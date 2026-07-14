@@ -45,11 +45,41 @@
           <span>分类</span>
           <select id="category-filter"><option value="">全部分类</option></select>
         </label>
-        <label class="select-field" for="tag-filter">
-          <span>主题</span>
-          <select id="tag-filter"><option value="">全部主题</option></select>
+        <label class="select-field" for="topic-filter">
+          <span>来源主题</span>
+          <select id="topic-filter"><option value="">全部来源主题</option></select>
+        </label>
+        <label class="select-field" for="custom-tag-filter">
+          <span>自定义标签</span>
+          <select id="custom-tag-filter"><option value="">全部自定义标签</option></select>
+        </label>
+        <label class="select-field" for="reading-state-filter">
+          <span>阅读状态</span>
+          <select id="reading-state-filter"><option value="">全部阅读状态</option></select>
         </label>
       </section>
+
+      <section id="saved-views" class="saved-views" aria-label="保存的筛选">
+        <div class="saved-views-copy">
+          <p class="section-label">本地保存的筛选</p>
+          <p>只保存当前搜索、分类、来源主题、自定义标签和阅读状态组合。</p>
+        </div>
+        <label class="select-field saved-view-select" for="saved-view-select">
+          <span>已保存</span>
+          <select id="saved-view-select"><option value="">选择已保存的筛选</option></select>
+        </label>
+        <label class="saved-view-name" for="saved-view-name">
+          <span class="sr-only">保存筛选名称</span>
+          <input id="saved-view-name" type="text" maxlength="80" placeholder="例如：本周精读" autocomplete="off" />
+        </label>
+        <div class="saved-view-actions">
+          <button type="button" id="save-saved-view">保存当前</button>
+          <button type="button" id="rename-saved-view" class="button-secondary" disabled>重命名所选</button>
+          <button type="button" id="delete-saved-view" class="button-secondary danger-button" disabled>删除所选</button>
+        </div>
+      </section>
+
+      <p id="storage-notice" class="storage-notice" role="status" hidden></p>
 
       <div id="result-summary" class="result-summary" aria-live="polite"></div>
       <section id="reader" aria-live="polite" aria-busy="true"></section>

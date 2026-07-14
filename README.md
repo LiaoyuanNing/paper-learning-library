@@ -15,6 +15,12 @@ npm run preview
 
 `npm run check` 会验证 8 条记录、唯一 arXiv ID、必填字段、四条学习亮点、不存全文姿态，以及阅读页的关键筛选/披露标记。`site/` 是 GitHub Pages 的直接发布目录。
 
+## 本地学习工作流（AGE-24）
+
+阅读状态（待阅读、阅读中、已读、已归档）、自定义标签、纯文本笔记、AI 中文摘要/学习亮点审核结论和保存的筛选组合均只保存在当前浏览器的 `localStorage`。它们以 canonical arXiv ID 为键，采用版本化 schema；无效或旧数据会安全回退为空状态，且不会影响 8 篇基线论文。清除浏览器数据、使用隐私模式或换设备后，这些学习数据不会保留。
+
+来源主题和 arXiv 分类始终来自静态数据；自定义标签不会改写 `site/data/`。笔记按文本安全转义后显示，不作为 HTML 注入。`npm test` 覆盖学习数据 CRUD、组合筛选、saved view、刷新持久化、损坏存储恢复和 XSS 文本边界。
+
 ## 数据与 AI 披露
 
 数据来自经独立验收的 AGE-23 附件 `paper_learning_mvp_sample.json`。公开页将原始 arXiv 字段与 AI 生成中文内容分区显示，并保留生成日期、数据集来源与 `full_text_stored=false` 版权姿态。

@@ -8,13 +8,17 @@ const [html, app, css] = await Promise.all([
   readFile(new URL("../site/styles.css", import.meta.url), "utf8"),
 ]);
 
-test("reader includes accessible search and both filters", () => {
-  for (const marker of ["search-input", "category-filter", "tag-filter", "aria-live"]) {
+test("reader includes accessible source and local learning filters", () => {
+  for (const marker of ["search-input", "category-filter", "topic-filter", "custom-tag-filter", "reading-state-filter", "saved-view-select", "aria-live"]) {
     assert.match(html, new RegExp(marker));
   }
   assert.match(app, /record\.authors/);
   assert.match(app, /record\.categories/);
   assert.match(app, /record\.tags/);
+  assert.match(app, /localStorage/);
+  assert.match(app, /saved_views/);
+  assert.match(app, /data-review-target/);
+  assert.match(app, /safeMultilineHtml/);
 });
 
 test("detail view separates arXiv and AI-generated content with honest provenance", () => {
