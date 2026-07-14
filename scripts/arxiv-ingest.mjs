@@ -226,16 +226,28 @@ function recordIdentity(record) {
       // An arbitrary URL or opaque provider field is not arXiv identity evidence.
     }
   };
+  const addLinkCandidates = (field, value) => {
+    if (typeof value === "string") {
+      addCandidate(field, value);
+      return;
+    }
+    if (Array.isArray(value)) {
+      value.forEach((nested, index) => addLinkCandidates(`${field}.${index}`, nested));
+      return;
+    }
+    if (value && typeof value === "object") {
+      for (const [key, nested] of Object.entries(value)) {
+        addLinkCandidates(`${field}.${key}`, nested);
+      }
+    }
+  };
   for (const field of ["id", "short_id", "pdf_url", "abstract_url", "abs_url", "url"]) {
     addCandidate(field, record?.[field]);
   }
-  if (typeof record?.links === "string") {
-    addCandidate("links", record.links);
-  } else if (record?.links && typeof record.links === "object" && !Array.isArray(record.links)) {
-    for (const [field, value] of Object.entries(record.links)) addCandidate(`links.${field}`, value);
-  } else if (Array.isArray(record?.links)) {
-    record.links.forEach((value, index) => addCandidate(`links.${index}`, value));
-  }
+  // arXiv clients commonly return links as [{ href, rel, type }]. Preserve
+  // the complete field path in provenance so an embedded contradictory link
+  // cannot bypass the exact-ID and batch-validation gates.
+  addLinkCandidates("links", record?.links);
   const unique = [...new Map(candidates.map((candidate) => [paperKey(candidate.identity.id, candidate.identity.version), candidate])).values()];
   const ids = [...new Set(candidates.map((candidate) => candidate.identity.id))];
   const versions = [...new Set(candidates
@@ -457,19 +469,24 @@ async function completeProviderCall(dataDir, index, provider, rateLimit) {
   await saveIndex(dataDir, index);
 }
 
-async function resolveExecutable(command) {
+async function findExecutable(command) {
   const candidates = command.includes(sep)
     ? [resolve(command)]
     : (process.env.PATH ?? "").split(":").filter(Boolean).map((directory) => join(directory, command));
   for (const candidate of candidates) {
     try {
       await access(candidate, constants.X_OK);
-      return realpath(candidate);
+      return candidate;
     } catch (error) {
       if (!["ENOENT", "EACCES"].includes(error.code)) throw error;
     }
   }
   return null;
+}
+
+async function resolveExecutable(command) {
+  const executable = await findExecutable(command);
+  return executable ? realpath(executable) : null;
 }
 
 function adapterInterpreterFromShebang(executableText) {
@@ -502,8 +519,11 @@ async function pythonAdapterRuntimeIdentity(executablePath) {
     };
   }
 
-  const resolvedInterpreter = await resolveExecutable(interpreter);
-  if (!resolvedInterpreter) {
+  // Run the interpreter referenced by the console script, not its realpath:
+  // pipx/venv Python shims select their isolated site-packages through that
+  // invocation path. The realpath is retained separately as audit evidence.
+  const invokedInterpreter = await findExecutable(interpreter);
+  if (!invokedInterpreter) {
     return {
       kind: "python",
       shebang,
@@ -514,14 +534,19 @@ async function pythonAdapterRuntimeIdentity(executablePath) {
       probe_error: `Could not resolve Python interpreter ${interpreter}`,
     };
   }
+  const resolvedInterpreter = await realpath(invokedInterpreter);
   try {
-    const result = await processCommand(resolvedInterpreter, ["-c", PYTHON_ADAPTER_IDENTITY_PROBE]);
+    const result = await processCommand(invokedInterpreter, ["-c", PYTHON_ADAPTER_IDENTITY_PROBE]);
     if (result.code !== 0) {
       return {
         kind: "python",
         shebang,
         interpreter,
-        python: { executable: resolvedInterpreter, sha256: digest(await readFile(resolvedInterpreter)) },
+        python: {
+          executable: invokedInterpreter,
+          resolved_executable: resolvedInterpreter,
+          sha256: digest(await readFile(resolvedInterpreter)),
+        },
         distributions: null,
         modules: null,
         console_entry_point: null,
@@ -535,6 +560,7 @@ async function pythonAdapterRuntimeIdentity(executablePath) {
       interpreter,
       python: {
         executable: probe.executable,
+        invoked_executable: invokedInterpreter,
         resolved_executable: resolvedInterpreter,
         sha256: digest(await readFile(resolvedInterpreter)),
         version: probe.version,
@@ -549,7 +575,11 @@ async function pythonAdapterRuntimeIdentity(executablePath) {
       kind: "python",
       shebang,
       interpreter,
-      python: { executable: resolvedInterpreter, sha256: digest(await readFile(resolvedInterpreter)) },
+      python: {
+        executable: invokedInterpreter,
+        resolved_executable: resolvedInterpreter,
+        sha256: digest(await readFile(resolvedInterpreter)),
+      },
       distributions: null,
       modules: null,
       console_entry_point: null,
@@ -915,12 +945,19 @@ function statusForPaper(paper, enrichment) {
   };
 }
 
-function createCapture(record, evidence, input) {
+function createCapture(record, evidence, input, selectedOriginalPayloadSha256) {
   const retrievedAt = now();
   const payloadSha256 = digest(JSON.stringify(record));
   return {
-    capture_id: `capture_${digest(JSON.stringify({ retrieved_at: retrievedAt, input, evidence, payload_sha256: payloadSha256 }))}`,
+    capture_id: `capture_${digest(JSON.stringify({
+      retrieved_at: retrievedAt,
+      input,
+      evidence,
+      payload_sha256: payloadSha256,
+      selected_original_payload_sha256: selectedOriginalPayloadSha256,
+    }))}`,
     payload_sha256: payloadSha256,
+    selected_original_payload_sha256: selectedOriginalPayloadSha256,
     provider: evidence.provider,
     input,
     retrieved_at: retrievedAt,
@@ -955,7 +992,7 @@ async function ingestOne(dataDir, index, options, record, source) {
     arxiv_version: version,
     captures: [],
   });
-  const capture = createCapture(record, source.evidence, source.input);
+  const capture = createCapture(record, source.evidence, source.input, source.selectedOriginalPayloadSha256);
   raw.captures.push(capture);
   await writeJson(filePaths.raw, raw);
 
@@ -1002,6 +1039,7 @@ async function ingestOne(dataDir, index, options, record, source) {
     version,
     created: wasNewVersion,
     capture_id: capture.capture_id,
+    selected_original_payload_sha256: capture.selected_original_payload_sha256,
     source_captures: raw.captures.length,
     statuses: statusForPaper(paper, enrichment),
   };
@@ -1100,7 +1138,10 @@ async function executeIngestion(dataDir, options, kind, input, retryOf = null) {
     for (const record of response.records) {
       const projected = projectApprovedRawMetadata(record);
       const { id, version } = parsedShortId(projected);
-      unique.set(paperKey(id, version), projected);
+      unique.set(paperKey(id, version), {
+        projected,
+        selectedOriginalPayloadSha256: digest(JSON.stringify(record)),
+      });
     }
     // Validate the selected response batch completely before the first capture,
     // normalized record, or enrichment file is written. A bad later record can
@@ -1108,15 +1149,19 @@ async function executeIngestion(dataDir, options, kind, input, retryOf = null) {
     let selected = unique;
     if (kind === "id") {
       const requested = canonicalId(input.value);
-      const exact = [...unique.entries()].find(([, record]) => isExactRecord(record, requested));
+      const exact = [...unique.entries()].find(([, selection]) => isExactRecord(selection.projected, requested));
       if (!exact) {
         throw new PipelineFailure(`Provider returned no exact record for ${input.value}`, { evidence: response.evidence });
       }
       selected = new Map([exact]);
     }
     const results = [];
-    for (const record of selected.values()) {
-      results.push(await ingestOne(dataDir, index, options, record, { evidence: response.evidence, input }));
+    for (const selection of selected.values()) {
+      results.push(await ingestOne(dataDir, index, options, selection.projected, {
+        evidence: response.evidence,
+        input,
+        selectedOriginalPayloadSha256: selection.selectedOriginalPayloadSha256,
+      }));
     }
     const result = {
       command: "ingest",
@@ -1130,7 +1175,15 @@ async function executeIngestion(dataDir, options, kind, input, retryOf = null) {
     transitionIngestionRun(run, "succeeded");
     run.retryable = false;
     run.provider_execution = response.evidence;
-    run.result = { ingested: results.map(({ id, version, created, capture_id }) => ({ id, version, created, capture_id })) };
+    run.result = {
+      ingested: results.map(({
+        id,
+        version,
+        created,
+        capture_id,
+        selected_original_payload_sha256,
+      }) => ({ id, version, created, capture_id, selected_original_payload_sha256 })),
+    };
     await saveIndex(dataDir, index);
     return result;
   } catch (error) {

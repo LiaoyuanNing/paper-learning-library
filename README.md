@@ -49,7 +49,7 @@ npm run ingest -- retry --job translation
 ARXIV_CLI_BIN="$HOME/Library/Python/3.9/bin/arxiv-cli" npm run ingest -- retry --job ingestion
 ```
 
-相同 canonical arXiv ID + version 会追加不可变来源 capture 而不会新增 paper/version；normalized record 永远指向首次生成它的 `capture_id`，最新 capture 则由 index 单独记录。每个 capture 保存完整 provider 输出的 SHA-256、实际 adapter/runtime/distribution/module 指纹，以及脱敏的候选 ID/version+payload hash；`raw_metadata` 仅保留 allowlist 元数据，任何全文/body/content 字段都会在整批写入前被拒绝。新版本会保留独立版本文件，并按版本顺序重建 `supersedes` / `superseded_by` 关系。指定历史版本只有在 adapter 返回相同 ID + version 时才会入库；绝不会以当前版本替代历史版本。`--adapter fixture` 和 `--ai-mode fake|fail:translation|fail:highlight` 是测试专用选项，不能作为正式采集或发布内容来源。完整命令、来源证据结构、adapter 选择与限制见 runbook。
+相同 canonical arXiv ID + version 会追加不可变来源 capture 而不会新增 paper/version；normalized record 永远指向首次生成它的 `capture_id`，最新 capture 则由 index 单独记录。每个 capture 保存 allowlist 投影的 SHA-256、关联的原始 provider payload SHA-256、实际 adapter/runtime/distribution/module 指纹，以及脱敏的候选 ID/version+payload hash；`raw_metadata` 仅保留 allowlist 元数据，任何全文/body/content 字段都会在整批写入前被拒绝。新版本会保留独立版本文件，并按版本顺序重建 `supersedes` / `superseded_by` 关系。指定历史版本只有在 adapter 返回相同 ID + version 时才会入库；绝不会以当前版本替代历史版本。`--adapter fixture` 和 `--ai-mode fake|fail:translation|fail:highlight` 是测试专用选项，不能作为正式采集或发布内容来源。完整命令、来源证据结构、adapter 选择与限制见 runbook。
 
 ## 发布
 
