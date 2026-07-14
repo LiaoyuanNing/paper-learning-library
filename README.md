@@ -23,7 +23,7 @@ npm run preview
 
 ## 可重复的 arXiv 采集（AGE-21）
 
-阅读页的 8 条基线数据保持在 `site/data/`；采集 pipeline 只写入单独的 `data/arxiv-ingestion/`（已被 Git 忽略），因此未经 review 的条目和测试用的 fake AI 内容不会公开发布。默认只存 arXiv 元数据、摘要、来源链接、来源证据与 AI enrichment；不会下载 PDF 或全文。
+阅读页的 8 条基线数据保持在 `site/data/`；采集 pipeline 只写入单独的 `data/arxiv-ingestion/`（已被 Git 忽略），因此未经 review 的条目和测试用的 fake AI 内容不会公开发布。程序会在创建任何文件前拒绝 `site/` 及其子目录（包括符号链接解析后的路径）。默认只存 arXiv 元数据、摘要、来源链接、来源证据与 AI enrichment；不会下载 PDF 或全文。
 
 先按 `docs/ingestion-runbook.md` 安装并实测 `arxiv-cli-tools`，随后可运行：
 
@@ -42,11 +42,14 @@ ARXIV_CLI_BIN="$HOME/Library/Python/3.9/bin/arxiv-cli" npm run ingest -- config 
 # 查看所有 ingestion / translation / highlight / review / publish 状态
 npm run ingest -- status
 
-# 仅重试可重试的失败任务；没有凭据时会重新排入可观察的 pending
+# 仅重试可重试的失败 AI 任务；没有凭据时会重新排入可观察的 pending
 npm run ingest -- retry --job translation
+
+# 失败的采集请求也会保留在 status 的 failed_ingestions 中，并可生成新一次审计 run
+ARXIV_CLI_BIN="$HOME/Library/Python/3.9/bin/arxiv-cli" npm run ingest -- retry --job ingestion
 ```
 
-相同 canonical arXiv ID + version 会更新来源 capture 而不会新增 paper/version；新版本会保留独立版本文件，并写出 `supersedes` / `superseded_by` 关系。`--adapter fixture` 和 `--ai-mode fake|fail:translation|fail:highlight` 是测试专用选项，不能作为正式采集或发布内容来源。完整命令、来源证据结构、adapter 选择与限制见 runbook。
+相同 canonical arXiv ID + version 会追加不可变来源 capture 而不会新增 paper/version；normalized record 永远指向首次生成它的 `capture_id`，最新 capture 则由 index 单独记录。新版本会保留独立版本文件，并按版本顺序重建 `supersedes` / `superseded_by` 关系。指定历史版本只有在 adapter 返回相同 ID + version 时才会入库；绝不会以当前版本替代历史版本。`--adapter fixture` 和 `--ai-mode fake|fail:translation|fail:highlight` 是测试专用选项，不能作为正式采集或发布内容来源。完整命令、来源证据结构、adapter 选择与限制见 runbook。
 
 ## 发布
 

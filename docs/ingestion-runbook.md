@@ -2,7 +2,7 @@
 
 ## Adapter choice
 
-The MVP adapter is `arxiv-cli-tools` 0.1.0 (Python package `arxiv` 2.4.1). It was selected because the installed CLI provides both an exact canonical-ID query and a keyword query in machine-readable JSON, without an API key. The pipeline itself does not call arXiv HTTP endpoints directly.
+The MVP adapter is `arxiv-cli-tools` (its identity is recorded at runtime as the executable path and SHA-256 rather than a hard-coded package version). It was selected because the installed CLI exposes both `--id` and keyword search in machine-readable JSON, without an API key. The pipeline itself does not call arXiv HTTP endpoints directly.
 
 The `oo-arxiv` connector was checked first as required: `oo connector schema "arxiv" --action "get_paper"` and `search_papers` could not start because `oo` was absent from this runtime. Its official first-time installer was tried; the runtime did not complete the binary installation. This is retained as an environment limitation, not silently replaced by a direct API client.
 
@@ -15,7 +15,7 @@ arxiv-cli search 2210.03629 --max-results 1 --json
 arxiv-cli search "agent reasoning" --max-results 1 --json
 ```
 
-The ID test returned `2210.03629v3` (ReAct); the query test returned `2607.11875v1` at the time of the run. `arxiv-cli search --id ... --json` returned an empty array in this package version even though its text display can find the paper, so the production adapter performs an ID-term JSON search and rejects any result whose canonical ID/version does not exactly match the requested input. This behaviour is documented in code and is covered by the production command's exact-match guard.
+The ID test returned `2210.03629v3` (ReAct); the query test returned `2607.11875v1` at the time of the run. Every ID request now first calls `arxiv-cli search --id <canonical-id-and-version> --json`. In this runtime that command can return an empty array, so the adapter makes one textual candidate query only as a compatibility fallback and applies the same exact canonical ID/version check before storing anything. A requested historical version is never replaced by the current version: when neither response has the requested version, the command fails and writes a retryable ingestion ledger entry. This contract is covered by an executable-level adapter test.
 
 Use the CLI's default three-second delay and small explicit limits. Do not add a direct arXiv API fallback unless a new adapter selection is reviewed.
 
@@ -25,21 +25,23 @@ The default store is `data/arxiv-ingestion/`; override it with `--data-dir` for 
 
 ```text
 data/arxiv-ingestion/
-  index.json                         canonical ID -> versions and paths
-  raw/<id>/<version>.json            provider input, retrieved_at, execution evidence, raw metadata
+  index.json                         canonical ID -> versions, paths, and ingestion run ledger
+  raw/<id>/<version>.json            append-only captures: immutable capture ID/hash, input, evidence, raw metadata
   papers/<id>/<version>.json         normalized metadata and ingest/review/publish state
   enrichments/<id>/<version>.json    translation/highlight states and AI-only fields
 ```
 
-Every raw capture contains the provider, input, retrieval timestamp, executable/arguments (or test fixture request), output SHA-256, provider stderr, and unmodified provider metadata. A repeat retrieval appends another capture; it does not create another canonical paper/version. A new version receives a separate record and an auditable `supersedes` / `superseded_by` link.
+Every raw capture contains the provider, input, retrieval timestamp, executable/arguments (or test fixture request), output SHA-256, provider stderr, and unmodified provider metadata. It also has an immutable `capture_id` and payload hash. A repeat retrieval appends another capture; it does not create another canonical paper/version. A normalized record has `normalized_from_capture_id`, so its source remains unambiguous even after later captures. A new version receives a separate record; after every insertion all versions are sorted and their `supersedes` / `superseded_by` links are rebuilt.
 
 `papers/` contains no AI text and `enrichments/` contains no raw provider response. The status surface includes:
 
-- ingestion: `succeeded` / `failed` as applicable;
+- ingestion: a persisted run ledger with `pending` → `running` → `succeeded` or `failed`, retryability, input, adapter/provider evidence, timestamps, and error/result;
 - translation and highlight: `pending`, `running`, `succeeded`, or `failed`, plus `retryable`, attempt count, error, generated time, and exact provider/model when generated;
 - review: `needs_review`; publish: `unpublished`.
 
-No credentialed AI provider is configured in this repository. Fresh ingest therefore leaves translation/highlight as visible, retryable `pending` jobs; a default retry requeues a failed job to `pending`. Fake provider content is explicitly `[TEST ONLY]`, stored only under the separate data directory, and cannot reach `site/data/`. Review and publishing are intentionally manual gates: the pipeline never modifies the public reader dataset.
+No credentialed AI provider is configured in this repository. Fresh ingest therefore leaves translation/highlight as visible, retryable `pending` jobs; a default retry requeues a failed job to `pending`. Any transition away from `succeeded` clears its active generated artifact, so failed/running jobs cannot claim successful content. Fake provider content is explicitly `[TEST ONLY]`, stored only under the separate data directory, and cannot reach `site/data/`. Review and publishing are intentionally manual gates: the pipeline never modifies the public reader dataset.
+
+The command rejects `site/` and every descendant before any write, including a `--data-dir` that reaches it through a symlink. Every JSON file is written by atomic rename and mutating commands take a per-store exclusive lock. The store is intentionally a single-writer filesystem MVP, not a multi-process database transaction; a stale lock after a killed process must be inspected before removal rather than deleted automatically.
 
 ## Reproducible verification
 
@@ -56,6 +58,13 @@ ARXIV_CLI_BIN="$HOME/Library/Python/3.9/bin/arxiv-cli" npm run ingest -- \
 ARXIV_CLI_BIN="$HOME/Library/Python/3.9/bin/arxiv-cli" npm run ingest -- \
   --data-dir "$tmp_dir" search --query "agent reasoning" --limit 1
 npm run ingest -- --data-dir "$tmp_dir" status
+
+# A historical version that the provider cannot return exactly must stay visible as a failed, retryable run.
+ARXIV_CLI_BIN="$HOME/Library/Python/3.9/bin/arxiv-cli" npm run ingest -- \
+  --data-dir "$tmp_dir" id 2210.03629v2
+npm run ingest -- --data-dir "$tmp_dir" status
+ARXIV_CLI_BIN="$HOME/Library/Python/3.9/bin/arxiv-cli" npm run ingest -- \
+  --data-dir "$tmp_dir" retry --job ingestion
 ```
 
-The automated integration test uses a separate fixture adapter to prove duplicate protection, version supersession, configured ID/query ingestion, source evidence capture, injected translation failure, observable status, and retry without adding a paper record. It stores no full text and does not contact arXiv.
+The automated integration test uses a separate fixture adapter to prove duplicate protection, out-of-order version supersession, immutable provenance, configured ID/query ingestion, source evidence capture, injected translation failure, observable retry states, public-directory rejection (including symlinks), and positive-limit validation. A fake `arxiv-cli` executable verifies the real adapter argument contract without making a network request. Tests store no full text and do not contact arXiv.
