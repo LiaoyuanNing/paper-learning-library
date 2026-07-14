@@ -2,11 +2,11 @@
 
 ## Adapter choice
 
-The MVP adapter is `arxiv-cli-tools`. Each run records the resolved CLI path and SHA-256, its Python runtime path/version/hash, the installed `arxiv-cli-tools` and `arxiv` distribution versions, and resolved module paths/hashes. This is runtime evidence rather than a hard-coded adapter version. It was selected because the installed CLI exposes both `--id` and keyword search in machine-readable JSON, without an API key. The pipeline itself does not call arXiv HTTP endpoints directly.
+The MVP adapter is `arxiv-cli-tools`. Each run records the resolved CLI path and SHA-256, its Python runtime path/version/hash, the installed `arxiv-cli-tools` and `arxiv` distribution versions, each distribution's file-list/content and `RECORD` digests, resolved module paths/hashes, and the `arxiv-cli` console entry-point module/path/hash. This is runtime evidence rather than a hard-coded adapter version. It was selected because the installed CLI exposes both `--id` and keyword search in machine-readable JSON, without an API key. The pipeline itself does not call arXiv HTTP endpoints directly.
 
 The `oo-arxiv` connector was checked first as required: `oo connector schema "arxiv" --action "get_paper"` and `search_papers` could not start because `oo` was absent from this runtime. Its official first-time installer was tried; the runtime did not complete the binary installation. This is retained as an environment limitation, not silently replaced by a direct API client.
 
-`arxiv-cli-tools` was then installed through its documented pip path. Its commands were verified with:
+`arxiv-cli-tools` was then installed through its documented `pipx` path. Its commands were verified with:
 
 ```bash
 arxiv-cli --help
@@ -17,7 +17,7 @@ arxiv-cli search "agent reasoning" --max-results 1 --json
 
 The ID test returned `2210.03629v3` (ReAct); the query test returned `2607.11875v1` at the time of the run. Every ID request now first calls `arxiv-cli search --id <canonical-id-and-version> --json`. In this runtime that command can return an empty array, so the adapter makes one textual candidate query only as a compatibility fallback and applies the same exact canonical ID/version check before storing anything. A requested historical version is never replaced by the current version: when neither response has the requested version, the command fails and writes a retryable ingestion ledger entry. This contract is covered by an executable-level adapter test.
 
-Use the CLI's default three-second delay and small explicit limits. Do not add a direct arXiv API fallback unless a new adapter selection is reviewed.
+The pipeline persists a three-second minimum interval for every `arxiv-cli` process start in `index.json`, while holding the store lock. That applies to an exact-ID fallback, config loop, retry, and a later process using the same store; the CLI's own delay is therefore supplementary. Use small explicit limits. Do not add a direct arXiv API fallback unless a new adapter selection is reviewed.
 
 ## Data layout and audit trail
 
@@ -31,7 +31,7 @@ data/arxiv-ingestion/
   enrichments/<id>/<version>.json    translation/highlight states and AI-only fields
 ```
 
-Every raw capture contains the provider, input, retrieval timestamp, executable/arguments (or test fixture request), full provider-output SHA-256, provider stderr, observed candidate canonical ID/version plus payload hashes, and an immutable `capture_id`/payload hash. `raw_metadata` is an allowlisted metadata projection (`id`, title, abstract/summary, authors, categories, dates, links, and DOI); a provider record that includes a prohibited full-text/body/content field is rejected. This preserves source auditability without storing arbitrary adapter output or paper text. A repeat retrieval appends another capture; it does not create another canonical paper/version. A normalized record has `normalized_from_capture_id`, so its source remains unambiguous even after later captures. A new version receives a separate record; after every insertion all versions are sorted and their `supersedes` / `superseded_by` links are rebuilt.
+Every raw capture contains the provider, input, retrieval timestamp, executable/arguments (or test fixture request), full provider-output SHA-256, and observed candidate canonical ID/version plus payload hashes. Provider stderr is never stored: evidence keeps only its SHA-256, byte length, and a controlled diagnostic code. `raw_metadata` is an allowlisted metadata projection (`id`, title, abstract/summary, authors, categories, dates, links, and DOI); a provider record that includes a prohibited full-text/body/content field is rejected. All parseable identity fields (`id`, `short_id`, and source links) must agree before exact matching or projection; a conflict rejects the complete batch and leaves only the failed ledger. This preserves source auditability without storing arbitrary adapter output or paper text. A repeat retrieval appends another capture; it does not create another canonical paper/version. A normalized record has `normalized_from_capture_id`, so its source remains unambiguous even after later captures. A new version receives a separate record; after every insertion all versions are sorted and their `supersedes` / `superseded_by` links are rebuilt.
 
 The complete provider response batch is type-checked and projected before the first capture, paper, or enrichment write. A malformed later record therefore leaves only a failed ingestion run ledger, not a partial batch of records. The filesystem store remains a single-writer MVP; its lock and per-file atomic rename protect normal writes, while the ledger makes interrupted or failed attempts visible for recovery.
 
@@ -53,22 +53,22 @@ npm run check
 
 # Real read-only arXiv proof in a separate directory; run twice to verify no duplicate paper/version.
 tmp_dir="$(mktemp -d)"
-ARXIV_CLI_BIN="$HOME/Library/Python/3.9/bin/arxiv-cli" npm run ingest -- \
+ARXIV_CLI_BIN="$HOME/.local/bin/arxiv-cli" npm run ingest -- \
   --data-dir "$tmp_dir" id 2210.03629v3
-ARXIV_CLI_BIN="$HOME/Library/Python/3.9/bin/arxiv-cli" npm run ingest -- \
+ARXIV_CLI_BIN="$HOME/.local/bin/arxiv-cli" npm run ingest -- \
   --data-dir "$tmp_dir" id 2210.03629v3
-ARXIV_CLI_BIN="$HOME/Library/Python/3.9/bin/arxiv-cli" npm run ingest -- \
+ARXIV_CLI_BIN="$HOME/.local/bin/arxiv-cli" npm run ingest -- \
   --data-dir "$tmp_dir" search --query "agent reasoning" --limit 1
 npm run ingest -- --data-dir "$tmp_dir" status
 
 # A historical version that the provider cannot return exactly must stay visible as a failed, retryable run.
 # Retrying creates one child attempt and retires the parent, so old failures cannot
 # be retried repeatedly or amplify provider traffic.
-ARXIV_CLI_BIN="$HOME/Library/Python/3.9/bin/arxiv-cli" npm run ingest -- \
+ARXIV_CLI_BIN="$HOME/.local/bin/arxiv-cli" npm run ingest -- \
   --data-dir "$tmp_dir" id 2210.03629v2
 npm run ingest -- --data-dir "$tmp_dir" status
-ARXIV_CLI_BIN="$HOME/Library/Python/3.9/bin/arxiv-cli" npm run ingest -- \
+ARXIV_CLI_BIN="$HOME/.local/bin/arxiv-cli" npm run ingest -- \
   --data-dir "$tmp_dir" retry --job ingestion
 ```
 
-The automated integration test uses a separate fixture adapter to prove duplicate protection, out-of-order version supersession, immutable provenance, configured ID/query ingestion, source evidence capture, injected translation failure, observable retry states, public-directory rejection (including symlinks), and positive-limit validation. A fake `arxiv-cli` executable verifies the real adapter argument contract without making a network request. Tests store no full text and do not contact arXiv.
+The automated integration test uses a separate fixture adapter to prove duplicate protection, out-of-order version supersession, immutable provenance, configured ID/query ingestion, source evidence capture, injected translation failure, observable retry states, public-directory rejection (including symlinks), and positive-limit validation. Fake `arxiv-cli` executables verify the real adapter argument contract, Python entry-point/distribution fingerprints, stderr storage boundary, identity-conflict rejection, and persistent rate limiting without making a network request. Tests store no full text and do not contact arXiv.

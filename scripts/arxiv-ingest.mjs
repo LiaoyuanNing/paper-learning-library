@@ -16,6 +16,8 @@ import { fileURLToPath } from "node:url";
 const ROOT = process.cwd();
 const REPOSITORY_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const DEFAULT_DATA_DIR = "data/arxiv-ingestion";
+const ARXIV_PROVIDER = "arxiv-cli-tools";
+const PROVIDER_MIN_REQUEST_INTERVAL_MS = 3_000;
 const JOB_STATES = new Set(["pending", "running", "succeeded", "failed"]);
 const APPROVED_RAW_METADATA_FIELDS = [
   "id",
@@ -50,16 +52,62 @@ def sha256_file(path):
     except OSError:
         return None
 
-distributions = {}
-for name in ("arxiv-cli-tools", "arxiv"):
+def sha256_json(value):
+    encoded = json.dumps(value, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+def distribution_identity(name):
     try:
         distribution = metadata.distribution(name)
-        distributions[name] = {
-            "version": distribution.version,
-            "metadata_path": str(distribution.locate_file("")),
-        }
     except metadata.PackageNotFoundError:
-        distributions[name] = None
+        return None
+
+    files = []
+    content_manifest = []
+    record_sha256 = None
+    for package_file in sorted(distribution.files or [], key=str):
+        relative_path = str(package_file)
+        files.append(relative_path)
+        resolved_path = distribution.locate_file(package_file)
+        content_sha256 = sha256_file(resolved_path)
+        content_manifest.append({"path": relative_path, "sha256": content_sha256})
+        if relative_path.endswith(".dist-info/RECORD") or relative_path == "RECORD":
+            record_sha256 = content_sha256
+    return {
+        "version": distribution.version,
+        "metadata_path": str(getattr(distribution, "_path", distribution.locate_file(""))),
+        "file_count": len(files),
+        "files_manifest_sha256": sha256_json(files),
+        "files_content_sha256": sha256_json(content_manifest),
+        "record_sha256": record_sha256,
+    }
+
+def console_entry_point(name):
+    try:
+        entry_points = metadata.entry_points()
+        if hasattr(entry_points, "select"):
+            matches = list(entry_points.select(group="console_scripts", name=name))
+        else:
+            matches = [entry for entry in entry_points.get("console_scripts", []) if entry.name == name]
+        if not matches:
+            return None
+        entry_point = matches[0]
+        module = entry_point.value.split(":", 1)[0].split("[", 1)[0].strip()
+        spec = importlib.util.find_spec(module)
+        origin = spec.origin if spec else None
+        return {
+            "name": entry_point.name,
+            "value": entry_point.value,
+            "module": module,
+            "path": origin,
+            "sha256": sha256_file(origin) if origin else None,
+        }
+    except Exception:
+        return None
+
+distributions = {}
+for name in ("arxiv-cli-tools", "arxiv"):
+    distributions[name] = distribution_identity(name)
 
 modules = {}
 for name in ("arxiv_cli", "arxiv_cli_tools", "arxiv"):
@@ -75,6 +123,7 @@ print(json.dumps({
     "executable": sys.executable,
     "distributions": distributions,
     "modules": modules,
+    "console_entry_point": console_entry_point("arxiv-cli"),
 }))
 `;
 
@@ -150,14 +199,53 @@ function parseArgs(argv) {
 }
 
 function canonicalId(input) {
-  const cleaned = String(input).trim().replace(/^https?:\/\/arxiv\.org\/abs\//i, "");
+  const cleaned = String(input)
+    .trim()
+    .replace(/^https?:\/\/(?:www\.)?arxiv\.org\/(?:abs|pdf)\//i, "")
+    .replace(/\.pdf(?=$|[?#])/i, "")
+    .replace(/[?#].*$/, "");
   const match = cleaned.match(/^(?<id>(?:\d{4}\.\d{4,5}|[a-z-]+\/\d{7}))(?<version>v\d+)?$/i);
   if (!match?.groups) throw new Error(`Invalid arXiv ID/version: ${input}`);
   return { id: match.groups.id.toLowerCase(), version: match.groups.version?.toLowerCase() ?? null };
 }
 
 function parsedShortId(record) {
-  return canonicalId(record.short_id ?? record.id);
+  const identity = recordIdentity(record);
+  if (!identity.candidates.length) throw new Error("Provider record is missing a parseable arXiv identity");
+  if (identity.conflict) throw new Error("Provider record has conflicting arXiv identity fields");
+  return identity.resolved;
+}
+
+function recordIdentity(record) {
+  const candidates = [];
+  const addCandidate = (field, value) => {
+    if (typeof value !== "string") return;
+    try {
+      candidates.push({ field, identity: canonicalId(value) });
+    } catch {
+      // An arbitrary URL or opaque provider field is not arXiv identity evidence.
+    }
+  };
+  for (const field of ["id", "short_id", "pdf_url", "abstract_url", "abs_url", "url"]) {
+    addCandidate(field, record?.[field]);
+  }
+  if (typeof record?.links === "string") {
+    addCandidate("links", record.links);
+  } else if (record?.links && typeof record.links === "object" && !Array.isArray(record.links)) {
+    for (const [field, value] of Object.entries(record.links)) addCandidate(`links.${field}`, value);
+  } else if (Array.isArray(record?.links)) {
+    record.links.forEach((value, index) => addCandidate(`links.${index}`, value));
+  }
+  const unique = [...new Map(candidates.map((candidate) => [paperKey(candidate.identity.id, candidate.identity.version), candidate])).values()];
+  const ids = [...new Set(candidates.map((candidate) => candidate.identity.id))];
+  const versions = [...new Set(candidates
+    .map((candidate) => candidate.identity.version)
+    .filter((version) => version !== null))];
+  // A source URL without a version identifies the same paper as a versioned
+  // `id`/`short_id`; two explicit versions never do.
+  const conflict = ids.length > 1 || versions.length > 1;
+  const resolved = ids.length ? { id: ids[0], version: versions[0] ?? null } : null;
+  return { candidates, unique, resolved, conflict };
 }
 
 function paperKey(id, version) {
@@ -192,6 +280,10 @@ function parsePositiveLimit(value, label) {
   const limit = Number(value);
   if (!Number.isInteger(limit) || limit < 1) throw new Error(`${label} must be a positive integer`);
   return limit;
+}
+
+function sleep(milliseconds) {
+  return new Promise((resolvePromise) => setTimeout(resolvePromise, milliseconds));
 }
 
 function isWithin(candidate, boundary) {
@@ -292,6 +384,7 @@ async function loadIndex(dataDir) {
   index.schema_version ??= "0.2.0";
   index.papers ??= {};
   index.ingestion_runs ??= [];
+  index.provider_rate_limits ??= {};
   index.content_policy ??= newIndex().content_policy;
   return index;
 }
@@ -320,6 +413,48 @@ function processCommand(command, args) {
     child.once("error", reject);
     child.once("close", (code) => resolvePromise({ code, stdout, stderr }));
   });
+}
+
+function safeStderrEvidence(stderr) {
+  return {
+    stderr_sha256: digest(stderr),
+    stderr_bytes: Buffer.byteLength(stderr),
+    stderr_diagnostic: stderr.length ? "provider_stderr_present" : "none",
+  };
+}
+
+async function reserveProviderCall(dataDir, index, provider) {
+  index.provider_rate_limits ??= {};
+  const previous = index.provider_rate_limits[provider]?.last_completed_at
+    ?? index.provider_rate_limits[provider]?.last_started_at
+    ?? null;
+  const elapsed = previous ? Date.now() - Date.parse(previous) : Number.POSITIVE_INFINITY;
+  const waitMs = Number.isFinite(elapsed) ? Math.max(0, PROVIDER_MIN_REQUEST_INTERVAL_MS - elapsed) : 0;
+  if (waitMs) await sleep(waitMs + 1);
+  const startedAt = now();
+  index.provider_rate_limits[provider] = {
+    minimum_interval_ms: PROVIDER_MIN_REQUEST_INTERVAL_MS,
+    last_started_at: startedAt,
+  };
+  // Persist the reservation before process creation. Under the store lock this
+  // carries the rate limit across independent CLI processes and fallback calls.
+  await saveIndex(dataDir, index);
+  return {
+    minimum_interval_ms: PROVIDER_MIN_REQUEST_INTERVAL_MS,
+    waited_ms: waitMs,
+    started_at: startedAt,
+  };
+}
+
+async function completeProviderCall(dataDir, index, provider, rateLimit) {
+  const completedAt = now();
+  index.provider_rate_limits[provider] = {
+    ...index.provider_rate_limits[provider],
+    minimum_interval_ms: PROVIDER_MIN_REQUEST_INTERVAL_MS,
+    last_completed_at: completedAt,
+  };
+  rateLimit.completed_at = completedAt;
+  await saveIndex(dataDir, index);
 }
 
 async function resolveExecutable(command) {
@@ -389,7 +524,8 @@ async function pythonAdapterRuntimeIdentity(executablePath) {
         python: { executable: resolvedInterpreter, sha256: digest(await readFile(resolvedInterpreter)) },
         distributions: null,
         modules: null,
-        probe_error: result.stderr.trim() || `Python identity probe exited ${result.code}`,
+        console_entry_point: null,
+        probe_error: `Python identity probe exited ${result.code}`,
       };
     }
     const probe = JSON.parse(result.stdout);
@@ -405,6 +541,7 @@ async function pythonAdapterRuntimeIdentity(executablePath) {
       },
       distributions: probe.distributions,
       modules: probe.modules,
+      console_entry_point: probe.console_entry_point,
       probe_error: null,
     };
   } catch (error) {
@@ -415,6 +552,7 @@ async function pythonAdapterRuntimeIdentity(executablePath) {
       python: { executable: resolvedInterpreter, sha256: digest(await readFile(resolvedInterpreter)) },
       distributions: null,
       modules: null,
+      console_entry_point: null,
       probe_error: `Python identity probe failed: ${error.message}`,
     };
   }
@@ -451,13 +589,25 @@ function observedCandidates(records) {
   if (!Array.isArray(records)) return [];
   return records.map((record) => {
     const candidate = { payload_sha256: digest(JSON.stringify(record)) };
-    try {
-      const parsed = parsedShortId(record);
-      candidate.arxiv_id = parsed.id;
-      candidate.arxiv_version = parsed.version;
-    } catch {
+    const identity = recordIdentity(record);
+    candidate.identity_fields = identity.candidates.map(({ field }) => field);
+    if (!identity.candidates.length) {
+      candidate.identity_status = "missing";
       candidate.arxiv_id = null;
       candidate.arxiv_version = null;
+    } else if (identity.conflict) {
+      candidate.identity_status = "conflict";
+      candidate.arxiv_id = null;
+      candidate.arxiv_version = null;
+      candidate.identity_candidates = identity.unique.map(({ identity: parsed }) => ({
+        arxiv_id: parsed.id,
+        arxiv_version: parsed.version,
+      }));
+    } else {
+      const parsed = identity.resolved;
+      candidate.identity_status = "consistent";
+      candidate.arxiv_id = parsed.id;
+      candidate.arxiv_version = parsed.version;
     }
     return candidate;
   });
@@ -468,29 +618,52 @@ function uniqueObservedCandidates(executions) {
   return [...new Map(observed.map((candidate) => [JSON.stringify(candidate), candidate])).values()];
 }
 
-async function runArxivCliAttempt(command, args, identity) {
+function assertConsistentRecordIdentities(records, evidence) {
+  const invalid = records.find((record) => {
+    const identity = recordIdentity(record);
+    return !identity.candidates.length || identity.conflict;
+  });
+  if (!invalid) return;
+  const identity = recordIdentity(invalid);
+  const message = identity.conflict
+    ? "Provider record has conflicting arXiv identity fields"
+    : "Provider record is missing a parseable arXiv identity";
+  throw new PipelineFailure(message, {
+    evidence: { ...evidence, observed_candidates: observedCandidates(records) },
+  });
+}
+
+async function runArxivCliAttempt(dataDir, index, command, args, identity) {
+  const rateLimit = await reserveProviderCall(dataDir, index, ARXIV_PROVIDER);
   let result;
   try {
     result = await processCommand(command, args);
   } catch (error) {
+    await completeProviderCall(dataDir, index, ARXIV_PROVIDER, rateLimit);
     throw new PipelineFailure(`arxiv-cli could not start: ${error.message}`, {
       evidence: {
-        provider: "arxiv-cli-tools",
+        provider: ARXIV_PROVIDER,
         adapter_identity: identity,
         argv: args,
-        execution_error: error.message,
+        rate_limit: rateLimit,
+        execution_error: {
+          code: error.code ?? null,
+          diagnostic: "provider_process_start_failed",
+        },
       },
     });
   }
+  await completeProviderCall(dataDir, index, ARXIV_PROVIDER, rateLimit);
   const execution = {
     argv: args,
     exit_code: result.code,
     stdout_sha256: digest(result.stdout),
-    stderr: result.stderr.trim() || null,
+    rate_limit: rateLimit,
+    ...safeStderrEvidence(result.stderr),
   };
   if (result.code !== 0) {
-    throw new PipelineFailure(`arxiv-cli failed (exit ${result.code}): ${result.stderr.trim() || "no stderr"}`, {
-      evidence: { provider: "arxiv-cli-tools", adapter_identity: identity, ...execution },
+    throw new PipelineFailure(`arxiv-cli failed (exit ${result.code}; ${execution.stderr_diagnostic})`, {
+      evidence: { provider: ARXIV_PROVIDER, adapter_identity: identity, ...execution },
     });
   }
   let records;
@@ -507,21 +680,22 @@ async function runArxivCliAttempt(command, args, identity) {
     });
   }
   execution.observed_candidates = observedCandidates(records);
+  assertConsistentRecordIdentities(records, { provider: ARXIV_PROVIDER, adapter_identity: identity, ...execution });
   return { records, execution };
 }
 
-async function callArxivCli(options, kind, input) {
+async function callArxivCli(dataDir, index, options, kind, input) {
   const command = options.arxivCliBin ?? process.env.ARXIV_CLI_BIN ?? "arxiv-cli";
   const identity = await executableIdentity(command);
   if (kind !== "id") {
     const args = ["search", input.query, "--max-results", String(input.limit), "--sort", "updated", "--json"];
     for (const author of input.authors ?? []) args.push("--author", author);
     for (const category of input.categories ?? []) args.push("--category", category);
-    const result = await runArxivCliAttempt(command, args, identity);
+    const result = await runArxivCliAttempt(dataDir, index, command, args, identity);
     return {
       records: result.records,
       evidence: {
-        provider: "arxiv-cli-tools",
+        provider: ARXIV_PROVIDER,
         adapter_identity: identity,
         request: input,
         executions: [result.execution],
@@ -533,7 +707,7 @@ async function callArxivCli(options, kind, input) {
   const requested = canonicalId(input.value);
   const requestedId = `${requested.id}${requested.version ?? ""}`;
   const exactArgs = ["search", "--id", requestedId, "--max-results", "1", "--json"];
-  const exact = await runArxivCliAttempt(command, exactArgs, identity);
+  const exact = await runArxivCliAttempt(dataDir, index, command, exactArgs, identity);
   const executions = [exact.execution];
   let records = exact.records;
 
@@ -542,7 +716,7 @@ async function callArxivCli(options, kind, input) {
   // canonical ID/version check below; it can never substitute a newer version.
   if (!records.some((record) => isExactRecord(record, requested))) {
     const fallbackArgs = ["search", requestedId, "--max-results", "1", "--json"];
-    const fallback = await runArxivCliAttempt(command, fallbackArgs, identity);
+    const fallback = await runArxivCliAttempt(dataDir, index, command, fallbackArgs, identity);
     executions.push(fallback.execution);
     records = fallback.records;
   }
@@ -573,20 +747,22 @@ async function callFixture(options, kind, input) {
   } else {
     records = (fixture.searches?.[input.query] ?? []).slice(0, input.limit);
   }
+  const evidence = {
+    provider: "fixture-adapter",
+    adapter_identity: { fixture: basename(fixturePath), fixture_sha256: digest(fixtureText), test_only: true },
+    request: kind === "id" ? { id: input.value } : input,
+    stdout_sha256: digest(JSON.stringify(records)),
+    observed_candidates: observedCandidates(records),
+  };
+  assertConsistentRecordIdentities(records, evidence);
   return {
     records,
-    evidence: {
-      provider: "fixture-adapter",
-      adapter_identity: { fixture: basename(fixturePath), fixture_sha256: digest(fixtureText), test_only: true },
-      request: kind === "id" ? { id: input.value } : input,
-      stdout_sha256: digest(JSON.stringify(records)),
-      observed_candidates: observedCandidates(records),
-    },
+    evidence,
   };
 }
 
-async function fetchRecords(options, kind, input) {
-  if (options.adapter === "arxiv-cli") return callArxivCli(options, kind, input);
+async function fetchRecords(dataDir, index, options, kind, input) {
+  if (options.adapter === "arxiv-cli") return callArxivCli(dataDir, index, options, kind, input);
   if (options.adapter === "fixture") return callFixture(options, kind, input);
   throw new PipelineFailure(`Unsupported adapter: ${options.adapter}`);
 }
@@ -916,7 +1092,7 @@ async function executeIngestion(dataDir, options, kind, input, retryOf = null) {
 
   let response;
   try {
-    response = await fetchRecords(options, kind, input);
+    response = await fetchRecords(dataDir, index, options, kind, input);
     if (!Array.isArray(response.records)) {
       throw new PipelineFailure("Provider response must contain a JSON array of records", { evidence: response.evidence });
     }

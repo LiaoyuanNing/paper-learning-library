@@ -10,9 +10,9 @@ const script = new URL("../scripts/arxiv-ingest.mjs", import.meta.url).pathname;
 const fixture = new URL("./fixtures/arxiv-cli-fixture.json", import.meta.url).pathname;
 const config = new URL("./fixtures/arxiv-ingest-config.fixture.json", import.meta.url).pathname;
 
-function runRaw(args, { cwd = root.pathname } = {}) {
+function runRaw(args, { cwd = root.pathname, env = process.env } = {}) {
   return new Promise((resolve, reject) => {
-    const child = spawn(process.execPath, [script, ...args], { cwd });
+    const child = spawn(process.execPath, [script, ...args], { cwd, env });
     let stdout = "";
     let stderr = "";
     child.stdout.on("data", (chunk) => { stdout += chunk; });
@@ -162,6 +162,219 @@ test("uses the arxiv-cli exact-ID contract and preserves its runtime identity", 
   assert.deepEqual(execution.observed_candidates.map(({ arxiv_id, arxiv_version }) => ({ arxiv_id, arxiv_version })), [
     { arxiv_id: "9900.00001", arxiv_version: "v2" },
   ]);
+});
+
+test("fingerprints the Python console entry point and installed distribution contents", async () => {
+  const workspace = await mkdtemp(join(tmpdir(), "paper-learning-python-identity-"));
+  const dataDir = join(workspace, "store");
+  const pythonSite = join(workspace, "python-site");
+  const packageDir = join(pythonSite, "arxiv_cli");
+  const distInfo = join(pythonSite, "arxiv_cli_tools-0.0.0.dist-info");
+  const cli = join(workspace, "fake-python-arxiv-cli");
+  const record = {
+    id: "http://arxiv.org/abs/9900.00003v1",
+    short_id: "9900.00003v1",
+    title: "Python identity fixture",
+    summary: "Metadata only.",
+    published: "2026-01-01T00:00:00+00:00",
+    updated: "2026-01-01T00:00:00+00:00",
+    authors: ["Test Author"],
+    primary_category: "cs.AI",
+    categories: ["cs.AI"],
+    pdf_url: "https://arxiv.org/pdf/9900.00003v1",
+    doi: null,
+  };
+  await mkdir(packageDir, { recursive: true });
+  await mkdir(distInfo, { recursive: true });
+  await writeFile(join(packageDir, "__init__.py"), "", "utf8");
+  await writeFile(join(packageDir, "cli.py"), "def main():\n    return 0\n", "utf8");
+  await writeFile(join(distInfo, "METADATA"), "Metadata-Version: 2.1\nName: arxiv-cli-tools\nVersion: 0.0.0\n", "utf8");
+  await writeFile(join(distInfo, "entry_points.txt"), "[console_scripts]\narxiv-cli = arxiv_cli.cli:main\n", "utf8");
+  await writeFile(join(distInfo, "RECORD"), [
+    "arxiv_cli/__init__.py,,",
+    "arxiv_cli/cli.py,,",
+    "arxiv_cli_tools-0.0.0.dist-info/METADATA,,",
+    "arxiv_cli_tools-0.0.0.dist-info/entry_points.txt,,",
+    "arxiv_cli_tools-0.0.0.dist-info/RECORD,,",
+  ].join("\n"), "utf8");
+  await writeFile(cli, [
+    "#!/usr/bin/env python3",
+    "import json",
+    `print(${JSON.stringify(JSON.stringify([record]))})`,
+  ].join("\n"), "utf8");
+  await chmod(cli, 0o755);
+
+  const result = await run([
+    "--data-dir", dataDir,
+    "--adapter", "arxiv-cli",
+    "--arxiv-cli-bin", cli,
+    "id", "9900.00003v1",
+  ], {
+    env: {
+      ...process.env,
+      PYTHONPATH: [pythonSite, process.env.PYTHONPATH].filter(Boolean).join(":"),
+    },
+  });
+  assert.equal(result.ingested[0].version, "v1");
+  const index = JSON.parse(await readFile(join(dataDir, "index.json"), "utf8"));
+  const runtime = index.ingestion_runs[0].provider_execution.adapter_identity.runtime;
+  assert.equal(runtime.kind, "python");
+  assert.equal(runtime.console_entry_point.name, "arxiv-cli");
+  assert.match(runtime.console_entry_point.path, /arxiv_cli[\\/]cli\.py$/);
+  assert.ok(runtime.console_entry_point.sha256);
+  const distribution = runtime.distributions["arxiv-cli-tools"];
+  assert.equal(distribution.version, "0.0.0");
+  assert.equal(distribution.file_count, 5);
+  assert.ok(distribution.files_manifest_sha256);
+  assert.ok(distribution.files_content_sha256);
+  assert.ok(distribution.record_sha256);
+});
+
+test("never stores raw provider stderr in successful or failed ingestion evidence", async () => {
+  const workspace = await mkdtemp(join(tmpdir(), "paper-learning-stderr-boundary-"));
+  const dataDir = join(workspace, "store");
+  const cli = join(workspace, "fake-arxiv-cli.mjs");
+  const forbidden = "full_text: PROHIBITED_STORED_PAPER_BODY";
+  const record = {
+    id: "http://arxiv.org/abs/9900.00004v1",
+    short_id: "9900.00004v1",
+    title: "Stderr boundary fixture",
+    summary: "Metadata only.",
+    published: "2026-01-01T00:00:00+00:00",
+    updated: "2026-01-01T00:00:00+00:00",
+    authors: ["Test Author"],
+    primary_category: "cs.AI",
+    categories: ["cs.AI"],
+    pdf_url: "https://arxiv.org/pdf/9900.00004v1",
+    doi: null,
+  };
+  await writeFile(cli, [
+    "#!/usr/bin/env node",
+    `process.stdout.write(${JSON.stringify(JSON.stringify([record]))});`,
+    `process.stderr.write(${JSON.stringify(forbidden)});`,
+  ].join("\n"), "utf8");
+  await chmod(cli, 0o755);
+
+  await run([
+    "--data-dir", dataDir,
+    "--adapter", "arxiv-cli",
+    "--arxiv-cli-bin", cli,
+    "id", "9900.00004v1",
+  ]);
+  let index = JSON.parse(await readFile(join(dataDir, "index.json"), "utf8"));
+  const successExecution = index.ingestion_runs[0].provider_execution.executions[0];
+  assert.ok(successExecution.stderr_sha256);
+  assert.equal(successExecution.stderr_bytes, Buffer.byteLength(forbidden));
+  assert.equal(successExecution.stderr_diagnostic, "provider_stderr_present");
+  assert.equal(Object.hasOwn(successExecution, "stderr"), false);
+  assert.equal(JSON.stringify(index).includes(forbidden), false);
+
+  await writeFile(cli, [
+    "#!/usr/bin/env node",
+    `process.stderr.write(${JSON.stringify(forbidden)});`,
+    "process.exit(7);",
+  ].join("\n"), "utf8");
+  const failed = await runFailure([
+    "--data-dir", dataDir,
+    "--adapter", "arxiv-cli",
+    "--arxiv-cli-bin", cli,
+    "id", "9900.00004v1",
+  ]);
+  assert.equal(failed.stderr.includes(forbidden), false);
+  index = JSON.parse(await readFile(join(dataDir, "index.json"), "utf8"));
+  const failedExecution = index.ingestion_runs.at(-1).provider_execution;
+  assert.equal(failedExecution.stderr_diagnostic, "provider_stderr_present");
+  assert.ok(failedExecution.stderr_sha256);
+  assert.equal(Object.hasOwn(failedExecution, "stderr"), false);
+  assert.equal(JSON.stringify(index).includes(forbidden), false);
+});
+
+test("rejects conflicting ID, short ID, and source-link identities before any paper write", async () => {
+  const workspace = await mkdtemp(join(tmpdir(), "paper-learning-identity-conflict-"));
+  const dataDir = join(workspace, "store");
+  const cli = join(workspace, "conflicting-arxiv-cli.mjs");
+  const record = {
+    id: "http://arxiv.org/abs/9900.00005v2",
+    short_id: "9900.00005v2",
+    title: "Conflicting identity fixture",
+    summary: "Metadata only.",
+    published: "2026-01-01T00:00:00+00:00",
+    updated: "2026-01-01T00:00:00+00:00",
+    authors: ["Test Author"],
+    primary_category: "cs.AI",
+    categories: ["cs.AI"],
+    pdf_url: "https://arxiv.org/pdf/9900.00005v3",
+    doi: null,
+  };
+  await writeFile(cli, [
+    "#!/usr/bin/env node",
+    `process.stdout.write(${JSON.stringify(JSON.stringify([record]))});`,
+  ].join("\n"), "utf8");
+  await chmod(cli, 0o755);
+
+  const failed = await runFailure([
+    "--data-dir", dataDir,
+    "--adapter", "arxiv-cli",
+    "--arxiv-cli-bin", cli,
+    "id", "9900.00005v2",
+  ]);
+  assert.match(failed.stderr, /conflicting arXiv identity fields/);
+  const status = await run(["--data-dir", dataDir, "status"]);
+  assert.equal(status.paper_count, 0);
+  assert.equal(status.failed_ingestions.length, 1);
+  const candidate = status.failed_ingestions[0].provider_execution.observed_candidates[0];
+  assert.equal(candidate.identity_status, "conflict");
+  assert.deepEqual(candidate.identity_candidates, [
+    { arxiv_id: "9900.00005", arxiv_version: "v2" },
+    { arxiv_id: "9900.00005", arxiv_version: "v3" },
+  ]);
+  await assert.rejects(access(join(dataDir, "raw")));
+  await assert.rejects(access(join(dataDir, "papers")));
+});
+
+test("persists the three-second arXiv interval across fallback and separate runs", async () => {
+  const workspace = await mkdtemp(join(tmpdir(), "paper-learning-rate-limit-"));
+  const dataDir = join(workspace, "store");
+  const cli = join(workspace, "rate-limited-arxiv-cli.mjs");
+  const callLog = join(workspace, "provider-calls.log");
+  const currentRecord = {
+    id: "http://arxiv.org/abs/9900.00006v3",
+    short_id: "9900.00006v3",
+    title: "Rate limit fixture",
+    summary: "Metadata only.",
+    published: "2026-01-01T00:00:00+00:00",
+    updated: "2026-03-01T00:00:00+00:00",
+    authors: ["Test Author"],
+    primary_category: "cs.AI",
+    categories: ["cs.AI"],
+    pdf_url: "https://arxiv.org/pdf/9900.00006v3",
+    doi: null,
+  };
+  await writeFile(cli, [
+    "#!/usr/bin/env node",
+    "import { appendFileSync } from 'node:fs';",
+    "appendFileSync(process.env.ARXIV_RATE_LOG, `${Date.now()}\\n`);",
+    `process.stdout.write(${JSON.stringify(JSON.stringify([currentRecord]))});`,
+  ].join("\n"), "utf8");
+  await chmod(cli, 0o755);
+  const options = {
+    env: { ...process.env, ARXIV_RATE_LOG: callLog },
+  };
+  const base = ["--data-dir", dataDir, "--adapter", "arxiv-cli", "--arxiv-cli-bin", cli];
+
+  await runFailure([...base, "id", "9900.00006v2"], options);
+  await run([...base, "id", "9900.00006v3"], options);
+
+  const callTimes = (await readFile(callLog, "utf8")).trim().split("\n").map(Number);
+  assert.equal(callTimes.length, 3, "exact lookup, fallback, and later run all call the provider");
+  assert.ok(callTimes[1] - callTimes[0] >= 3_000, `fallback is rate limited: ${callTimes.join(", ")}`);
+  assert.ok(callTimes[2] - callTimes[1] >= 3_000, `a separate run is rate limited: ${callTimes.join(", ")}`);
+  const index = JSON.parse(await readFile(join(dataDir, "index.json"), "utf8"));
+  assert.equal(index.provider_rate_limits["arxiv-cli-tools"].minimum_interval_ms, 3_000);
+  assert.ok(index.provider_rate_limits["arxiv-cli-tools"].last_started_at);
+  const executions = index.ingestion_runs.flatMap((ingestionRun) => ingestionRun.provider_execution?.executions ?? []);
+  assert.equal(executions.length, 3);
+  assert.ok(executions.every((execution) => execution.rate_limit.minimum_interval_ms === 3_000));
 });
 
 test("does not substitute a newer version when a historical ID cannot be returned", async () => {
