@@ -1,0 +1,17 @@
+{
+  "name": "paper-learning-library",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Static MVP reader for the Paper Learning Library",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "validate:data": "node scripts/validate-data.mjs",
+    "test": "node --test",
+    "check": "npm run validate:data && npm test && npm run build",
+    "preview": "node scripts/serve.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

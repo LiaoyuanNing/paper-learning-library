@@ -1,0 +1,564 @@
+{
+  "dataset_id": "paper_learning_mvp_seed_v1",
+  "schema_version": "0.1.0",
+  "project": "论文学习库 Paper Learning Library",
+  "generated_at": "2026-07-13T04:08:14Z",
+  "source_model_for_ai_fields": "GPT-5 Codex (Multica PM-Paper runtime)",
+  "selection_scope": [
+    "AI agent",
+    "LLM tooling",
+    "vision-language-action"
+  ],
+  "record_count": 8,
+  "copyright_policy": "Store metadata, arXiv abstract, AI-generated Chinese abstract/highlights, tags, and source links only. Do not store paper full text unless license is explicitly checked.",
+  "source_query": {
+    "primary_tools_attempted": [
+      "oo-arxiv connector",
+      "arxiv-cli-tools"
+    ],
+    "fallback_source": "arXiv Atom metadata endpoint",
+    "arxiv_ids": [
+      "2210.03629",
+      "2302.04761",
+      "2303.11366",
+      "2304.03442",
+      "2305.16291",
+      "2307.13854",
+      "2308.08155",
+      "2406.09246"
+    ],
+    "queried_at": "2026-07-13T04:09:32Z"
+  },
+  "records": [
+    {
+      "id": "arxiv:2210.03629",
+      "arxiv_id": "2210.03629",
+      "arxiv_version": "v3",
+      "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+      "authors": [
+        "Shunyu Yao",
+        "Jeffrey Zhao",
+        "Dian Yu",
+        "Nan Du",
+        "Izhak Shafran",
+        "Karthik Narasimhan",
+        "Yuan Cao"
+      ],
+      "categories": [
+        "cs.CL",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "primary_category": "cs.CL",
+      "published_at": "2022-10-06T01:00:32Z",
+      "updated_at": "2023-03-10T01:00:17Z",
+      "abstract": "While large language models (LLMs) have demonstrated impressive capabilities across tasks in language understanding and interactive decision making, their abilities for reasoning (e.g. chain-of-thought prompting) and acting (e.g. action plan generation) have primarily been studied as separate topics. In this paper, we explore the use of LLMs to generate both reasoning traces and task-specific actions in an interleaved manner, allowing for greater synergy between the two: reasoning traces help the model induce, track, and update action plans as well as handle exceptions, while actions allow it to interface with external sources, such as knowledge bases or environments, to gather additional information. We apply our approach, named ReAct, to a diverse set of language and decision making tasks and demonstrate its effectiveness over state-of-the-art baselines, as well as improved human interpretability and trustworthiness over methods without reasoning or acting components. Concretely, on question answering (HotpotQA) and fact verification (Fever), ReAct overcomes issues of hallucination and error propagation prevalent in chain-of-thought reasoning by interacting with a simple Wikipedia API, and generates human-like task-solving trajectories that are more interpretable than baselines without reasoning traces. On two interactive decision making benchmarks (ALFWorld and WebShop), ReAct outperforms imitation and reinforcement learning methods by an absolute success rate of 34% and 10% respectively, while being prompted with only one or two in-context examples. Project site with code: https://react-lm.github.io",
+      "links": {
+        "abstract": "https://arxiv.org/abs/2210.03629v3",
+        "pdf": "https://arxiv.org/pdf/2210.03629v3",
+        "doi": "https://doi.org/10.48550/arXiv.2210.03629"
+      },
+      "source": {
+        "name": "arXiv",
+        "url": "https://arxiv.org/abs/2210.03629v3",
+        "retrieved_at": "2026-07-13T04:09:32Z",
+        "retrieval_note": "Fetched from arXiv Atom metadata endpoint after oo/arxiv-cli local entrypoints were unavailable in this runtime. No full text was ingested."
+      },
+      "copyright": {
+        "full_text_stored": false,
+        "stored_content": [
+          "metadata",
+          "abstract",
+          "ai_generated_chinese_abstract",
+          "ai_generated_highlights",
+          "source_links"
+        ],
+        "license_checked_for_full_text": false
+      },
+      "tags": [
+        "ai-agent",
+        "reasoning-and-acting",
+        "tool-use",
+        "prompting",
+        "benchmark"
+      ],
+      "ai_generated": {
+        "generated_at": "2026-07-13T04:08:14Z",
+        "source_model": "GPT-5 Codex (Multica PM-Paper runtime)",
+        "abstract_zh": "ReAct 提出让大语言模型交替生成推理轨迹与任务动作的通用范式，把链式思考式推理和与外部环境交互的行动结合起来。推理部分帮助模型维护计划、处理异常并解释决策，行动部分让模型调用知识库或环境获得新信息。论文在问答、事实验证、ALFWorld 和 WebShop 等任务上展示了更好的效果、可解释性和可信度，说明“边想边做”的结构是构建语言智能体的基础模式。",
+        "learning_highlights_zh": [
+          "把 reasoning trace 与 action interleaving 明确成 agent 设计模式，是后续工具调用和浏览器 agent 的基础概念。",
+          "动作不只是输出结果，而是让模型主动查询环境、修正推理和降低幻觉。",
+          "论文同时覆盖知识任务与交互式决策任务，适合作为论文学习库的 agent 入门必读。",
+          "对产品设计的启发是：学习条目可以把论文拆成“认知机制、外部工具、反馈闭环、评测场景”四类信息。"
+        ]
+      }
+    },
+    {
+      "id": "arxiv:2302.04761",
+      "arxiv_id": "2302.04761",
+      "arxiv_version": "v1",
+      "title": "Toolformer: Language Models Can Teach Themselves to Use Tools",
+      "authors": [
+        "Timo Schick",
+        "Jane Dwivedi-Yu",
+        "Roberto Dessì",
+        "Roberta Raileanu",
+        "Maria Lomeli",
+        "Luke Zettlemoyer",
+        "Nicola Cancedda",
+        "Thomas Scialom"
+      ],
+      "categories": [
+        "cs.CL"
+      ],
+      "primary_category": "cs.CL",
+      "published_at": "2023-02-09T16:49:57Z",
+      "updated_at": "2023-02-09T16:49:57Z",
+      "abstract": "Language models (LMs) exhibit remarkable abilities to solve new tasks from just a few examples or textual instructions, especially at scale. They also, paradoxically, struggle with basic functionality, such as arithmetic or factual lookup, where much simpler and smaller models excel. In this paper, we show that LMs can teach themselves to use external tools via simple APIs and achieve the best of both worlds. We introduce Toolformer, a model trained to decide which APIs to call, when to call them, what arguments to pass, and how to best incorporate the results into future token prediction. This is done in a self-supervised way, requiring nothing more than a handful of demonstrations for each API. We incorporate a range of tools, including a calculator, a Q\\&A system, two different search engines, a translation system, and a calendar. Toolformer achieves substantially improved zero-shot performance across a variety of downstream tasks, often competitive with much larger models, without sacrificing its core language modeling abilities.",
+      "links": {
+        "abstract": "https://arxiv.org/abs/2302.04761v1",
+        "pdf": "https://arxiv.org/pdf/2302.04761v1",
+        "doi": "https://doi.org/10.48550/arXiv.2302.04761"
+      },
+      "source": {
+        "name": "arXiv",
+        "url": "https://arxiv.org/abs/2302.04761v1",
+        "retrieved_at": "2026-07-13T04:09:32Z",
+        "retrieval_note": "Fetched from arXiv Atom metadata endpoint after oo/arxiv-cli local entrypoints were unavailable in this runtime. No full text was ingested."
+      },
+      "copyright": {
+        "full_text_stored": false,
+        "stored_content": [
+          "metadata",
+          "abstract",
+          "ai_generated_chinese_abstract",
+          "ai_generated_highlights",
+          "source_links"
+        ],
+        "license_checked_for_full_text": false
+      },
+      "tags": [
+        "llm-tooling",
+        "tool-use",
+        "self-supervised",
+        "api-calling",
+        "language-model"
+      ],
+      "ai_generated": {
+        "generated_at": "2026-07-13T04:08:14Z",
+        "source_model": "GPT-5 Codex (Multica PM-Paper runtime)",
+        "abstract_zh": "Toolformer 研究语言模型如何通过少量 API 示例自我标注数据，并学习在合适时机调用外部工具。论文覆盖计算器、问答系统、搜索、翻译、日历等工具，让模型学习何时调用、传什么参数以及如何把返回结果纳入后续预测。结果显示，这种自监督工具学习能提升零样本任务能力，同时尽量保留语言模型本身的生成能力。",
+        "learning_highlights_zh": [
+          "核心价值在于把工具使用从人工规则改成模型可学习的行为。",
+          "训练数据生成流程比具体 API 更重要：少量示例触发、候选调用采样、过滤有效调用。",
+          "适合放在 LLM tooling 主题下，帮助读者理解 function calling 和 tool use 的前史。",
+          "产品上可把它标记为“工具学习 pipeline”样例，而不是单纯 agent 论文。"
+        ]
+      }
+    },
+    {
+      "id": "arxiv:2303.11366",
+      "arxiv_id": "2303.11366",
+      "arxiv_version": "v4",
+      "title": "Reflexion: Language Agents with Verbal Reinforcement Learning",
+      "authors": [
+        "Noah Shinn",
+        "Federico Cassano",
+        "Edward Berman",
+        "Ashwin Gopinath",
+        "Karthik Narasimhan",
+        "Shunyu Yao"
+      ],
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.LG"
+      ],
+      "primary_category": "cs.AI",
+      "published_at": "2023-03-20T18:08:50Z",
+      "updated_at": "2023-10-10T05:21:45Z",
+      "abstract": "Large language models (LLMs) have been increasingly used to interact with external environments (e.g., games, compilers, APIs) as goal-driven agents. However, it remains challenging for these language agents to quickly and efficiently learn from trial-and-error as traditional reinforcement learning methods require extensive training samples and expensive model fine-tuning. We propose Reflexion, a novel framework to reinforce language agents not by updating weights, but instead through linguistic feedback. Concretely, Reflexion agents verbally reflect on task feedback signals, then maintain their own reflective text in an episodic memory buffer to induce better decision-making in subsequent trials. Reflexion is flexible enough to incorporate various types (scalar values or free-form language) and sources (external or internally simulated) of feedback signals, and obtains significant improvements over a baseline agent across diverse tasks (sequential decision-making, coding, language reasoning). For example, Reflexion achieves a 91% pass@1 accuracy on the HumanEval coding benchmark, surpassing the previous state-of-the-art GPT-4 that achieves 80%. We also conduct ablation and analysis studies using different feedback signals, feedback incorporation methods, and agent types, and provide insights into how they affect performance.",
+      "links": {
+        "abstract": "https://arxiv.org/abs/2303.11366v4",
+        "pdf": "https://arxiv.org/pdf/2303.11366v4",
+        "doi": "https://doi.org/10.48550/arXiv.2303.11366"
+      },
+      "source": {
+        "name": "arXiv",
+        "url": "https://arxiv.org/abs/2303.11366v4",
+        "retrieved_at": "2026-07-13T04:09:32Z",
+        "retrieval_note": "Fetched from arXiv Atom metadata endpoint after oo/arxiv-cli local entrypoints were unavailable in this runtime. No full text was ingested."
+      },
+      "copyright": {
+        "full_text_stored": false,
+        "stored_content": [
+          "metadata",
+          "abstract",
+          "ai_generated_chinese_abstract",
+          "ai_generated_highlights",
+          "source_links"
+        ],
+        "license_checked_for_full_text": false
+      },
+      "tags": [
+        "ai-agent",
+        "self-reflection",
+        "verbal-reinforcement",
+        "memory",
+        "coding-agent"
+      ],
+      "ai_generated": {
+        "generated_at": "2026-07-13T04:08:14Z",
+        "source_model": "GPT-5 Codex (Multica PM-Paper runtime)",
+        "abstract_zh": "Reflexion 提出不用更新模型权重，而是让语言智能体通过语言化反馈进行强化的框架。智能体在任务失败或收到评分后生成反思文本，并把这些反思保存在 episodic memory 中，后续尝试时检索使用，从而改善决策。论文在顺序决策、代码生成和语言推理任务中展示了效果，强调反馈信号、反思方式和记忆机制对 agent 表现的重要性。",
+        "learning_highlights_zh": [
+          "把“失败后的语言反思”变成可复用记忆，是 agent 迭代能力的关键设计。",
+          "不需要微调权重，适合产品中的轻量闭环和在线学习体验。",
+          "对 coding agent、任务代理和自动评测系统都有直接启发。",
+          "学习时应关注 feedback source、memory buffer、下一轮检索三者如何连接。"
+        ]
+      }
+    },
+    {
+      "id": "arxiv:2304.03442",
+      "arxiv_id": "2304.03442",
+      "arxiv_version": "v2",
+      "title": "Generative Agents: Interactive Simulacra of Human Behavior",
+      "authors": [
+        "Joon Sung Park",
+        "Joseph C. O'Brien",
+        "Carrie J. Cai",
+        "Meredith Ringel Morris",
+        "Percy Liang",
+        "Michael S. Bernstein"
+      ],
+      "categories": [
+        "cs.HC",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "primary_category": "cs.HC",
+      "published_at": "2023-04-07T01:55:19Z",
+      "updated_at": "2023-08-06T00:21:19Z",
+      "abstract": "Believable proxies of human behavior can empower interactive applications ranging from immersive environments to rehearsal spaces for interpersonal communication to prototyping tools. In this paper, we introduce generative agents--computational software agents that simulate believable human behavior. Generative agents wake up, cook breakfast, and head to work; artists paint, while authors write; they form opinions, notice each other, and initiate conversations; they remember and reflect on days past as they plan the next day. To enable generative agents, we describe an architecture that extends a large language model to store a complete record of the agent's experiences using natural language, synthesize those memories over time into higher-level reflections, and retrieve them dynamically to plan behavior. We instantiate generative agents to populate an interactive sandbox environment inspired by The Sims, where end users can interact with a small town of twenty five agents using natural language. In an evaluation, these generative agents produce believable individual and emergent social behaviors: for example, starting with only a single user-specified notion that one agent wants to throw a Valentine's Day party, the agents autonomously spread invitations to the party over the next two days, make new acquaintances, ask each other out on dates to the party, and coordinate to show up for the party together at the right time. We demonstrate through ablation that the components of our agent architecture--observation, planning, and reflection--each contribute critically to the believability of agent behavior. By fusing large language models with computational, interactive agents, this work introduces architectural and interaction patterns for enabling believable simulations of human behavior.",
+      "links": {
+        "abstract": "https://arxiv.org/abs/2304.03442v2",
+        "pdf": "https://arxiv.org/pdf/2304.03442v2",
+        "doi": "https://doi.org/10.48550/arXiv.2304.03442"
+      },
+      "source": {
+        "name": "arXiv",
+        "url": "https://arxiv.org/abs/2304.03442v2",
+        "retrieved_at": "2026-07-13T04:09:32Z",
+        "retrieval_note": "Fetched from arXiv Atom metadata endpoint after oo/arxiv-cli local entrypoints were unavailable in this runtime. No full text was ingested."
+      },
+      "copyright": {
+        "full_text_stored": false,
+        "stored_content": [
+          "metadata",
+          "abstract",
+          "ai_generated_chinese_abstract",
+          "ai_generated_highlights",
+          "source_links"
+        ],
+        "license_checked_for_full_text": false
+      },
+      "tags": [
+        "generative-agent",
+        "simulation",
+        "memory",
+        "planning",
+        "human-computer-interaction"
+      ],
+      "ai_generated": {
+        "generated_at": "2026-07-13T04:08:14Z",
+        "source_model": "GPT-5 Codex (Multica PM-Paper runtime)",
+        "abstract_zh": "Generative Agents 展示了如何用大语言模型构建可信的人类行为模拟体。论文设计了观察、记忆、反思、计划与行动架构，让多个 agent 在类似《模拟人生》的小镇环境中形成日常活动、社会互动和涌现行为。研究表明，记忆检索、长期反思与计划模块对行为可信度很关键，是多智能体社会模拟和交互式应用的重要参考。",
+        "learning_highlights_zh": [
+          "这是从单任务 agent 走向多 agent 社会模拟的代表性论文。",
+          "架构把 experience log、reflection、planning 明确分层，适合转成学习库中的结构化图解。",
+          "评价重点不是单一准确率，而是行为可信度、涌现互动和用户可感知质量。",
+          "对产品原型、角色模拟、培训沙盘和协作仿真都有启发。"
+        ]
+      }
+    },
+    {
+      "id": "arxiv:2305.16291",
+      "arxiv_id": "2305.16291",
+      "arxiv_version": "v2",
+      "title": "Voyager: An Open-Ended Embodied Agent with Large Language Models",
+      "authors": [
+        "Guanzhi Wang",
+        "Yuqi Xie",
+        "Yunfan Jiang",
+        "Ajay Mandlekar",
+        "Chaowei Xiao",
+        "Yuke Zhu",
+        "Linxi Fan",
+        "Anima Anandkumar"
+      ],
+      "categories": [
+        "cs.AI",
+        "cs.LG"
+      ],
+      "primary_category": "cs.AI",
+      "published_at": "2023-05-25T17:46:38Z",
+      "updated_at": "2023-10-19T16:27:03Z",
+      "abstract": "We introduce Voyager, the first LLM-powered embodied lifelong learning agent in Minecraft that continuously explores the world, acquires diverse skills, and makes novel discoveries without human intervention. Voyager consists of three key components: 1) an automatic curriculum that maximizes exploration, 2) an ever-growing skill library of executable code for storing and retrieving complex behaviors, and 3) a new iterative prompting mechanism that incorporates environment feedback, execution errors, and self-verification for program improvement. Voyager interacts with GPT-4 via blackbox queries, which bypasses the need for model parameter fine-tuning. The skills developed by Voyager are temporally extended, interpretable, and compositional, which compounds the agent's abilities rapidly and alleviates catastrophic forgetting. Empirically, Voyager shows strong in-context lifelong learning capability and exhibits exceptional proficiency in playing Minecraft. It obtains 3.3x more unique items, travels 2.3x longer distances, and unlocks key tech tree milestones up to 15.3x faster than prior SOTA. Voyager is able to utilize the learned skill library in a new Minecraft world to solve novel tasks from scratch, while other techniques struggle to generalize. We open-source our full codebase and prompts at https://voyager.minedojo.org/.",
+      "links": {
+        "abstract": "https://arxiv.org/abs/2305.16291v2",
+        "pdf": "https://arxiv.org/pdf/2305.16291v2",
+        "doi": "https://doi.org/10.48550/arXiv.2305.16291"
+      },
+      "source": {
+        "name": "arXiv",
+        "url": "https://arxiv.org/abs/2305.16291v2",
+        "retrieved_at": "2026-07-13T04:09:32Z",
+        "retrieval_note": "Fetched from arXiv Atom metadata endpoint after oo/arxiv-cli local entrypoints were unavailable in this runtime. No full text was ingested."
+      },
+      "copyright": {
+        "full_text_stored": false,
+        "stored_content": [
+          "metadata",
+          "abstract",
+          "ai_generated_chinese_abstract",
+          "ai_generated_highlights",
+          "source_links"
+        ],
+        "license_checked_for_full_text": false
+      },
+      "tags": [
+        "embodied-agent",
+        "lifelong-learning",
+        "skill-library",
+        "minecraft",
+        "self-verification"
+      ],
+      "ai_generated": {
+        "generated_at": "2026-07-13T04:08:14Z",
+        "source_model": "GPT-5 Codex (Multica PM-Paper runtime)",
+        "abstract_zh": "Voyager 是一个基于 LLM 的 Minecraft 终身学习 embodied agent。它结合自动课程、持续增长的代码技能库，以及利用环境反馈、执行错误和自我验证的迭代提示机制，在无需微调模型参数的情况下持续探索并获得新技能。论文显示 Voyager 能更快获得物品、移动更远、解锁科技树，并把已学技能迁移到新世界中的新任务。",
+        "learning_highlights_zh": [
+          "技能库是核心资产：agent 不只完成一次任务，而是积累可组合行为。",
+          "自动课程让探索目标随能力增长而变化，是 open-ended learning 的产品化线索。",
+          "自我验证和执行错误反馈把 LLM 调用连接成可持续改进循环。",
+          "适合与 ReAct、Reflexion 对照学习：行动、反思、技能沉淀三条线如何合流。"
+        ]
+      }
+    },
+    {
+      "id": "arxiv:2307.13854",
+      "arxiv_id": "2307.13854",
+      "arxiv_version": "v4",
+      "title": "WebArena: A Realistic Web Environment for Building Autonomous Agents",
+      "authors": [
+        "Shuyan Zhou",
+        "Frank F. Xu",
+        "Hao Zhu",
+        "Xuhui Zhou",
+        "Robert Lo",
+        "Abishek Sridhar",
+        "Xianyi Cheng",
+        "Tianyue Ou",
+        "Yonatan Bisk",
+        "Daniel Fried",
+        "Uri Alon",
+        "Graham Neubig"
+      ],
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.LG"
+      ],
+      "primary_category": "cs.AI",
+      "published_at": "2023-07-25T22:59:32Z",
+      "updated_at": "2024-04-16T15:13:18Z",
+      "abstract": "With advances in generative AI, there is now potential for autonomous agents to manage daily tasks via natural language commands. However, current agents are primarily created and tested in simplified synthetic environments, leading to a disconnect with real-world scenarios. In this paper, we build an environment for language-guided agents that is highly realistic and reproducible. Specifically, we focus on agents that perform tasks on the web, and create an environment with fully functional websites from four common domains: e-commerce, social forum discussions, collaborative software development, and content management. Our environment is enriched with tools (e.g., a map) and external knowledge bases (e.g., user manuals) to encourage human-like task-solving. Building upon our environment, we release a set of benchmark tasks focusing on evaluating the functional correctness of task completions. The tasks in our benchmark are diverse, long-horizon, and designed to emulate tasks that humans routinely perform on the internet. We experiment with several baseline agents, integrating recent techniques such as reasoning before acting. The results demonstrate that solving complex tasks is challenging: our best GPT-4-based agent only achieves an end-to-end task success rate of 14.41%, significantly lower than the human performance of 78.24%. These results highlight the need for further development of robust agents, that current state-of-the-art large language models are far from perfect performance in these real-life tasks, and that WebArena can be used to measure such progress.",
+      "links": {
+        "abstract": "https://arxiv.org/abs/2307.13854v4",
+        "pdf": "https://arxiv.org/pdf/2307.13854v4",
+        "doi": "https://doi.org/10.48550/arXiv.2307.13854"
+      },
+      "source": {
+        "name": "arXiv",
+        "url": "https://arxiv.org/abs/2307.13854v4",
+        "retrieved_at": "2026-07-13T04:09:32Z",
+        "retrieval_note": "Fetched from arXiv Atom metadata endpoint after oo/arxiv-cli local entrypoints were unavailable in this runtime. No full text was ingested."
+      },
+      "copyright": {
+        "full_text_stored": false,
+        "stored_content": [
+          "metadata",
+          "abstract",
+          "ai_generated_chinese_abstract",
+          "ai_generated_highlights",
+          "source_links"
+        ],
+        "license_checked_for_full_text": false
+      },
+      "tags": [
+        "web-agent",
+        "benchmark",
+        "evaluation",
+        "realistic-environment",
+        "tool-use"
+      ],
+      "ai_generated": {
+        "generated_at": "2026-07-13T04:08:14Z",
+        "source_model": "GPT-5 Codex (Multica PM-Paper runtime)",
+        "abstract_zh": "WebArena 构建了一个更接近真实互联网任务的可复现实验环境，用于评估语言驱动的 autonomous web agents。环境包含电商、论坛、协作开发和内容管理等功能网站，并提供地图、知识库等辅助工具。论文发布长程、多样化任务，并用功能正确性验证完成情况。实验显示，即使 GPT-4 代理也远低于人类表现，暴露了真实网页任务中的规划、探索和可靠性挑战。",
+        "learning_highlights_zh": [
+          "WebArena 的价值在于把 web agent 评测从玩具环境推向可复现的真实工作流。",
+          "功能正确性验证比只看文字回答更适合评估 agent 是否真的完成任务。",
+          "14.41% vs 78.24% 的差距清楚说明当前 agent 产品仍需要工具、状态和容错设计。",
+          "学习库可把它作为“agent eval/benchmark”主题的锚点。"
+        ]
+      }
+    },
+    {
+      "id": "arxiv:2308.08155",
+      "arxiv_id": "2308.08155",
+      "arxiv_version": "v2",
+      "title": "AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation",
+      "authors": [
+        "Qingyun Wu",
+        "Gagan Bansal",
+        "Jieyu Zhang",
+        "Yiran Wu",
+        "Beibin Li",
+        "Erkang Zhu",
+        "Li Jiang",
+        "Xiaoyun Zhang",
+        "Shaokun Zhang",
+        "Jiale Liu",
+        "Ahmed Hassan Awadallah",
+        "Ryen W White",
+        "Doug Burger",
+        "Chi Wang"
+      ],
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "primary_category": "cs.AI",
+      "published_at": "2023-08-16T05:57:52Z",
+      "updated_at": "2023-10-03T20:47:10Z",
+      "abstract": "AutoGen is an open-source framework that allows developers to build LLM applications via multiple agents that can converse with each other to accomplish tasks. AutoGen agents are customizable, conversable, and can operate in various modes that employ combinations of LLMs, human inputs, and tools. Using AutoGen, developers can also flexibly define agent interaction behaviors. Both natural language and computer code can be used to program flexible conversation patterns for different applications. AutoGen serves as a generic infrastructure to build diverse applications of various complexities and LLM capacities. Empirical studies demonstrate the effectiveness of the framework in many example applications, with domains ranging from mathematics, coding, question answering, operations research, online decision-making, entertainment, etc.",
+      "links": {
+        "abstract": "https://arxiv.org/abs/2308.08155v2",
+        "pdf": "https://arxiv.org/pdf/2308.08155v2",
+        "doi": "https://doi.org/10.48550/arXiv.2308.08155"
+      },
+      "source": {
+        "name": "arXiv",
+        "url": "https://arxiv.org/abs/2308.08155v2",
+        "retrieved_at": "2026-07-13T04:09:32Z",
+        "retrieval_note": "Fetched from arXiv Atom metadata endpoint after oo/arxiv-cli local entrypoints were unavailable in this runtime. No full text was ingested."
+      },
+      "copyright": {
+        "full_text_stored": false,
+        "stored_content": [
+          "metadata",
+          "abstract",
+          "ai_generated_chinese_abstract",
+          "ai_generated_highlights",
+          "source_links"
+        ],
+        "license_checked_for_full_text": false
+      },
+      "tags": [
+        "multi-agent",
+        "llm-application-framework",
+        "conversation-programming",
+        "developer-tooling",
+        "autogen"
+      ],
+      "ai_generated": {
+        "generated_at": "2026-07-13T04:08:14Z",
+        "source_model": "GPT-5 Codex (Multica PM-Paper runtime)",
+        "abstract_zh": "AutoGen 提出一个通过多智能体对话构建 LLM 应用的开源框架。开发者可以定制不同 agent，使它们在包含 LLM、人类输入和工具的多种模式下协作，并用自然语言或代码定义交互模式。论文展示了 AutoGen 作为通用基础设施支持数学、代码、问答、运筹、在线决策和娱乐等复杂应用的能力。",
+        "learning_highlights_zh": [
+          "AutoGen 把 agent 从单体循环扩展到可编排的多角色对话系统。",
+          "“conversation programming”是理解多 agent 应用框架的关键概念。",
+          "它连接研究论文与开发者工具，适合放在 MVP 的 LLM tooling/agent framework 交叉主题。",
+          "产品学习重点应放在角色定义、工具接入、人类参与和会话终止条件。"
+        ]
+      }
+    },
+    {
+      "id": "arxiv:2406.09246",
+      "arxiv_id": "2406.09246",
+      "arxiv_version": "v3",
+      "title": "OpenVLA: An Open-Source Vision-Language-Action Model",
+      "authors": [
+        "Moo Jin Kim",
+        "Karl Pertsch",
+        "Siddharth Karamcheti",
+        "Ted Xiao",
+        "Ashwin Balakrishna",
+        "Suraj Nair",
+        "Rafael Rafailov",
+        "Ethan Foster",
+        "Grace Lam",
+        "Pannag Sanketi",
+        "Quan Vuong",
+        "Thomas Kollar",
+        "Benjamin Burchfiel",
+        "Russ Tedrake",
+        "Dorsa Sadigh",
+        "Sergey Levine",
+        "Percy Liang",
+        "Chelsea Finn"
+      ],
+      "categories": [
+        "cs.RO",
+        "cs.LG"
+      ],
+      "primary_category": "cs.RO",
+      "published_at": "2024-06-13T15:46:55Z",
+      "updated_at": "2024-09-05T19:46:34Z",
+      "abstract": "Large policies pretrained on a combination of Internet-scale vision-language data and diverse robot demonstrations have the potential to change how we teach robots new skills: rather than training new behaviors from scratch, we can fine-tune such vision-language-action (VLA) models to obtain robust, generalizable policies for visuomotor control. Yet, widespread adoption of VLAs for robotics has been challenging as 1) existing VLAs are largely closed and inaccessible to the public, and 2) prior work fails to explore methods for efficiently fine-tuning VLAs for new tasks, a key component for adoption. Addressing these challenges, we introduce OpenVLA, a 7B-parameter open-source VLA trained on a diverse collection of 970k real-world robot demonstrations. OpenVLA builds on a Llama 2 language model combined with a visual encoder that fuses pretrained features from DINOv2 and SigLIP. As a product of the added data diversity and new model components, OpenVLA demonstrates strong results for generalist manipulation, outperforming closed models such as RT-2-X (55B) by 16.5% in absolute task success rate across 29 tasks and multiple robot embodiments, with 7x fewer parameters. We further show that we can effectively fine-tune OpenVLA for new settings, with especially strong generalization results in multi-task environments involving multiple objects and strong language grounding abilities, and outperform expressive from-scratch imitation learning methods such as Diffusion Policy by 20.4%. We also explore compute efficiency; as a separate contribution, we show that OpenVLA can be fine-tuned on consumer GPUs via modern low-rank adaptation methods and served efficiently via quantization without a hit to downstream success rate. Finally, we release model checkpoints, fine-tuning notebooks, and our PyTorch codebase with built-in support for training VLAs at scale on Open X-Embodiment datasets.",
+      "links": {
+        "abstract": "https://arxiv.org/abs/2406.09246v3",
+        "pdf": "https://arxiv.org/pdf/2406.09246v3",
+        "doi": "https://doi.org/10.48550/arXiv.2406.09246"
+      },
+      "source": {
+        "name": "arXiv",
+        "url": "https://arxiv.org/abs/2406.09246v3",
+        "retrieved_at": "2026-07-13T04:09:32Z",
+        "retrieval_note": "Fetched from arXiv Atom metadata endpoint after oo/arxiv-cli local entrypoints were unavailable in this runtime. No full text was ingested."
+      },
+      "copyright": {
+        "full_text_stored": false,
+        "stored_content": [
+          "metadata",
+          "abstract",
+          "ai_generated_chinese_abstract",
+          "ai_generated_highlights",
+          "source_links"
+        ],
+        "license_checked_for_full_text": false
+      },
+      "tags": [
+        "vla",
+        "robotics",
+        "vision-language-action",
+        "open-source-model",
+        "fine-tuning"
+      ],
+      "ai_generated": {
+        "generated_at": "2026-07-13T04:08:14Z",
+        "source_model": "GPT-5 Codex (Multica PM-Paper runtime)",
+        "abstract_zh": "OpenVLA 发布了一个 7B 参数的开源 vision-language-action 模型，使用大规模视觉语言数据和 97 万条真实机器人示范进行预训练，目标是让机器人策略更容易泛化和微调。论文强调开放权重、训练代码、微调笔记本和高效部署的重要性，并展示其在多机器人、多任务操作上的效果，以及通过低秩适配和量化降低使用门槛。",
+        "learning_highlights_zh": [
+          "OpenVLA 适合作为 VLA 主题的 MVP 种子论文，因为它把模型、数据、代码和微调路径都开放出来。",
+          "它把互联网视觉语言知识迁移到机器人动作控制，代表 agent 从数字任务走向物理世界。",
+          "论文值得关注的不是单一榜单分数，而是开放性、适配成本和多机器人泛化。",
+          "对阅读界面而言，VLA 条目应突出输入输出模态、训练数据规模、适配方式和部署约束。"
+        ]
+      }
+    }
+  ]
+}
