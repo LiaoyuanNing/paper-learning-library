@@ -7,6 +7,7 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "validate:data": "node scripts/validate-data.mjs",
+    "ingest": "node scripts/arxiv-ingest.mjs",
     "test": "node --test",
     "check": "npm run validate:data && npm test && npm run build",
     "preview": "node scripts/serve.mjs"

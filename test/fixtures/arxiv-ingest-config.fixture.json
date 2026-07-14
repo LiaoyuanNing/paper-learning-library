@@ -1,0 +1,17 @@
+{
+  "paper_ids": [
+    "9900.00001v1"
+  ],
+  "searches": [
+    {
+      "query": "fixture agents",
+      "limit": 1,
+      "authors": [
+        "Search Author"
+      ],
+      "categories": [
+        "cs.LG"
+      ]
+    }
+  ]
+}

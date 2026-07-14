@@ -1,0 +1,15 @@
+{
+  "paper_ids": [
+    "2210.03629v3"
+  ],
+  "searches": [
+    {
+      "query": "agent reasoning",
+      "limit": 2,
+      "authors": [],
+      "categories": [
+        "cs.AI"
+      ]
+    }
+  ]
+}
