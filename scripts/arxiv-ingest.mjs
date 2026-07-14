@@ -17,6 +17,66 @@ const ROOT = process.cwd();
 const REPOSITORY_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const DEFAULT_DATA_DIR = "data/arxiv-ingestion";
 const JOB_STATES = new Set(["pending", "running", "succeeded", "failed"]);
+const APPROVED_RAW_METADATA_FIELDS = [
+  "id",
+  "short_id",
+  "title",
+  "summary",
+  "authors",
+  "categories",
+  "primary_category",
+  "published",
+  "updated",
+  "pdf_url",
+  "doi",
+];
+const APPROVED_RAW_METADATA_FIELD_SET = new Set(APPROVED_RAW_METADATA_FIELDS);
+const PROHIBITED_CONTENT_FIELD = /(?:^|_)(?:full_?text|paper_?text|body|content|text|source(?:_?text|_?content)?|latex|html|document|pdf_(?:text|content|data))(?:_|$)/;
+const PYTHON_ADAPTER_IDENTITY_PROBE = String.raw`
+import hashlib
+import importlib.metadata as metadata
+import importlib.util
+import json
+from pathlib import Path
+import sys
+
+def sha256_file(path):
+    try:
+        digest = hashlib.sha256()
+        with open(path, "rb") as handle:
+            for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+                digest.update(chunk)
+        return digest.hexdigest()
+    except OSError:
+        return None
+
+distributions = {}
+for name in ("arxiv-cli-tools", "arxiv"):
+    try:
+        distribution = metadata.distribution(name)
+        distributions[name] = {
+            "version": distribution.version,
+            "metadata_path": str(distribution.locate_file("")),
+        }
+    except metadata.PackageNotFoundError:
+        distributions[name] = None
+
+modules = {}
+for name in ("arxiv_cli", "arxiv_cli_tools", "arxiv"):
+    spec = importlib.util.find_spec(name)
+    origin = spec.origin if spec else None
+    modules[name] = {
+        "path": origin,
+        "sha256": sha256_file(origin) if origin else None,
+    } if origin else None
+
+print(json.dumps({
+    "version": sys.version,
+    "executable": sys.executable,
+    "distributions": distributions,
+    "modules": modules,
+}))
+`;
 
 class PipelineFailure extends Error {
   constructor(message, details = {}) {
@@ -277,15 +337,104 @@ async function resolveExecutable(command) {
   return null;
 }
 
+function adapterInterpreterFromShebang(executableText) {
+  const line = executableText.slice(0, 1024).split(/\r?\n/, 1)[0];
+  if (!line.startsWith("#!")) return { shebang: null, interpreter: null };
+  const parts = line.slice(2).trim().split(/\s+/).filter(Boolean);
+  if (!parts.length) return { shebang: line, interpreter: null };
+  if (basename(parts[0]) !== "env") return { shebang: line, interpreter: parts[0] };
+  const environmentArgs = parts.slice(1);
+  if (environmentArgs[0] === "-S") environmentArgs.shift();
+  return {
+    shebang: line,
+    interpreter: environmentArgs.find((part) => !part.startsWith("-")) ?? null,
+  };
+}
+
+async function pythonAdapterRuntimeIdentity(executablePath) {
+  let executableText;
+  try {
+    executableText = await readFile(executablePath, "utf8");
+  } catch (error) {
+    return { kind: "unknown", probe_error: `Could not inspect executable: ${error.message}` };
+  }
+  const { shebang, interpreter } = adapterInterpreterFromShebang(executableText);
+  if (!interpreter || !/python(?:\d+(?:\.\d+)?)?$/i.test(basename(interpreter))) {
+    return {
+      kind: "non_python",
+      shebang,
+      interpreter: interpreter ?? null,
+    };
+  }
+
+  const resolvedInterpreter = await resolveExecutable(interpreter);
+  if (!resolvedInterpreter) {
+    return {
+      kind: "python",
+      shebang,
+      interpreter,
+      python: null,
+      distributions: null,
+      modules: null,
+      probe_error: `Could not resolve Python interpreter ${interpreter}`,
+    };
+  }
+  try {
+    const result = await processCommand(resolvedInterpreter, ["-c", PYTHON_ADAPTER_IDENTITY_PROBE]);
+    if (result.code !== 0) {
+      return {
+        kind: "python",
+        shebang,
+        interpreter,
+        python: { executable: resolvedInterpreter, sha256: digest(await readFile(resolvedInterpreter)) },
+        distributions: null,
+        modules: null,
+        probe_error: result.stderr.trim() || `Python identity probe exited ${result.code}`,
+      };
+    }
+    const probe = JSON.parse(result.stdout);
+    return {
+      kind: "python",
+      shebang,
+      interpreter,
+      python: {
+        executable: probe.executable,
+        resolved_executable: resolvedInterpreter,
+        sha256: digest(await readFile(resolvedInterpreter)),
+        version: probe.version,
+      },
+      distributions: probe.distributions,
+      modules: probe.modules,
+      probe_error: null,
+    };
+  } catch (error) {
+    return {
+      kind: "python",
+      shebang,
+      interpreter,
+      python: { executable: resolvedInterpreter, sha256: digest(await readFile(resolvedInterpreter)) },
+      distributions: null,
+      modules: null,
+      probe_error: `Python identity probe failed: ${error.message}`,
+    };
+  }
+}
+
 async function executableIdentity(command) {
   const executablePath = await resolveExecutable(command);
   if (!executablePath) {
-    return { executable: command, resolved_executable: null, executable_sha256: null };
+    return {
+      executable: command,
+      resolved_executable: null,
+      executable_sha256: null,
+      runtime: null,
+    };
   }
   return {
     executable: command,
     resolved_executable: executablePath,
     executable_sha256: digest(await readFile(executablePath)),
+    runtime: await pythonAdapterRuntimeIdentity(executablePath),
   };
 }
 
@@ -296,6 +445,27 @@ function isExactRecord(record, requested) {
   } catch {
     return false;
   }
+}
+
+function observedCandidates(records) {
+  if (!Array.isArray(records)) return [];
+  return records.map((record) => {
+    const candidate = { payload_sha256: digest(JSON.stringify(record)) };
+    try {
+      const parsed = parsedShortId(record);
+      candidate.arxiv_id = parsed.id;
+      candidate.arxiv_version = parsed.version;
+    } catch {
+      candidate.arxiv_id = null;
+      candidate.arxiv_version = null;
+    }
+    return candidate;
+  });
+}
+
+function uniqueObservedCandidates(executions) {
+  const observed = executions.flatMap((execution) => execution.observed_candidates ?? []);
+  return [...new Map(observed.map((candidate) => [JSON.stringify(candidate), candidate])).values()];
 }
 
 async function runArxivCliAttempt(command, args, identity) {
@@ -323,13 +493,21 @@ async function runArxivCliAttempt(command, args, identity) {
       evidence: { provider: "arxiv-cli-tools", adapter_identity: identity, ...execution },
     });
   }
+  let records;
   try {
-    return { records: JSON.parse(result.stdout), execution };
+    records = JSON.parse(result.stdout);
   } catch {
     throw new PipelineFailure("arxiv-cli returned non-JSON output", {
       evidence: { provider: "arxiv-cli-tools", adapter_identity: identity, ...execution },
     });
   }
+  if (!Array.isArray(records)) {
+    throw new PipelineFailure("arxiv-cli returned JSON that was not a record array", {
+      evidence: { provider: "arxiv-cli-tools", adapter_identity: identity, ...execution },
+    });
+  }
+  execution.observed_candidates = observedCandidates(records);
+  return { records, execution };
 }
 
 async function callArxivCli(options, kind, input) {
@@ -347,6 +525,7 @@ async function callArxivCli(options, kind, input) {
         adapter_identity: identity,
         request: input,
         executions: [result.execution],
+        observed_candidates: uniqueObservedCandidates([result.execution]),
       },
     };
   }
@@ -374,6 +553,7 @@ async function callArxivCli(options, kind, input) {
       adapter_identity: identity,
       request: { id: requestedId, exact_version_required: Boolean(requested.version) },
       executions,
+      observed_candidates: uniqueObservedCandidates(executions),
     },
   };
 }
@@ -400,6 +580,7 @@ async function callFixture(options, kind, input) {
       adapter_identity: { fixture: basename(fixturePath), fixture_sha256: digest(fixtureText), test_only: true },
       request: kind === "id" ? { id: input.value } : input,
       stdout_sha256: digest(JSON.stringify(records)),
+      observed_candidates: observedCandidates(records),
     },
   };
 }
@@ -408,6 +589,45 @@ async function fetchRecords(options, kind, input) {
   if (options.adapter === "arxiv-cli") return callArxivCli(options, kind, input);
   if (options.adapter === "fixture") return callFixture(options, kind, input);
   throw new PipelineFailure(`Unsupported adapter: ${options.adapter}`);
+}
+
+function projectApprovedRawMetadata(record) {
+  if (!record || typeof record !== "object" || Array.isArray(record)) {
+    throw new PipelineFailure("Provider record must be a JSON object");
+  }
+  for (const field of Object.keys(record)) {
+    const normalizedField = field.trim().toLowerCase().replace(/[^a-z0-9]+/g, "_");
+    if (!APPROVED_RAW_METADATA_FIELD_SET.has(field) && PROHIBITED_CONTENT_FIELD.test(normalizedField)) {
+      throw new PipelineFailure(`Provider record contains prohibited full-text field: ${field}`);
+    }
+  }
+
+  const projected = {};
+  for (const field of APPROVED_RAW_METADATA_FIELDS) {
+    if (record[field] !== undefined) projected[field] = record[field];
+  }
+  const nullableMetadataFields = new Set(["published", "updated", "pdf_url", "doi"]);
+  for (const field of ["id", "short_id", "title", "summary", "primary_category", "published", "updated", "pdf_url", "doi"]) {
+    if (projected[field] !== undefined && projected[field] !== null && typeof projected[field] !== "string") {
+      throw new PipelineFailure(`Provider record field ${field} must be a string`);
+    }
+    if (projected[field] === null && !nullableMetadataFields.has(field)) {
+      throw new PipelineFailure(`Provider record field ${field} cannot be null`);
+    }
+  }
+  for (const field of ["authors", "categories"]) {
+    if (projected[field] !== undefined
+      && (!Array.isArray(projected[field]) || projected[field].some((value) => typeof value !== "string"))) {
+      throw new PipelineFailure(`Provider record field ${field} must be an array of strings`);
+    }
+  }
+  if (projected.summary && projected.summary.length > 100_000) {
+    throw new PipelineFailure("Provider record summary exceeds the metadata-only content limit");
+  }
+
+  const { id, version } = parsedShortId(projected);
+  normalizeRecord(projected, id, version);
+  return projected;
 }
 
 function normalizeRecord(record, id, version) {
@@ -611,15 +831,20 @@ async function ingestOne(dataDir, index, options, record, source) {
   };
 }
 
-function newIngestionRun(options, kind, input, retryOf = null) {
+function newIngestionRun(options, kind, input, retryParent = null) {
   const createdAt = now();
+  const runId = `ingest_${randomUUID()}`;
   return {
-    run_id: `ingest_${randomUUID()}`,
+    run_id: runId,
     state: "pending",
     retryable: true,
     adapter: options.adapter,
     input: { kind, ...input },
-    retry_of: retryOf,
+    retry_of: retryParent?.run_id ?? null,
+    retry_root_id: retryParent?.retry_root_id ?? retryParent?.run_id ?? runId,
+    retry_retired_at: null,
+    retry_retired_reason: null,
+    superseded_by_run_id: null,
     created_at: createdAt,
     started_at: null,
     finished_at: null,
@@ -628,6 +853,13 @@ function newIngestionRun(options, kind, input, retryOf = null) {
     error: null,
     result: null,
   };
+}
+
+function isRetryableIngestionLeaf(index, run) {
+  return run.state === "failed"
+    && run.retryable
+    && !run.superseded_by_run_id
+    && !index.ingestion_runs.some((candidate) => candidate.retry_of === run.run_id);
 }
 
 function transitionIngestionRun(run, state) {
@@ -647,6 +879,10 @@ function runSummary(run) {
     adapter: run.adapter,
     input: run.input,
     retry_of: run.retry_of,
+    retry_root_id: run.retry_root_id ?? run.run_id,
+    retry_retired_at: run.retry_retired_at ?? null,
+    retry_retired_reason: run.retry_retired_reason ?? null,
+    superseded_by_run_id: run.superseded_by_run_id ?? null,
     created_at: run.created_at,
     started_at: run.started_at,
     finished_at: run.finished_at,
@@ -659,7 +895,20 @@ function runSummary(run) {
 
 async function executeIngestion(dataDir, options, kind, input, retryOf = null) {
   const index = await loadIndex(dataDir);
-  const run = newIngestionRun(options, kind, input, retryOf);
+  const retryParent = retryOf
+    ? index.ingestion_runs.find((candidate) => candidate.run_id === retryOf)
+    : null;
+  if (retryOf && !retryParent) throw new Error(`Cannot retry unknown ingestion run ${retryOf}`);
+  if (retryParent && !isRetryableIngestionLeaf(index, retryParent)) {
+    throw new Error(`Ingestion run ${retryParent.run_id} is no longer the current retryable lineage leaf`);
+  }
+  const run = newIngestionRun(options, kind, input, retryParent);
+  if (retryParent) {
+    retryParent.retryable = false;
+    retryParent.retry_retired_at = run.created_at;
+    retryParent.retry_retired_reason = "superseded_by_retry";
+    retryParent.superseded_by_run_id = run.run_id;
+  }
   index.ingestion_runs.push(run);
   await saveIndex(dataDir, index);
   transitionIngestionRun(run, "running");
@@ -668,22 +917,29 @@ async function executeIngestion(dataDir, options, kind, input, retryOf = null) {
   let response;
   try {
     response = await fetchRecords(options, kind, input);
-    const records = response.records ?? [];
-    if (kind === "id") {
-      const requested = canonicalId(input.value);
-      const found = records.find((record) => isExactRecord(record, requested));
-      if (!found) {
-        throw new PipelineFailure(`Provider returned no exact record for ${input.value}`, { evidence: response.evidence });
-      }
-      response.records = [found];
+    if (!Array.isArray(response.records)) {
+      throw new PipelineFailure("Provider response must contain a JSON array of records", { evidence: response.evidence });
     }
     const unique = new Map();
     for (const record of response.records) {
-      const { id, version } = parsedShortId(record);
-      unique.set(paperKey(id, version), record);
+      const projected = projectApprovedRawMetadata(record);
+      const { id, version } = parsedShortId(projected);
+      unique.set(paperKey(id, version), projected);
+    }
+    // Validate the selected response batch completely before the first capture,
+    // normalized record, or enrichment file is written. A bad later record can
+    // therefore only leave the failed run ledger, never a partial paper batch.
+    let selected = unique;
+    if (kind === "id") {
+      const requested = canonicalId(input.value);
+      const exact = [...unique.entries()].find(([, record]) => isExactRecord(record, requested));
+      if (!exact) {
+        throw new PipelineFailure(`Provider returned no exact record for ${input.value}`, { evidence: response.evidence });
+      }
+      selected = new Map([exact]);
     }
     const results = [];
-    for (const record of unique.values()) {
+    for (const record of selected.values()) {
       results.push(await ingestOne(dataDir, index, options, record, { evidence: response.evidence, input }));
     }
     const result = {
@@ -753,7 +1009,7 @@ async function showStatus(dataDir) {
     version_count: records.length,
     records: records.sort((left, right) => paperKey(left.arxiv_id, left.arxiv_version).localeCompare(paperKey(right.arxiv_id, right.arxiv_version))),
     ingestion_runs: ingestionRuns,
-    failed_ingestions: ingestionRuns.filter((run) => run.state === "failed" && run.retryable),
+    failed_ingestions: ingestionRuns.filter((run) => isRetryableIngestionLeaf(index, run)),
     full_text_stored: false,
   };
 }
@@ -780,7 +1036,7 @@ async function retryAiJobs(dataDir, options) {
 
 async function retryIngestionRuns(dataDir, options) {
   const index = await loadIndex(dataDir);
-  const failures = index.ingestion_runs.filter((run) => run.state === "failed" && run.retryable);
+  const failures = index.ingestion_runs.filter((run) => isRetryableIngestionLeaf(index, run));
   const retried = [];
   for (const failedRun of failures) {
     const { kind, ...input } = failedRun.input;

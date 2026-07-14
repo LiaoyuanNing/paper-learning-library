@@ -2,7 +2,7 @@
 
 ## Adapter choice
 
-The MVP adapter is `arxiv-cli-tools` (its identity is recorded at runtime as the executable path and SHA-256 rather than a hard-coded package version). It was selected because the installed CLI exposes both `--id` and keyword search in machine-readable JSON, without an API key. The pipeline itself does not call arXiv HTTP endpoints directly.
+The MVP adapter is `arxiv-cli-tools`. Each run records the resolved CLI path and SHA-256, its Python runtime path/version/hash, the installed `arxiv-cli-tools` and `arxiv` distribution versions, and resolved module paths/hashes. This is runtime evidence rather than a hard-coded adapter version. It was selected because the installed CLI exposes both `--id` and keyword search in machine-readable JSON, without an API key. The pipeline itself does not call arXiv HTTP endpoints directly.
 
 The `oo-arxiv` connector was checked first as required: `oo connector schema "arxiv" --action "get_paper"` and `search_papers` could not start because `oo` was absent from this runtime. Its official first-time installer was tried; the runtime did not complete the binary installation. This is retained as an environment limitation, not silently replaced by a direct API client.
 
@@ -26,16 +26,18 @@ The default store is `data/arxiv-ingestion/`; override it with `--data-dir` for 
 ```text
 data/arxiv-ingestion/
   index.json                         canonical ID -> versions, paths, and ingestion run ledger
-  raw/<id>/<version>.json            append-only captures: immutable capture ID/hash, input, evidence, raw metadata
+  raw/<id>/<version>.json            append-only captures: immutable capture ID/hash, input, evidence, approved metadata projection
   papers/<id>/<version>.json         normalized metadata and ingest/review/publish state
   enrichments/<id>/<version>.json    translation/highlight states and AI-only fields
 ```
 
-Every raw capture contains the provider, input, retrieval timestamp, executable/arguments (or test fixture request), output SHA-256, provider stderr, and unmodified provider metadata. It also has an immutable `capture_id` and payload hash. A repeat retrieval appends another capture; it does not create another canonical paper/version. A normalized record has `normalized_from_capture_id`, so its source remains unambiguous even after later captures. A new version receives a separate record; after every insertion all versions are sorted and their `supersedes` / `superseded_by` links are rebuilt.
+Every raw capture contains the provider, input, retrieval timestamp, executable/arguments (or test fixture request), full provider-output SHA-256, provider stderr, observed candidate canonical ID/version plus payload hashes, and an immutable `capture_id`/payload hash. `raw_metadata` is an allowlisted metadata projection (`id`, title, abstract/summary, authors, categories, dates, links, and DOI); a provider record that includes a prohibited full-text/body/content field is rejected. This preserves source auditability without storing arbitrary adapter output or paper text. A repeat retrieval appends another capture; it does not create another canonical paper/version. A normalized record has `normalized_from_capture_id`, so its source remains unambiguous even after later captures. A new version receives a separate record; after every insertion all versions are sorted and their `supersedes` / `superseded_by` links are rebuilt.
+
+The complete provider response batch is type-checked and projected before the first capture, paper, or enrichment write. A malformed later record therefore leaves only a failed ingestion run ledger, not a partial batch of records. The filesystem store remains a single-writer MVP; its lock and per-file atomic rename protect normal writes, while the ledger makes interrupted or failed attempts visible for recovery.
 
 `papers/` contains no AI text and `enrichments/` contains no raw provider response. The status surface includes:
 
-- ingestion: a persisted run ledger with `pending` → `running` → `succeeded` or `failed`, retryability, input, adapter/provider evidence, timestamps, and error/result;
+- ingestion: a persisted run ledger with `pending` → `running` → `succeeded` or `failed`, retryability, input, adapter/provider evidence, timestamps, and error/result. A retry creates a child attempt linked by `retry_of`/`retry_root_id`, retires the parent, and exposes only the latest unresolved failed lineage leaf as retryable. A succeeding child leaves no active failed retry for that lineage;
 - translation and highlight: `pending`, `running`, `succeeded`, or `failed`, plus `retryable`, attempt count, error, generated time, and exact provider/model when generated;
 - review: `needs_review`; publish: `unpublished`.
 
@@ -60,6 +62,8 @@ ARXIV_CLI_BIN="$HOME/Library/Python/3.9/bin/arxiv-cli" npm run ingest -- \
 npm run ingest -- --data-dir "$tmp_dir" status
 
 # A historical version that the provider cannot return exactly must stay visible as a failed, retryable run.
+# Retrying creates one child attempt and retires the parent, so old failures cannot
+# be retried repeatedly or amplify provider traffic.
 ARXIV_CLI_BIN="$HOME/Library/Python/3.9/bin/arxiv-cli" npm run ingest -- \
   --data-dir "$tmp_dir" id 2210.03629v2
 npm run ingest -- --data-dir "$tmp_dir" status

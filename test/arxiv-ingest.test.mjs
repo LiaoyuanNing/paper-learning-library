@@ -91,6 +91,9 @@ test("pipeline is idempotent, audit-ready, and retries a failed AI job without p
   assert.ok(raw.captures[0].payload_sha256);
   assert.equal(raw.captures[0].provider_execution.provider, "fixture-adapter");
   assert.ok(raw.captures[0].raw_metadata.title);
+  assert.deepEqual(Object.keys(raw.captures[0].raw_metadata).sort(), [
+    "authors", "categories", "doi", "id", "pdf_url", "primary_category", "published", "short_id", "summary", "title", "updated",
+  ]);
   assert.equal(normalizedV1.copyright.full_text_stored, false);
   assert.equal(normalizedV1.normalized_from_capture_id, raw.captures[0].capture_id);
   assert.equal(normalizedV1.source_capture.capture_id, raw.captures[0].capture_id);
@@ -154,7 +157,11 @@ test("uses the arxiv-cli exact-ID contract and preserves its runtime identity", 
   const execution = index.ingestion_runs[0].provider_execution;
   assert.equal(execution.provider, "arxiv-cli-tools");
   assert.ok(execution.adapter_identity.executable_sha256);
+  assert.equal(execution.adapter_identity.runtime.kind, "non_python");
   assert.deepEqual(execution.executions[0].argv.slice(0, 4), ["search", "--id", "9900.00001v2", "--max-results"]);
+  assert.deepEqual(execution.observed_candidates.map(({ arxiv_id, arxiv_version }) => ({ arxiv_id, arxiv_version })), [
+    { arxiv_id: "9900.00001", arxiv_version: "v2" },
+  ]);
 });
 
 test("does not substitute a newer version when a historical ID cannot be returned", async () => {
@@ -192,9 +199,13 @@ test("does not substitute a newer version when a historical ID cannot be returne
   assert.equal(status.failed_ingestions.length, 1);
   assert.equal(status.failed_ingestions[0].input.value, "9900.00001v2");
   assert.equal(status.failed_ingestions[0].provider_execution.executions.length, 2);
+  assert.deepEqual(status.failed_ingestions[0].provider_execution.observed_candidates.map(({ arxiv_id, arxiv_version }) => ({ arxiv_id, arxiv_version })), [
+    { arxiv_id: "9900.00001", arxiv_version: "v3" },
+  ]);
+  assert.ok(status.failed_ingestions[0].provider_execution.observed_candidates[0].payload_sha256);
 });
 
-test("persists failed ingestion attempts, exposes them in status, and retries them", async () => {
+test("retries only the current failed ingestion lineage leaf and retires it after success", async () => {
   const dataDir = await mkdtemp(join(tmpdir(), "paper-learning-failed-ingestion-"));
   const absentCli = join(dataDir, "missing-arxiv-cli");
   const base = ["--data-dir", dataDir, "--adapter", "arxiv-cli", "--arxiv-cli-bin", absentCli];
@@ -215,8 +226,82 @@ test("persists failed ingestion attempts, exposes them in status, and retries th
   assert.equal(retried.retried.length, 1);
   assert.equal(retried.retried[0].state, "failed");
   const secondStatus = await run(["--data-dir", dataDir, "status"]);
-  assert.equal(secondStatus.failed_ingestions.length, 2, "the retry is a separately auditable attempt");
-  assert.equal(secondStatus.failed_ingestions[1].retry_of, firstStatus.failed_ingestions[0].run_id);
+  assert.equal(secondStatus.failed_ingestions.length, 1, "only the newest failed lineage leaf remains retryable");
+  const rootFailure = secondStatus.ingestion_runs.find((run) => run.run_id === firstStatus.failed_ingestions[0].run_id);
+  const firstRetry = secondStatus.failed_ingestions[0];
+  assert.equal(firstRetry.retry_of, rootFailure.run_id);
+  assert.equal(rootFailure.retryable, false);
+  assert.equal(rootFailure.superseded_by_run_id, firstRetry.run_id);
+  assert.equal(firstRetry.retry_root_id, rootFailure.run_id);
+
+  const retriedAgain = await run([...base, "retry", "--job", "ingestion"]);
+  assert.equal(retriedAgain.retried.length, 1, "a second retry cannot rerun retired ancestors");
+  const thirdStatus = await run(["--data-dir", dataDir, "status"]);
+  assert.equal(thirdStatus.failed_ingestions.length, 1);
+  const secondRetry = thirdStatus.failed_ingestions[0];
+  const retiredFirstRetry = thirdStatus.ingestion_runs.find((run) => run.run_id === firstRetry.run_id);
+  assert.equal(secondRetry.retry_of, firstRetry.run_id);
+  assert.equal(retiredFirstRetry.superseded_by_run_id, secondRetry.run_id);
+
+  const recoveredRecord = {
+    id: "http://arxiv.org/abs/9900.00001v1",
+    short_id: "9900.00001v1",
+    title: "Recovered record",
+    summary: "Metadata only.",
+    published: "2026-01-01T00:00:00+00:00",
+    updated: "2026-01-01T00:00:00+00:00",
+    authors: ["Test Author"],
+    primary_category: "cs.AI",
+    categories: ["cs.AI"],
+    pdf_url: "https://arxiv.org/pdf/9900.00001v1",
+    doi: null,
+  };
+  await writeFile(absentCli, [
+    "#!/usr/bin/env node",
+    `process.stdout.write(${JSON.stringify(JSON.stringify([recoveredRecord]))});`,
+  ].join("\n"), "utf8");
+  await chmod(absentCli, 0o755);
+
+  const recovered = await run([...base, "retry", "--job", "ingestion"]);
+  assert.equal(recovered.retried.length, 1);
+  assert.equal(recovered.retried[0].state, "succeeded");
+  const finalStatus = await run(["--data-dir", dataDir, "status"]);
+  assert.equal(finalStatus.paper_count, 1);
+  assert.equal(finalStatus.failed_ingestions.length, 0, "a successful child leaves no active failed retry in its lineage");
+  const recoveryRun = finalStatus.ingestion_runs.find((run) => run.retry_of === secondRetry.run_id);
+  const retiredSecondRetry = finalStatus.ingestion_runs.find((run) => run.run_id === secondRetry.run_id);
+  assert.equal(recoveryRun.state, "succeeded");
+  assert.equal(retiredSecondRetry.superseded_by_run_id, recoveryRun.run_id);
+  assert.equal(recoveryRun.retry_root_id, rootFailure.run_id);
+});
+
+test("rejects full-text fields and validates a whole provider batch before writing papers", async () => {
+  const workspace = await mkdtemp(join(tmpdir(), "paper-learning-metadata-boundary-"));
+  const dataDir = join(workspace, "store");
+  const fixturePath = join(workspace, "unsafe-fixture.json");
+  const fixtureRecords = JSON.parse(await readFile(fixture, "utf8")).papers;
+  const unsafeRecord = { ...fixtureRecords[1], full_text: "This must never be persisted." };
+  await writeFile(fixturePath, JSON.stringify({
+    papers: fixtureRecords,
+    searches: { unsafe: [fixtureRecords[0], unsafeRecord] },
+  }), "utf8");
+
+  const failed = await runFailure([
+    "--data-dir", dataDir,
+    "--adapter", "fixture",
+    "--fixture", fixturePath,
+    "search", "--query", "unsafe", "--limit", "2",
+  ]);
+  assert.match(failed.stderr, /prohibited full-text field: full_text/);
+  const status = await run(["--data-dir", dataDir, "status"]);
+  assert.equal(status.paper_count, 0);
+  assert.equal(status.failed_ingestions.length, 1);
+  assert.ok(status.failed_ingestions[0].provider_execution.stdout_sha256, "the full provider output remains auditable by hash");
+  assert.equal(status.failed_ingestions[0].provider_execution.observed_candidates.length, 2);
+  await assert.rejects(access(join(dataDir, "raw")));
+  await assert.rejects(access(join(dataDir, "papers")));
+  await assert.rejects(access(join(dataDir, "enrichments")));
+  assert.deepEqual(await readdir(dataDir), ["index.json"]);
 });
 
 test("refuses public site directories before any pipeline file is written", async () => {
