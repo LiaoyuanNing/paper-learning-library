@@ -1,0 +1,60 @@
+{
+  "papers": [
+    {
+      "id": "http://arxiv.org/abs/9900.00001v1",
+      "short_id": "9900.00001v1",
+      "title": "Fixture Agent Paper v1",
+      "summary": "Fixture metadata only; no full text.",
+      "published": "2026-01-01T00:00:00+00:00",
+      "updated": "2026-01-01T00:00:00+00:00",
+      "authors": ["Test Author"],
+      "primary_category": "cs.AI",
+      "categories": ["cs.AI"],
+      "pdf_url": "https://arxiv.org/pdf/9900.00001v1",
+      "doi": null
+    },
+    {
+      "id": "http://arxiv.org/abs/9900.00001v2",
+      "short_id": "9900.00001v2",
+      "title": "Fixture Agent Paper v2",
+      "summary": "Fixture metadata for a superseding version; no full text.",
+      "published": "2026-01-01T00:00:00+00:00",
+      "updated": "2026-02-01T00:00:00+00:00",
+      "authors": ["Test Author"],
+      "primary_category": "cs.AI",
+      "categories": ["cs.AI"],
+      "pdf_url": "https://arxiv.org/pdf/9900.00001v2",
+      "doi": null
+    },
+    {
+      "id": "http://arxiv.org/abs/9900.00002v1",
+      "short_id": "9900.00002v1",
+      "title": "Fixture Search Result",
+      "summary": "A deterministic search fixture with metadata only.",
+      "published": "2026-03-01T00:00:00+00:00",
+      "updated": "2026-03-01T00:00:00+00:00",
+      "authors": ["Search Author"],
+      "primary_category": "cs.LG",
+      "categories": ["cs.LG", "cs.AI"],
+      "pdf_url": "https://arxiv.org/pdf/9900.00002v1",
+      "doi": null
+    }
+  ],
+  "searches": {
+    "fixture agents": [
+      {
+        "id": "http://arxiv.org/abs/9900.00002v1",
+        "short_id": "9900.00002v1",
+        "title": "Fixture Search Result",
+        "summary": "A deterministic search fixture with metadata only.",
+        "published": "2026-03-01T00:00:00+00:00",
+        "updated": "2026-03-01T00:00:00+00:00",
+        "authors": ["Search Author"],
+        "primary_category": "cs.LG",
+        "categories": ["cs.LG", "cs.AI"],
+        "pdf_url": "https://arxiv.org/pdf/9900.00002v1",
+        "doi": null
+      }
+    ]
+  }
+}
