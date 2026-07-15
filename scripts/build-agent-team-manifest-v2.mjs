@@ -386,7 +386,14 @@ manifest.report.method = [
   `先宽后窄：machine-readable 候选池 ${manifest.papers.length} 篇；18 篇核心由 8 篇奠基/典型与 10 篇前沿组成。MacNet、MasRouter、ExtAgents 退出核心但保留扩展记录；三篇直接边界证据进入核心。`,
   "逐 claim Critic：C01–C11 均记录 counter_search 范围、outcome、发现/未发现和修正理由；未发现反证不被表述为已证明。",
   "一手元数据审计：S01–S23 的 title、authors、version、submission/venue year、publication status、venue/track 与 URL 逐项对照 arXiv 和官方 venue；测试要求 audit 与 manifest 完全一致。",
-  "机器证据优先：网页从 manifest v2 渲染；claim → evidence → source 使用闭合 ID。digest 排除自身与 stable_url，后者固定到首个不可变 commit SHA。",
+  "机器证据优先：网页从 manifest v2 渲染；claim → evidence → source 使用闭合 ID。digest 排除自身、stable_url 与独立消费回填记录，后者固定到首个不可变 evidence snapshot commit SHA。",
+];
+manifest.report.episode_loop = [
+  "现有知识差距：专家稀释、matched-budget 与同质 workflow 可折叠边界缺少直接证据。",
+  `新检索：11 条主题 query + ${manifest.papers.length} 篇 machine-readable 候选 ledger。`,
+  "综合：18 篇核心重排为 8 篇奠基/典型与 10 篇前沿，三篇直接反证进入核心。",
+  "质量门：全量元数据审计、逐 claim Critic、固定 locator、digest 与独立 manifest 消费测试。",
+  "资产化：报告、manifest v2、完整候选决策、query、审计和独立消费 transcript。",
 ];
 manifest.report.limitations = manifest.report.limitations.map((item) => item.replace("oo-arxiv 依赖的 oo CLI 不可用；arxiv-cli 批量查询后遇到 HTTP 429", "oo-arxiv 依赖的 oo CLI 不可用；arxiv-cli 对已知 ID 与关键词返回空结果"));
 manifest.report.limitations.push("v2 是 open PR 的 review candidate，未 merge、未 tag、未 deploy；公开 Pages 仍是 v1，不能把本文件的相对 report_url 当成已发布 URL。");
@@ -406,12 +413,24 @@ manifest.validation.metadata_audit = {
   required_fields: ["title", "authors", "version", "submission_year", "venue_year", "publication_status", "venue", "track", "official_url", "venue_url"],
 };
 manifest.validation.manifest_consumer_trial = {
-  status: "pending_independent_agent",
+  status: "passed",
   questions_file: "research/agent-teams-2026/manifest-consumer-questions.v2.md",
   record_file: "research/agent-teams-2026/manifest-consumer-validation.v2.md",
   manifest_version: "2.0.0",
   snapshot_digest: null,
   immutable_url: stableUrl,
+  consumer_agent: {
+    identity: "/root/manifest_consumer_v2",
+    runtime: "Codex native sub-agent",
+    prior_involvement: "none",
+  },
+  consumer_scope: "manifest v2 only; no report, other research files, Git, issue, conversation history, paper originals or internet",
+  question_results: ["expert_dilution:PASS", "matched_budget:PASS", "workflow_collapse:PASS", "negative_answerability:PASS"],
+  manual_review: {
+    reviewer: "PM-Paper",
+    result: "4/4 PASS",
+    method: "Resolved every cited evidence ID to source ID and checked URL, locator, answer and boundary against the manifest.",
+  },
 };
 
 manifest.snapshot_digest = digest(manifest);

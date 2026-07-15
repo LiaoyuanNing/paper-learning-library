@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "evidence_pack_id": "age-174-agent-teams-2026",
   "manifest_version": "2.0.0",
-  "snapshot_digest": "sha256:6b97d52f21e8cea60cf21c043da9d27fabdd41b90d446c556fdd57972cde857f",
+  "snapshot_digest": "sha256:118f88a9b4151ec49c76b77189da8cddc388aeb891d583c9cb897dccdec992ec",
   "digest_method": "SHA-256 of recursively key-sorted JSON after omitting top-level snapshot_digest, stable_url, and validation.manifest_consumer_trial; these self-referential validation fields are excluded so stable_url can point to the first immutable evidence snapshot commit",
   "supersedes": [
     {
@@ -2335,12 +2335,29 @@
       }
     ],
     "manifest_consumer_trial": {
-      "status": "pending_independent_agent",
+      "status": "passed",
       "questions_file": "research/agent-teams-2026/manifest-consumer-questions.v2.md",
       "record_file": "research/agent-teams-2026/manifest-consumer-validation.v2.md",
       "manifest_version": "2.0.0",
-      "snapshot_digest": "sha256:6b97d52f21e8cea60cf21c043da9d27fabdd41b90d446c556fdd57972cde857f",
-      "immutable_url": "PENDING_COMMIT_PIN"
+      "snapshot_digest": "sha256:118f88a9b4151ec49c76b77189da8cddc388aeb891d583c9cb897dccdec992ec",
+      "immutable_url": "PENDING_COMMIT_PIN",
+      "consumer_agent": {
+        "identity": "/root/manifest_consumer_v2",
+        "runtime": "Codex native sub-agent",
+        "prior_involvement": "none"
+      },
+      "consumer_scope": "manifest v2 only; no report, other research files, Git, issue, conversation history, paper originals or internet",
+      "question_results": [
+        "expert_dilution:PASS",
+        "matched_budget:PASS",
+        "workflow_collapse:PASS",
+        "negative_answerability:PASS"
+      ],
+      "manual_review": {
+        "reviewer": "PM-Paper",
+        "result": "4/4 PASS",
+        "method": "Resolved every cited evidence ID to source ID and checked URL, locator, answer and boundary against the manifest."
+      }
     },
     "metadata_audit": {
       "status": "passed",
@@ -2550,15 +2567,14 @@
       "先宽后窄：machine-readable 候选池 48 篇；18 篇核心由 8 篇奠基/典型与 10 篇前沿组成。MacNet、MasRouter、ExtAgents 退出核心但保留扩展记录；三篇直接边界证据进入核心。",
       "逐 claim Critic：C01–C11 均记录 counter_search 范围、outcome、发现/未发现和修正理由；未发现反证不被表述为已证明。",
       "一手元数据审计：S01–S23 的 title、authors、version、submission/venue year、publication status、venue/track 与 URL 逐项对照 arXiv 和官方 venue；测试要求 audit 与 manifest 完全一致。",
-      "机器证据优先：网页从 manifest v2 渲染；claim → evidence → source 使用闭合 ID。digest 排除自身与 stable_url，后者固定到首个不可变 commit SHA。"
+      "机器证据优先：网页从 manifest v2 渲染；claim → evidence → source 使用闭合 ID。digest 排除自身、stable_url 与独立消费回填记录，后者固定到首个不可变 evidence snapshot commit SHA。"
     ],
     "episode_loop": [
-      "现有知识差距：已有库只覆盖 AutoGen，缺团队机制的跨论文证据图。",
-      "新检索：8 条主题 query + 37 篇候选 ledger。",
-      "执行：Scout 检索、Reader 深读、Critic 反证、PM 综合。",
-      "质量闸门：来源/版本、主张闭包、构建、移动端与控制台验证。",
-      "资产化：报告、manifest、候选 ledger、query 与独立消费测试。",
-      "再评估：只将跨任务复用且通过 Librarian 去重的主张晋升长期知识。"
+      "现有知识差距：专家稀释、matched-budget 与同质 workflow 可折叠边界缺少直接证据。",
+      "新检索：11 条主题 query + 48 篇 machine-readable 候选 ledger。",
+      "综合：18 篇核心重排为 8 篇奠基/典型与 10 篇前沿，三篇直接反证进入核心。",
+      "质量门：全量元数据审计、逐 claim Critic、固定 locator、digest 与独立 manifest 消费测试。",
+      "资产化：报告、manifest v2、完整候选决策、query、审计和独立消费 transcript。"
     ],
     "limitations": [
       "知识截止为 2026-07-15；之后的 arXiv 修订、录用状态和代码发布未纳入。",
