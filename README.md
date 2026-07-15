@@ -2,6 +2,13 @@
 
 面向 arXiv 学习的静态 MVP 阅读页。它展示元数据、原始摘要、中文学习摘要、学习亮点和原文链接；不存储或渲染论文全文。
 
+## 前沿研究报告
+
+- [Agent Team 前沿研究：组建更多 Agent，不等于拥有更好的团队](https://liaoyuanning.github.io/paper-learning-library/reports/agent-teams-2026/)
+- [机器可读证据包](https://liaoyuanning.github.io/paper-learning-library/reports/agent-teams-2026/data/evidence-manifest.v1.json)
+
+报告正文直接从版本化 evidence manifest 渲染；每条综合主张必须闭合到 evidence 与固定版本的一手来源。检索式、37 篇候选 ledger、独立消费验收与更新协议位于 `research/agent-teams-2026/`。
+
 ## 本地验证与预览
 
 需要 Node.js 18 或更新版本。
