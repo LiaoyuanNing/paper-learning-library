@@ -9,19 +9,20 @@
 ## Desktop
 
 - Viewport: 1440 × 1000
-- Full-page capture: `output/playwright/age174-v2-desktop.png` (1440 × 12813)
-- SHA-256: `493e5faf5ec0004518016675b7ca5ae6f642869f0241b39afe73521455e009e8`
+- Full-page capture: `output/playwright/age174-v2-candidate2-desktop.png` (1440 × 13176)
+- SHA-256: `b3f5cf8a6a5f63288152ccab7659dc5fddf523fb9c40b49ba16f3fff886754ae`
 - Console: 0 errors, 0 warnings
 - Horizontal overflow: false
-- Manual visual review: hero, boundary-first summary, timeline, problem map, 18-paper core grid, recommendations, methods, references, and limitations all rendered; no clipping or broken layout observed.
+- Document/body width: 1440 / 1440; horizontal overflow: false
+- Manual visual review: hero, boundary-first summary, timeline, problem map, 18-paper core grid, recommendations, methods, references, and limitations all rendered; the OpenReview-only LatentMAS critique renders with its source kind and year rather than an arXiv placeholder; no clipping or broken layout observed.
 
 ## Mobile
 
 - Viewport: 390 × 844
-- Full-page capture: `output/playwright/age174-v2-mobile-390.png` (390 × 25444)
-- SHA-256: `d1ac60360f4b443767a4faeabd37582fdd1187b4437d3e696fbb03f74ecb89c2`
+- Full-page capture: `output/playwright/age174-v2-candidate2-mobile-390.png` (390 × 26399)
+- SHA-256: `a938e02fb9903d74c8f0cb0535f1ca070454266e5b0ac188e67ffd3faaacffab`
 - Console: 0 errors, 0 warnings
 - Document/body width: 390 / 390; horizontal overflow: false
-- Manual visual review: content collapses to the narrow layout, core cards and evidence sections remain readable, and no horizontal clipping or overlapping controls were observed.
+- Manual visual review: content collapses to the narrow layout, all 18 core cards and the Communication–Reasoning Gap, HiddenBench, and learned-alignment evidence remain readable, and no horizontal clipping or overlapping controls were observed.
 
 The captures are deterministic review artifacts for the v2 branch. They are not evidence that v2 has been deployed; public Pages remains on v1 until Master approves merge/tag/deploy.

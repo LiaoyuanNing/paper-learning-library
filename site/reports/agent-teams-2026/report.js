@@ -25,6 +25,7 @@ function renderReport(manifest) {
     if (source.publication_status === "preprint") return "preprint";
     return [source.venue, source.venue_year, source.track].filter(Boolean).join(" · ");
   };
+  const sourceLabel = (source) => source.source_kind === "arxiv" ? source.paper_id : `${source.source_kind}:${source.external_id}`;
 
   document.querySelector("#knowledge-cutoff").textContent = manifest.request.knowledge_cutoff;
   document.querySelector("#paper-count").textContent = `${manifest.papers.filter((paper) => paper.selection.decision === "included").length} 篇`;
@@ -41,7 +42,7 @@ function renderReport(manifest) {
       seen.add(source.source_id);
       citations.append(element("a", {
         className: "citation",
-        text: `[${source.paper_id}]`,
+        text: `[${sourceLabel(source)}]`,
         attrs: { href: source.official_url, target: "_blank", rel: "noreferrer", title: `${source.title} · ${item.locator}` },
       }));
     }
@@ -155,8 +156,8 @@ function renderReport(manifest) {
     const link = element("a", { text: source.title, attrs: { href: source.official_url, target: "_blank", rel: "noreferrer" } });
     row.append(
       link,
-      document.createTextNode(` — ${source.authors.join(", ")} (arXiv 首发 ${source.submission_year})`),
-      element("span", { className: "reference-meta", text: `${source.paper_id} · ${source.version} · ${source.publication_status} · ${publicationLabel(source)} · 访问 ${source.accessed_at}` }),
+      document.createTextNode(` — ${source.authors.join(", ")} (${source.source_kind === "arxiv" ? "arXiv 首发" : "来源年份"} ${source.submission_year})`),
+      element("span", { className: "reference-meta", text: `${sourceLabel(source)} · ${source.version} · ${source.publication_status} · ${publicationLabel(source)} · 访问 ${source.accessed_at}` }),
     );
     references.append(row);
   }
