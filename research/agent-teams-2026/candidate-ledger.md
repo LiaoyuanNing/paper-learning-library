@@ -1,6 +1,6 @@
 # Candidate ledger
 
-“扩展”表示不进入 18 篇核心集合，不表示论文无价值。核心中的 `More Agents` 被明确标注为无通信 ensemble，用作强制基线而非团队协作证据。
+“扩展”表示不进入 18 篇核心集合，不表示论文无价值。v2 两次重开召回后，核心仍为 18 篇；完整 49 条版本/状态/决定/理由以 machine-readable manifest v2 为准。核心中的 `More Agents` 被明确标注为无通信 ensemble，用作强制基线而非团队协作证据。
 
 | # | 论文 / arXiv | 路径 | 决定 | 理由 |
 |---:|---|---|---|---|
@@ -12,16 +12,22 @@
 | 6 | ReConcile / 2309.13007 | 异构辩论 | 核心 | 多样模型、置信度与说服过程 |
 | 7 | DyLAN / 2310.02170 | 动态组队 | 核心 | 选人、动态网络与早停 |
 | 8 | More Agents Is All You Need / 2402.05120 | 规模基线 | 核心 | 无通信 sampling ensemble；复杂 MAS 必须超过的基线 |
-| 9 | MacNet / 2406.07155 | 拓扑、规模 | 核心 | 大规模 DAG；需与负规模研究对读 |
+| 9 | MacNet / 2406.07155 | 拓扑、规模 | 扩展 | 大规模 DAG 保留；由 matched-budget 与专家稀释直接边界替换核心席位 |
 | 10 | MaAS / 2502.04180 | 架构搜索 | 核心 | 查询条件化 supernet 与成本目标 |
-| 11 | MasRouter / 2502.11133 | 联合路由 | 核心 | 模式、角色、模型的级联路由 |
+| 11 | MasRouter / 2502.11133 | 联合路由 | 扩展 | 预印本且与 MaAS/DyLAN 机制重叠 |
 | 12 | MultiAgentBench / 2503.01935 | 评测 | 核心 | 任务、里程碑、通信与拓扑联合评估 |
 | 13 | Why Do Multi-Agent LLM Systems Fail? / 2503.13657 | 失败 | 核心 | 1,642 traces；14 类 taxonomy |
-| 14 | ExtAgents / 2505.21471 | 分布式上下文 | 核心 | 超上下文知识分片与聚合 |
+| 14 | ExtAgents / 2505.21471 | 分布式上下文 | 扩展 | 保留超上下文分片证据；由 matched-budget 直接反证替换核心席位 |
 | 15 | LatentMAS / 2511.20639 | latent 通信 | 核心 | 连续状态协作与通信效率 |
 | 16 | Towards a Science of Scaling Agent Systems / 2512.08296 | 规模效应 | 核心 | 等提示/工具/计算受控的正负结果 |
-| 17 | Understanding Agent Scaling via Diversity / 2602.03794 | 多样性 | 核心 | 有效信息通道解释同质饱和 |
-| 18 | FS-Researcher / 2602.01566 | 持久工件 | 核心 | 文件系统作共享协调介质 |
+| 17 | Understanding Agent Scaling via Diversity / 2602.03794 | 多样性 | 扩展 | workshop 机制证据保留；核心席位让给 2026 顶会直接协调失败研究 |
+| 18 | FS-Researcher / 2602.01566 | 持久工件 | 扩展 | ACL 专门研究编排证据保留；主题直接性弱于分布式协调失败研究 |
+| 18A | Multi-Agent Teams Hold Experts Back / 2602.01011 | 专家稀释 | 核心 | ICML 2026；揭示已知专家仍被共识稀释，最大差距 41.1% |
+| 18B | Single-Agent LLMs Outperform MAS / 2604.02460 | matched-budget | 核心 | equal thinking-token 直接对照，约束 C05 |
+| 18C | Rethinking the Value of Multi-Agent Workflow / 2601.12307 | workflow 折叠 | 核心 | 强单体 baseline；同质 workflow 可折叠 |
+| 18D | More Capable, Less Cooperative? / 2604.07821 | 零成本合作 | 核心 | ICML 2026；分离能力与合作，含协议/微激励干预 |
+| 18E | Silo-Bench / 2603.01045 | 分布式协调 | 核心 | ACL 2026；30 任务、54 配置、1,620 实验揭示 Communication–Reasoning Gap |
+| 18F | Systematic Failures in Collective Reasoning under Distributed Information in Multi-Agent LLMs（HiddenBench）/ 2505.11556v4 | 隐藏信息整合 | 扩展反证 | ICML 2026；65 任务、15 模型的 accuracy 结果直接揭示分布式信息整合失败，与核心 Silo-Bench 边界高度重叠 |
 | 19 | AgentVerse / 2308.10848 | 动态组合 | 扩展反证 | 与 AutoGen/DyLAN 重叠；保留错误同伴案例 |
 | 20 | AutoAgents / 2309.17288 | 自动组队 | 扩展 | 前驱意义强，证据弱于 MaAS/DyLAN |
 | 21 | AgentScope / 2402.14034 | 平台工程 | 扩展 | 基础设施贡献为主，机制因果较弱 |
@@ -42,6 +48,6 @@
 | 36 | LACP / 2510.13821 | 通信协议 | 扩展 | protocol proposal 为主，实证不足 |
 | 37 | MAEBE / 2506.03053 | 同伴压力、安全 | 扩展 | 方向重要，验证范围与 venue 较弱 |
 
-## Critic 补充的后续候选
+## Critic 补充与 v2 决定
 
-本轮未改变冻结的 18 篇核心集，但下一版优先复核：Multi-Agent Teams Hold Experts Back（2602.01011v4）、Zero-Cost Collaboration（2604.07821v2）、SILO-BENCH（2603.01045v2）、Collab-Overcooked（2502.20073v3）、Faulty Agents（2408.00989v4）、Prompt Infection（2410.07283v1）、Scalable Oversight（2407.04622v2）、Communication Topologies（2505.23352v1）。它们分别补专家稀释、合作性、规模协调税、长链、故障传播、攻击面、debate 边界与拓扑双刃效应。
+v2 已把 Multi-Agent Teams Hold Experts Back（2602.01011v4）、matched-budget（2604.02460v2）、strong single-agent workflow baseline（2601.12307v1）、Zero-Cost Collaboration（2604.07821v2）和 Silo-Bench（2603.01045v2）纳入核心。HiddenBench（2505.11556v4）保留扩展但进入正式证据链；CompLearn 2026 的 LatentMAS 复核作为非 arXiv source/evidence 纳入，不计入 49 篇 arXiv 候选池。

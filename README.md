@@ -5,9 +5,9 @@
 ## 前沿研究报告
 
 - [Agent Team 前沿研究：组建更多 Agent，不等于拥有更好的团队](https://liaoyuanning.github.io/paper-learning-library/reports/agent-teams-2026/)
-- [机器可读证据包](https://liaoyuanning.github.io/paper-learning-library/reports/agent-teams-2026/data/evidence-manifest.v1.json)
+- [机器可读证据包 v2](https://liaoyuanning.github.io/paper-learning-library/reports/agent-teams-2026/data/evidence-manifest.v2.json)
 
-报告正文直接从版本化 evidence manifest 渲染；每条综合主张必须闭合到 evidence 与固定版本的一手来源。检索式、37 篇候选 ledger、独立消费验收与更新协议位于 `research/agent-teams-2026/`。
+报告正文直接从 v2 evidence manifest 渲染；每条综合主张必须闭合到 evidence 与固定版本的一手来源。v2 包含 49 篇 machine-readable 候选、18 篇核心、27 个来源与 28 条 evidence，并配有独立 evidence snapshot/consumer attestation；v1 保留为 superseded 历史版本。
 
 ## 本地验证与预览
 
@@ -20,7 +20,7 @@ npm run preview
 
 打开终端显示的地址（默认 `http://127.0.0.1:4173`）。可直接打开单篇详情，例如 `http://127.0.0.1:4173/?paper=2210.03629`。
 
-`npm run check` 会验证 8 条记录、唯一 arXiv ID、必填字段、四条学习亮点、不存全文姿态，以及阅读页的关键筛选/披露标记。`site/` 是 GitHub Pages 的直接发布目录。
+`npm run check` 会验证 8 条阅读基线记录、唯一 arXiv ID、必填字段、四条学习亮点、不存全文姿态，以及 v2 研究证据包的 49 篇候选、18 篇核心、27 个来源、28 条 evidence、长期知识指针与独立消费契约。`site/` 是 GitHub Pages 的直接发布目录。
 
 ## 本地学习工作流（AGE-24）
 
