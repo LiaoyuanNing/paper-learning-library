@@ -1,28 +1,33 @@
-# Agent Team evidence pack v2 browser QA
+# Local browser QA · manifest v2
 
-- Run date: 2026-07-15 (Asia/Shanghai)
-- Candidate state: open-PR review candidate; not merged, tagged, or deployed
-- Tested URL: `http://127.0.0.1:4173/reports/agent-teams-2026/index.html`
-- Browser driver: Playwright Chromium
-- Manifest request: `GET /reports/agent-teams-2026/data/evidence-manifest.v2.json` → `200 OK`
+- Run date: 2026-07-15 (day precision)
+- Scope: local `release_v2` artifact served from `site/`; this record makes no live-environment or deployment claim.
+- Page: `http://127.0.0.1:4173/reports/agent-teams-2026/index.html`
+- Runner: Playwright CLI, fresh session `age174-v2-final`
+- Manifest: HTTP 200, `application/json; charset=utf-8`, version `2.0.0`, digest `sha256:1cab26e51999310225fb08e05621ddfdbcad7ca3e478bc37181af0d614484a8c`
+- Data rendered: 49 candidates, 18 core, 27 sources, 28 evidence records.
 
-## Desktop
+## Desktop · 1440 × 1000 viewport
 
-- Viewport: 1440 × 1000
-- Full-page capture: `output/playwright/age174-v2-candidate2-desktop.png` (1440 × 13176)
-- SHA-256: `b3f5cf8a6a5f63288152ccab7659dc5fddf523fb9c40b49ba16f3fff886754ae`
-- Console: 0 errors, 0 warnings
-- Horizontal overflow: false
-- Document/body width: 1440 / 1440; horizontal overflow: false
-- Manual visual review: hero, boundary-first summary, timeline, problem map, 18-paper core grid, recommendations, methods, references, and limitations all rendered; the OpenReview-only LatentMAS critique renders with its source kind and year rather than an arXiv placeholder; no clipping or broken layout observed.
+- Document width / viewport width: 1440 / 1440 px.
+- Page-level horizontal overflow: none; no element crossed the viewport boundary.
+- Full-page height: 13,182 px.
+- Footer: `Manifest 2.0.0 · sha256:1cab26e51999…`.
+- Capture: `output/playwright/age174-v2-final-desktop-1440.png` (1440 × 13,182 px).
+- SHA-256: `e725c39a6b9acd8d368c08f3c3d654b0fa083d318fbf269e632eb2445988c7df`.
 
-## Mobile
+## Mobile · 390 × 844 viewport
 
-- Viewport: 390 × 844
-- Full-page capture: `output/playwright/age174-v2-candidate2-mobile-390.png` (390 × 26399)
-- SHA-256: `a938e02fb9903d74c8f0cb0535f1ca070454266e5b0ac188e67ffd3faaacffab`
-- Console: 0 errors, 0 warnings
-- Document/body width: 390 / 390; horizontal overflow: false
-- Manual visual review: content collapses to the narrow layout, all 18 core cards and the Communication–Reasoning Gap, HiddenBench, and learned-alignment evidence remain readable, and no horizontal clipping or overlapping controls were observed.
+- Document width / viewport width: 390 / 390 px.
+- Page-level horizontal overflow: none.
+- The comparison table is intentionally contained by `.matrix-wrap` (`overflow-x: auto`; wrapper 366 px, table 830 px), so it does not widen the page.
+- Full-page height: 26,384 px.
+- Footer: `Manifest 2.0.0 · sha256:1cab26e51999…`.
+- Capture: `output/playwright/age174-v2-final-mobile-390.png` (390 × 26,384 px).
+- SHA-256: `a3c9880fb4fcaa9f74eb9c02f663da73d404d2fee1164d7c719dea4fc8e83cb9`.
 
-The captures are deterministic review artifacts for the v2 branch. They are not evidence that v2 has been deployed; public Pages remains on v1 until Master approves merge/tag/deploy.
+## Console and network
+
+- Console errors: 0.
+- Console warnings: 0.
+- The report fetched `./data/evidence-manifest.v2.json` successfully and rendered the v2 footer, 18-paper core count and digest.

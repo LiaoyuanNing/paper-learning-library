@@ -2610,15 +2610,15 @@
       ]
     },
     "consumer_attestation": {
-      "status": "pending_independent_trial",
-      "consumer_identity": "PENDING_CONSUMER_IDENTITY",
+      "status": "passed_release_v2_trial",
+      "consumer_identity": "/root/manifest_consumer_v2_release5",
       "prior_involvement": "none",
       "manifest_version": "2.0.0",
       "snapshot_digest": "sha256:1cab26e51999310225fb08e05621ddfdbcad7ca3e478bc37181af0d614484a8c",
-      "input_url": "PENDING_EVIDENCE_SNAPSHOT_URL",
-      "attestation_url": "PENDING_ATTESTATION_URL",
-      "attestation_digest": "PENDING_ATTESTATION_DIGEST",
-      "transcript_url": "PENDING_TRANSCRIPT_URL",
+      "input_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/2aeb71cf4388a238e76a95ac6d6c715ab1c9dd3c/site/reports/agent-teams-2026/data/evidence-snapshot.v2.json",
+      "attestation_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/4c97d4365ae73e41e9ce8db4d118fa242e48e41d/research/agent-teams-2026/consumer-attestation.v2.json",
+      "attestation_digest": "sha256:92795e0f2a423958148e52d8d536c3290c2c7de4a0239db6c6b8549bb52fa4de",
+      "transcript_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/4c97d4365ae73e41e9ce8db4d118fa242e48e41d/research/agent-teams-2026/manifest-consumer-validation.v2.md",
       "scope": "immutable evidence snapshot only; no report, research notes, Git history, issue, conversation history, paper originals or internet"
     }
   },
@@ -2883,11 +2883,11 @@
     "next_review_on": "2026-10-15",
     "bidirectional_pointer_status": "complete"
   },
-  "evidence_snapshot_url": "PENDING_EVIDENCE_SNAPSHOT_URL",
+  "evidence_snapshot_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/2aeb71cf4388a238e76a95ac6d6c715ab1c9dd3c/site/reports/agent-teams-2026/data/evidence-snapshot.v2.json",
   "evidence_snapshot": {
-    "status": "pending_commit_pin",
+    "status": "immutable_release_v2",
     "manifest_version": "2.0.0",
     "snapshot_digest": "sha256:1cab26e51999310225fb08e05621ddfdbcad7ca3e478bc37181af0d614484a8c",
-    "immutable_url": "PENDING_EVIDENCE_SNAPSHOT_URL"
+    "immutable_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/2aeb71cf4388a238e76a95ac6d6c715ab1c9dd3c/site/reports/agent-teams-2026/data/evidence-snapshot.v2.json"
   }
 }

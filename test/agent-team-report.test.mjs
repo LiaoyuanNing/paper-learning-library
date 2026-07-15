@@ -11,7 +11,7 @@ const auditPath = new URL("research/agent-teams-2026/metadata-audit.v2.json", ro
 const attestationPath = new URL("research/agent-teams-2026/consumer-attestation.v2.json", root);
 const transcriptPath = new URL("research/agent-teams-2026/manifest-consumer-validation.v2.md", root);
 
-const [manifest, localSnapshot, audit, attestation, transcript, v1Manifest, html, script, css, rootReadme, researchReadme, changelog] = await Promise.all([
+const [manifest, localSnapshot, audit, attestation, transcript, v1Manifest, html, script, css, rootReadme, researchReadme, changelog, browserQa] = await Promise.all([
   readFile(manifestPath, "utf8").then(JSON.parse),
   readFile(snapshotPath, "utf8").then(JSON.parse),
   readFile(auditPath, "utf8").then(JSON.parse),
@@ -24,6 +24,7 @@ const [manifest, localSnapshot, audit, attestation, transcript, v1Manifest, html
   readFile(new URL("README.md", root), "utf8"),
   readFile(new URL("research/agent-teams-2026/README.md", root), "utf8"),
   readFile(new URL("research/agent-teams-2026/CHANGELOG.md", root), "utf8"),
+  readFile(new URL("research/agent-teams-2026/browser-qa.v2.md", root), "utf8"),
 ]);
 
 function unique(items, label) {
@@ -270,7 +271,8 @@ test("consumer attestation is immutable, independently digested and bound to the
     assert.ok(transcript.includes(exact), `transcript must contain ${exact}`);
   }
   assert.match(transcript, /Systematic Failures in Collective Reasoning under Distributed Information in Multi-Agent LLMs/);
-  assert.match(transcript, /accuracy was 30\.1%.*accuracy was 80\.7%/s);
+  assert.match(transcript, /accuracy was 30\.1%/);
+  assert.match(transcript, /80\.7% accuracy/);
   assert.doesNotMatch(transcript, /completed 30\.1%|30\.1% completion/i);
   assert.match(transcript, /Premature Submission.*37\.2%.*Consensus Failure.*29\.9%.*Computation Error.*28\.6%/s);
   assert.equal(attestation.durable_pointer_review.result, "PASS");
@@ -310,6 +312,7 @@ test("release-facing artifacts contain no dynamic candidate-state residue", () =
     ["root README", rootReadme],
     ["research README", researchReadme],
     ["CHANGELOG", changelog],
+    ["browser QA", browserQa],
     ["report HTML", html],
   ]) {
     assert.doesNotMatch(value, stale, `${label} contains stale release-candidate copy`);
