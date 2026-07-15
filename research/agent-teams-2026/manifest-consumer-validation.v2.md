@@ -1,65 +1,104 @@
-# Independent manifest consumer validation · v2
+# Independent evidence-snapshot consumer transcript · v2 candidate
 
-## Input boundary
+## Attested input boundary
 
-- Consumer identity: Codex native sub-agent `/root/manifest_consumer_v2_final`.
-- Prior involvement: none; spawned only after the evidence graph, digest, and immutable evidence snapshot were frozen.
-- Only readable research input: `site/reports/agent-teams-2026/data/evidence-manifest.v2.json`.
-- Prohibited and not read: report page, other research files, Git, Multica issue/comments, conversation history, paper originals, web/internet.
-- Manifest version: `2.0.0`.
-- Snapshot digest: `sha256:118f88a9b4151ec49c76b77189da8cddc388aeb891d583c9cb897dccdec992ec`.
-- Immutable input URL: `https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/f6ee325dd1100c30de818429ce016e6e43536403/site/reports/agent-teams-2026/data/evidence-manifest.v2.json`.
-- Run date: 2026-07-15.
-- Consumer did not modify files.
+- Consumer identity: `/root/manifest_consumer_v2_candidate2`
+- Prior research involvement: none
+- Manifest version: `2.0.0`
+- Snapshot digest: `sha256:cbe74d0293139ee118fccc4abc106f2bb713d492db4c049a9371203bb29941f3`
+- Immutable input URL: `https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/a6d4385ffc87efbe2572edfaae8eb9e49e39e20e/site/reports/agent-teams-2026/data/evidence-snapshot.v2.json`
+- Allowed input: only the named local copy of that immutable snapshot; substantive answers use only `evidence_payload`.
+- Forbidden inputs: release manifest, report, research notes, Git, issue/comments, conversation history, paper originals and internet.
+- Trial status: candidate-only; rerun after Librarian promotion before final digest/release.
 
-## Verbatim consumer answers
+## Verbatim consumer response
 
-### Q1 · Expert dilution
+### INPUT BOUNDARY
 
-- 来源 ID：`S21`
-- 证据 ID：`E22`
-- 官方 URL：https://arxiv.org/abs/2602.01011v4
-- 证据定位：`§4.1 Table 1; §4.2 Table 2; §4.3; Appendix H`
-- 结论：入选原因是“ICML 2026”“直接揭示专家稀释”“重审共识与规模结论所需反证”。即使明确告知团队谁是专家，团队仍未匹配最佳个体；报告差距为 `6.3%–41.1%`，精确最大差距为 `41.1%`。
-- 边界：实验是四类受控协作/排序任务及多种模型、团队构成，不等同于生产组织。共识有时可提高鲁棒性，但可能牺牲最佳专家信号，不能外推为所有团队讨论必然有害。
+I read only:
+`paper-learning-library/site/reports/agent-teams-2026/data/evidence-snapshot.v2.json`
 
-### Q2 · Equal thinking-token budget
+Substantive answers use only its evidence_payload. I used the top-level manifest_version and snapshot_digest solely to identify the snapshot. I did not read Git, issues, conversation history, paper originals, other files, or the internet.
 
-- 来源 ID：`S22`
-- 证据 ID：`E23`
-- 官方 URL：https://arxiv.org/abs/2604.02460v2
-- 证据定位：`§4.4 Table 1; §5.1; §5.3 Figure 3; Appendix F Tables 3–10`
-- 结论：不。在该直接配平实验中，single-agent scaling 在大多数条件下匹配或超过 MAS。
-- 边界：证据覆盖三个模型家族、两个 multi-hop reasoning 数据集和多个预算点；MAS 优势主要出现在单 agent 上下文被人为退化时。它不覆盖持续行动、异构权限或外部状态任务，因此不是跨任务普遍定律。
+manifest_version: 2.0.0
 
-### Q3 · Homogeneous workflow collapse
+snapshot_digest: sha256:cbe74d0293139ee118fccc4abc106f2bb713d492db4c049a9371203bb29941f3
+knowledge cutoff: 2026-07-15
 
-- 来源 ID：`S23`
-- 证据 ID：`E24`
-- 官方 URL：https://arxiv.org/abs/2601.12307v1
-- 证据定位：`§4.2 Tables 1–2; §4.2.3 Table 3; §4.2.4 Table 4`
-- 结论：不必须。OneFlow 让单 agent 顺序执行同质 MAS workflow 节点，可匹配或略优于原系统，并减少 KV-cache 与通信开销。
-- 边界：结论只针对同质 workflow。异构模型、不同权限、独立信息源或真实并行环境交互不保证可折叠，这些场景仍可能需要多 agent 或并发执行。
+### Q1
 
-### Q4 · Negative answerability
+2602.01011v4 is core because it is ICML 2026 evidence directly testing whether team consensus preserves a known expert’s judgment. Even when the team was explicitly told who the expert was, it failed to match the best individual across four conditions: the gaps were 6.3%–41.1%, and adding members intensified consensus pressure and expert dilution. This is direct counterevidence to treating consensus or team size as a correctness guarantee.
 
-- 结论：`unknown`
-- `S16` / `E17` / https://arxiv.org/abs/2512.08296v3 / `§4.2–§4.4; Figure 1; Table 2`
-- `S17` / `E18` / https://arxiv.org/abs/2602.03794v1 / `§4.1–§4.3; Figures 2–4; Tables 1–2`
-- `S21` / `E22` / https://arxiv.org/abs/2602.01011v4 / `§4.1 Table 1; §4.2 Table 2; §4.3; Appendix H`
-- 边界：manifest 没有真实企业生产任务上的 `100 vs 10` 直接实验。现有证据仅显示受控 benchmark 中收益可从 `+80.8%` 到 `-70.0%`、2 个多样化 agent 可匹配或超过 16 个同质 agent，以及扩员可能稀释专家判断；这些结果既不支持单调规模律，也不足以直接判定 100 对 10 的生产效果。
+Citation: S21 | https://arxiv.org/abs/2602.01011v4 | E22 | §4.1 Table 1; §4.2 Table 2; §4.3; Appendix H
 
-Consumer closing statement: the answers used only the specified local manifest; the consumer did not read Git, issue/comments, report, other research files, paper originals, conversation history, or the internet.
+Boundary: these are controlled collaboration/ranking tasks, not production organizations. Consensus may sometimes improve robustness, but can sacrifice the strongest expert signal.
 
-## PM-Paper manual review
+2604.07821v2 is core because it is an ICML 2026 main-conference study that directly separates individual capability from zero-cost cooperation and tests interventions. Capability did not predict cooperation: o3 achieved only 17% of optimal collective performance, versus 50% for o3-mini. Explicit protocols doubled performance for some lower-capability models, and micro-incentives improved weak cooperators. Thus stronger models are not automatically better collaborators, while cooperation can depend on protocol and incentives.
 
-Reviewer: PM-Paper. Review method: for each answer, resolve the cited evidence ID to source ID, compare official URL and locator against the manifest, then confirm that wording stays within source and claim limitations.
+Citation: S24 | https://arxiv.org/abs/2604.07821v2 | E25 | Abstract; §4–§6; Table 3
 
-| Question | IDs/URL/locator resolve | Answer matches manifest | Boundary preserved | Result |
-|---|---|---|---|---|
-| Expert dilution | S21 → E22; exact URL and locator | 6.3%–41.1%, expert reveal and core reason present | Controlled-task/robustness trade-off retained | PASS |
-| Matched budget | S22 → E23; exact URL and locator | Single-agent majority result and degraded-context exception present | Multi-hop scope and interaction-budget caveat retained | PASS |
-| Workflow collapse | S23 → E24; exact URL and locator | OneFlow effect and KV/communication saving present | Heterogeneous/permission/parallel limits retained | PASS |
-| Negative answerability | S16/S17/S21 all resolve | Correctly answered unknown; no unsupported production conclusion | No 100-vs-10 production extrapolation | PASS |
+Boundary: zero-cost games do not cover long-running tool workflows, and neither structured protocols nor micro-incentives are established as universal cooperation solutions.
 
-Overall: **4/4 PASS**. This proves manifest-only answerability for these four questions; it does not prove the underlying papers or the research corpus are error-free.
+### Q2
+
+No. Under equal thinking-token budgets, the snapshot does not support universal MAS superiority. Across three model families, two multi-hop datasets, and several budget points, single-agent scaling usually matched or exceeded MAS. MAS advantages appeared mainly when the single agent’s context was deliberately degraded.
+
+Citation: S22 | https://arxiv.org/abs/2604.02460v2 | E23 | §4.4 Table 1; §5.1; §5.3 Figure 3; Appendix F Tables 3–10
+
+Boundary: this directly concerns multi-hop reasoning. It does not establish the answer for persistent action, heterogeneous permissions, independent external state, or long-running production workflows. Outcomes in those settings are unknown without matched-budget evaluation.
+
+A homogeneous workflow does not necessarily require multiple live agents. OneFlow had one agent execute the nodes of a same-model MAS workflow sequentially while reusing KV cache; it matched or slightly outperformed the original MAS and reduced KV-cache and communication overhead.
+
+Citation: S23 | https://arxiv.org/abs/2601.12307v1 | E24 | §4.2 Tables 1–2; §4.2.3 Table 3; §4.2.4 Table 4
+
+Boundary: the result is limited to homogeneous workflows. Heterogeneous models, distinct permissions, genuinely parallel environment interaction, or independent information sources may not be collapsible and can still require multiple live agents.
+
+### Q3
+
+Silo-Bench separates communication from reasoning within the distributed team. It places private information in agent silos, observes whether information was exchanged, and independently checks whether the distributed state was correctly integrated into the answer. Across 30 tasks, 54 configurations, and 1,620 experiments, it found a Communication–Reasoning Gap: messages could be exchanged without successful joint reasoning. Premature conclusions, false consensus, and calculation errors were major failure modes.
+
+Citation: S25 | https://arxiv.org/abs/2603.01045v2 | E26 | §3–§5; §5.2 Table 4; Figures 4–6
+
+HiddenBench uses a complementary outcome comparison. It distributes task-critical information among agents, then compares the resulting MAS against a single agent given the complete input. Across 65 hidden-profile tasks, distributed MAS completed 30.1%, versus 80.7% for the full-information single agent; increasing model scale did not reliably remove the integration failure.
+
+Citation: S26 | https://arxiv.org/abs/2505.11556v4 | E27 | Abstract; §3; §4.2; Tables 1–2; §5
+
+Together, Silo-Bench diagnoses “messages arrived but reasoning failed,” while HiddenBench quantifies the loss caused by distributing information relative to centralized full information.
+
+Boundaries: both use controlled tasks. Their task structures differ, and neither captures all production complications such as permissions, latency, asynchronous failures, or long-horizon organizational dynamics.
+
+### Q4
+
+No. LatentMAS’s headline results do not prove that learned alignment matrices or cross-agent transfer are universally necessary. The original work reported, over nine benchmarks, gains as high as +14.6 accuracy points, output-token reductions of 70.8%–83.7%, and roughly 4× speed. These are performance results, not universal necessity proofs.
+
+Citation: S15 | https://arxiv.org/abs/2511.20639v3 | E16 | §4.1 Table 1; Appendix D Tables 3–5
+
+Direct follow-up counterevidence found no significant decline with an identity matrix; on some tasks, removing cross-agent transfer was equal or better; and text communication outperformed latent communication on coding tasks.
+
+Citation: S27 | https://openreview.net/forum?id=manXhfpRH3 | E28 | §4.1 Table 1; §4.2–§4.3; Appendix C
+
+Boundary: the counterevidence is an ICML 2026 workshop study, so it narrows the claim rather than proving latent mechanisms are never useful. General auditability, interoperability, security, and cross-task necessity remain unresolved.
+
+At the cutoff, we cannot assert that 100 production agents are necessarily stronger than 10. The exact 100-versus-10 production comparison is absent, so that proposition is unknown. Available evidence argues against a monotonic size law:
+
+MacNet showed that systems can run at thousand-node scale, but did not establish a cross-task, equal-budget universal scaling advantage.
+
+Citation: S09 | https://arxiv.org/abs/2406.07155v3 | E09 | Abstract; §3–§5
+
+Across 260 controlled configurations, MAS performance relative to a single agent ranged from +80.8% to −70.0%, showing that architecture-task alignment can reverse the direction of benefit.
+
+Citation: S16 | https://arxiv.org/abs/2512.08296v3 | E17 | §4.2–§4.4; Figure 1; Table 2
+
+Known-expert experiments also found that additional members could worsen expert dilution.
+
+Citation: S21 | https://arxiv.org/abs/2602.01011v4 | E22 | §4.1 Table 1; §4.2 Table 2; §4.3; Appendix H
+
+The manifest screened 49 candidate papers and selected 18 core papers—8 foundational/typical and 10 frontier—with 27 source records. These are manifest selection statistics, not evidence that exhausts the literature or validates a production scaling law. The corpus is not a systematic-review-level exhaustive sample, benchmarks skew toward mathematics, code, QA, and software engineering, and production incentives, permissions, security, long-term learning, model drift, concurrency, and budget effects remain insufficiently tested.
+
+### COMPLIANCE STATEMENT
+
+I complied with the stated boundary: only the named immutable snapshot was read, substantive claims came only from evidence_payload, every used research source is identified by source ID, official URL, evidence ID, and locator, and unsupported propositions are marked unknown.
+
+## PM manual review
+
+`4/4 PASS`. Every cited evidence ID was resolved to its source ID, official URL and stable locator in the immutable snapshot. Numbers, selection counts, unknowns and scope boundaries matched the same input. The machine-readable review is `consumer-attestation.v2.json`; its digest is independently recomputable and excluded from the evidence snapshot digest.

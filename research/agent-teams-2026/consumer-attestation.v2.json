@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0.0",
+  "attestation_version": "1.0.0",
+  "attestation_digest": "sha256:b4afd78740fda621350c71ea18e97d10fd68e82b5da40fe59109fa46b533b825",
+  "digest_method": "SHA-256 of recursively key-sorted JSON after omitting top-level attestation_digest",
+  "status": "passed_candidate_trial",
+  "completed_on": "2026-07-15",
+  "time_precision": "day",
+  "consumer_identity": "/root/manifest_consumer_v2_candidate2",
+  "runtime": "Codex native sub-agent",
+  "prior_involvement": "none",
+  "manifest_version": "2.0.0",
+  "snapshot_digest": "sha256:cbe74d0293139ee118fccc4abc106f2bb713d492db4c049a9371203bb29941f3",
+  "input_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/a6d4385ffc87efbe2572edfaae8eb9e49e39e20e/site/reports/agent-teams-2026/data/evidence-snapshot.v2.json",
+  "input_boundary": "immutable evidence snapshot only; no release manifest, report, research notes, Git history, issue, conversation history, paper originals or internet",
+  "transcript_path": "research/agent-teams-2026/manifest-consumer-validation.v2.md",
+  "question_results": [
+    {
+      "question_id": "Q1",
+      "result": "PASS",
+      "citation_review": [
+        { "source_id": "S21", "official_url": "https://arxiv.org/abs/2602.01011v4", "evidence_id": "E22", "locator": "§4.1 Table 1; §4.2 Table 2; §4.3; Appendix H" },
+        { "source_id": "S24", "official_url": "https://arxiv.org/abs/2604.07821v2", "evidence_id": "E25", "locator": "Abstract; §4–§6; Table 3" }
+      ],
+      "manual_review": "All numbers, core decisions and scope boundaries resolve exactly in the snapshot."
+    },
+    {
+      "question_id": "Q2",
+      "result": "PASS",
+      "citation_review": [
+        { "source_id": "S22", "official_url": "https://arxiv.org/abs/2604.02460v2", "evidence_id": "E23", "locator": "§4.4 Table 1; §5.1; §5.3 Figure 3; Appendix F Tables 3–10" },
+        { "source_id": "S23", "official_url": "https://arxiv.org/abs/2601.12307v1", "evidence_id": "E24", "locator": "§4.2 Tables 1–2; §4.2.3 Table 3; §4.2.4 Table 4" }
+      ],
+      "manual_review": "The answer rejects universal superiority and preserves multi-hop, homogeneous-workflow and heterogeneous-production boundaries."
+    },
+    {
+      "question_id": "Q3",
+      "result": "PASS",
+      "citation_review": [
+        { "source_id": "S25", "official_url": "https://arxiv.org/abs/2603.01045v2", "evidence_id": "E26", "locator": "§3–§5; §5.2 Table 4; Figures 4–6" },
+        { "source_id": "S26", "official_url": "https://arxiv.org/abs/2505.11556v4", "evidence_id": "E27", "locator": "Abstract; §3; §4.2; Tables 1–2; §5" }
+      ],
+      "manual_review": "The answer distinguishes message exchange from reasoning integration and states both benchmark scales and controlled-task limits."
+    },
+    {
+      "question_id": "Q4",
+      "result": "PASS",
+      "citation_review": [
+        { "source_id": "S15", "official_url": "https://arxiv.org/abs/2511.20639v3", "evidence_id": "E16", "locator": "§4.1 Table 1; Appendix D Tables 3–5" },
+        { "source_id": "S27", "official_url": "https://openreview.net/forum?id=manXhfpRH3", "evidence_id": "E28", "locator": "§4.1 Table 1; §4.2–§4.3; Appendix C" },
+        { "source_id": "S09", "official_url": "https://arxiv.org/abs/2406.07155v3", "evidence_id": "E09", "locator": "Abstract; §3–§5" },
+        { "source_id": "S16", "official_url": "https://arxiv.org/abs/2512.08296v3", "evidence_id": "E17", "locator": "§4.2–§4.4; Figure 1; Table 2" },
+        { "source_id": "S21", "official_url": "https://arxiv.org/abs/2602.01011v4", "evidence_id": "E22", "locator": "§4.1 Table 1; §4.2 Table 2; §4.3; Appendix H" }
+      ],
+      "manual_review": "The answer uses the direct LatentMAS contradiction, marks 100-vs-10 production performance unknown, and reports 49 candidates / 18 core / 27 sources accurately."
+    }
+  ],
+  "manual_review": {
+    "reviewer": "PM-Paper",
+    "result": "4/4 PASS",
+    "method": "Resolved every cited evidence ID to its source ID, official URL and stable locator in the immutable snapshot; checked numbers, selection counts, unknowns and scope boundaries against the same input."
+  }
+}
