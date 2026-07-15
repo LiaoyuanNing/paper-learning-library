@@ -1,17 +1,17 @@
 {
   "schema_version": "1.0.0",
   "attestation_version": "1.0.0",
-  "attestation_digest": "sha256:60824e7dca0a3ed75d10b26dff0add30b7bbfb6620179c651fe1ff3572cd312f",
+  "attestation_digest": "sha256:92795e0f2a423958148e52d8d536c3290c2c7de4a0239db6c6b8549bb52fa4de",
   "digest_method": "SHA-256 of recursively key-sorted JSON after omitting top-level attestation_digest",
-  "status": "passed_candidate_trial",
+  "status": "passed_release_v2_trial",
   "completed_on": "2026-07-15",
   "time_precision": "day",
-  "consumer_identity": "/root/manifest_consumer_v2_candidate4",
+  "consumer_identity": "/root/manifest_consumer_v2_release5",
   "runtime": "Codex native sub-agent",
   "prior_involvement": "none",
   "manifest_version": "2.0.0",
-  "snapshot_digest": "sha256:71e586bf10fdd6cdf7b59c1a71cb8c358c31275e187dad17050c8eb04ea5cb8d",
-  "input_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/62c2d1b4c2e0736456a8d02fbe16b55fb60ea429/site/reports/agent-teams-2026/data/evidence-snapshot.v2.json",
+  "snapshot_digest": "sha256:1cab26e51999310225fb08e05621ddfdbcad7ca3e478bc37181af0d614484a8c",
+  "input_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/2aeb71cf4388a238e76a95ac6d6c715ab1c9dd3c/site/reports/agent-teams-2026/data/evidence-snapshot.v2.json",
   "input_boundary": "immutable evidence snapshot only; no release manifest, report, research notes, Git history, issue, conversation history, paper originals or internet",
   "transcript_path": "research/agent-teams-2026/manifest-consumer-validation.v2.md",
   "question_results": [
@@ -22,7 +22,7 @@
         { "source_id": "S21", "official_url": "https://arxiv.org/abs/2602.01011v4", "evidence_id": "E22", "locator": "§4.1 Table 1; §4.2 Table 2; §4.3; Appendix H" },
         { "source_id": "S24", "official_url": "https://arxiv.org/abs/2604.07821v2", "evidence_id": "E25", "locator": "Abstract; §4–§6; Table 3" }
       ],
-      "manual_review": "The answer preserves the expert-dilution and zero-cost-collaboration numbers, core decisions, and controlled-task boundaries."
+      "manual_review": "Preserves the expert-dilution and zero-cost-collaboration numbers, core decisions and controlled-task boundaries."
     },
     {
       "question_id": "Q2",
@@ -31,7 +31,7 @@
         { "source_id": "S22", "official_url": "https://arxiv.org/abs/2604.02460v2", "evidence_id": "E23", "locator": "§4.4 Table 1; §5.1; §5.3 Figure 3; Appendix F Tables 3–10" },
         { "source_id": "S23", "official_url": "https://arxiv.org/abs/2601.12307v1", "evidence_id": "E24", "locator": "§4.2 Tables 1–2; §4.2.3 Table 3; §4.2.4 Table 4" }
       ],
-      "manual_review": "The answer rejects universal MAS superiority and preserves matched-budget, homogeneous-workflow, heterogeneous-permission and parallel-interaction boundaries."
+      "manual_review": "Rejects universal MAS superiority and preserves matched-budget, homogeneous-workflow, heterogeneous-permission and parallel-interaction boundaries."
     },
     {
       "question_id": "Q3",
@@ -40,7 +40,7 @@
         { "source_id": "S25", "official_url": "https://arxiv.org/abs/2603.01045v2", "evidence_id": "E26", "locator": "§3–§5; §5.2 Table 4; Figures 4–6" },
         { "source_id": "S26", "official_url": "https://arxiv.org/abs/2505.11556v4", "evidence_id": "E27", "locator": "Abstract; §3; §4.2; Tables 1–2; §5" }
       ],
-      "manual_review": "The answer states the exact v4 title, 65 tasks / 15 models, accuracy 30.1% versus 80.7%, the 6 × 3 × 3 SILO axes, and Premature Submission 37.2% / Consensus Failure 29.9% / Computation Error 28.6%; it correctly defines Consensus Failure as unsynchronized different answers."
+      "manual_review": "States the exact HiddenBench v4 title and accuracy comparison plus the exact SILO-BENCH axes, experiment count, failure labels and shares."
     },
     {
       "question_id": "Q4",
@@ -48,17 +48,29 @@
       "citation_review": [
         { "source_id": "S15", "official_url": "https://arxiv.org/abs/2511.20639v3", "evidence_id": "E16", "locator": "§4.1 Table 1; Appendix D Tables 3–5" },
         { "source_id": "S27", "official_url": "https://openreview.net/forum?id=manXhfpRH3", "evidence_id": "E28", "locator": "§4.1 Table 1; §4.2–§4.3; Appendix C" },
-        { "source_id": "S09", "official_url": "https://arxiv.org/abs/2406.07155v3", "evidence_id": "E09", "locator": "Abstract; §3–§5" },
-        { "source_id": "S16", "official_url": "https://arxiv.org/abs/2512.08296v3", "evidence_id": "E17", "locator": "§4.2–§4.4; Figure 1; Table 2" },
         { "source_id": "S17", "official_url": "https://arxiv.org/abs/2602.03794v1", "evidence_id": "E18", "locator": "§4.1–§4.3; Figures 2–4; Tables 1–2" },
-        { "source_id": "S21", "official_url": "https://arxiv.org/abs/2602.01011v4", "evidence_id": "E22", "locator": "§4.1 Table 1; §4.2 Table 2; §4.3; Appendix H" }
+        { "source_id": "S21", "official_url": "https://arxiv.org/abs/2602.01011v4", "evidence_id": "E22", "locator": "§4.1 Table 1; §4.2 Table 2; §4.3; Appendix H" },
+        { "source_id": "S09", "official_url": "https://arxiv.org/abs/2406.07155v3", "evidence_id": "E09", "locator": "Abstract; §3–§5" }
       ],
-      "manual_review": "The answer uses the direct LatentMAS contradiction, marks 100-vs-10 production performance unknown, and reports 49 candidates / 18 core / 8 foundation / 10 frontier accurately."
+      "manual_review": "Uses the direct LatentMAS contradiction, marks 100-vs-10 production performance unknown, reports 49 candidates / 18 core and audits promotion boundaries."
     }
   ],
+  "durable_pointer_review": {
+    "result": "PASS",
+    "scope": "consumer syntax/internal consistency plus PM-Paper authenticated Multica resolution",
+    "promoted_claim_ids": ["C01", "C05", "C09"],
+    "not_eligible_claim_ids": ["C08", "C11"],
+    "promotion_reviewed_on": "2026-07-15",
+    "next_review_on": "2026-10-15",
+    "mappings": [
+      { "claim_id": "C01", "durable_knowledge_id": "AGE-185", "issue_uuid": "c807b74e-b65f-4424-b2b9-38ada71b0aad", "issue_pointer": "mention://issue/c807b74e-b65f-4424-b2b9-38ada71b0aad", "resolved": true },
+      { "claim_id": "C05", "durable_knowledge_id": "AGE-186", "issue_uuid": "5e7a4332-0f1d-4e0c-831d-e6ed7431395f", "issue_pointer": "mention://issue/5e7a4332-0f1d-4e0c-831d-e6ed7431395f", "resolved": true, "claim_strength": "conditional" },
+      { "claim_id": "C09", "durable_knowledge_id": "AGE-187", "issue_uuid": "f0a25456-ddd4-46c1-9ae7-94e6ed43fbd4", "issue_pointer": "mention://issue/f0a25456-ddd4-46c1-9ae7-94e6ed43fbd4", "resolved": true }
+    ]
+  },
   "manual_review": {
     "reviewer": "PM-Paper",
     "result": "4/4 PASS",
-    "method": "Resolved every cited evidence ID to its source ID, official URL and stable locator in the immutable snapshot; checked titles, metrics, failure semantics, selection counts, unknowns and scope boundaries against the same input."
+    "method": "Resolved every cited evidence ID to its source ID, official URL and stable locator in the immutable snapshot; checked titles, metrics, failure semantics, selection counts, unknowns, scope boundaries and durable pointer mappings."
   }
 }

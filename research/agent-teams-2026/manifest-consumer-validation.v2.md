@@ -1,88 +1,73 @@
-# Independent evidence-snapshot consumer transcript · v2 candidate
+# Independent evidence-snapshot consumer transcript · v2
 
-## Attested input boundary
+## Input boundary
 
-- Consumer identity: `/root/manifest_consumer_v2_candidate4`
-- Prior research involvement: none
+- Consumer identity: `/root/manifest_consumer_v2_release5`
+- Prior involvement: none; this consumer did not participate in the research or earlier consumer trials.
+- Sole input: `https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/2aeb71cf4388a238e76a95ac6d6c715ab1c9dd3c/site/reports/agent-teams-2026/data/evidence-snapshot.v2.json`
 - Manifest version: `2.0.0`
-- Snapshot digest: `sha256:71e586bf10fdd6cdf7b59c1a71cb8c358c31275e187dad17050c8eb04ea5cb8d`
-- Immutable input URL: `https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/62c2d1b4c2e0736456a8d02fbe16b55fb60ea429/site/reports/agent-teams-2026/data/evidence-snapshot.v2.json`
-- Allowed input: only the named local copy of that immutable snapshot; substantive answers use only `evidence_payload`.
-- Forbidden inputs: release manifest, report, research notes, Git, issue/comments, conversation history, paper originals and internet.
-- Trial status: candidate-only; rerun after Librarian promotion before final digest/release.
+- Snapshot digest: `sha256:1cab26e51999310225fb08e05621ddfdbcad7ca3e478bc37181af0d614484a8c`
+- Excluded inputs: release manifest, report, research notes, Git history, issue, conversation history, paper originals and internet.
+- Requested output: answer the four questions below with source ID, official URL, evidence ID and locator; report unknowns; audit the promoted durable pointers and review contract.
 
-## Verbatim consumer response
+## Questions given to the consumer
 
-### INPUT BOUNDARY
+1. Why were `2602.01011v4` and `2604.07821v2` included in core? Give key counter-results/numbers for known expert + team consensus and capability + zero-cost collaboration.
+2. Under equal thinking-token budgets, can we say MAS generally outperforms a single agent? Does a homogeneous workflow necessarily require multiple concurrently running agents? Give direct evidence and boundaries.
+3. How do Silo-Bench and HiddenBench distinguish messages exchanged from distributed information correctly integrated? Give experimental scales, results and boundaries.
+4. Do LatentMAS headline results prove learned alignment matrices and cross-agent transfer are generally necessary? At cutoff, can we assert 100 production agents are always stronger than 10? Give direct contradictions, 49-candidate/18-core counts and non-extrapolations. Also audit C01/C05/C09 durable knowledge IDs, issue pointers for syntactic resolvability, promotion/next-review dates and revalidation triggers; confirm C05 remains `conditional` and C08/C11 remain `not_eligible`.
 
-Sole input:
-paper-learning-library/site/reports/agent-teams-2026/data/evidence-snapshot.v2.json
+## Consumer response (verbatim)
 
-Snapshot identity:
-manifest_version: 2.0.0
-snapshot_digest: sha256:71e586bf10fdd6cdf7b59c1a71cb8c358c31275e187dad17050c8eb04ea5cb8d
-immutable input URL: https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/62c2d1b4c2e0736456a8d02fbe16b55fb60ea429/site/reports/agent-teams-2026/data/evidence-snapshot.v2.json
+Canonical agent identity: `/root/manifest_consumer_v2_release5`
 
-The version and digest above identify the snapshot only. All substantive answers below derive solely from evidence_payload.
+- Sole input URL: `https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/2aeb71cf4388a238e76a95ac6d6c715ab1c9dd3c/site/reports/agent-teams-2026/data/evidence-snapshot.v2.json`
+- `manifest_version`: `2.0.0`
+- `snapshot_digest`: `sha256:1cab26e51999310225fb08e05621ddfdbcad7ca3e478bc37181af0d614484a8c`
+- Digest check: PASS. Recomputing the canonical `evidence_payload` with the manifest’s stated key-sorting and omission rules produced exactly `sha256:1cab26e51999310225fb08e05621ddfdbcad7ca3e478bc37181af0d614484a8c`, matching the outer `snapshot_digest`.
 
-### Q1
+### Q1 — Why the two papers entered core
 
-2602.01011v4 is core because it is direct ICML 2026 counterevidence to the assumption that a team preserves a known expert’s superior judgment. It compares no-expert, implicit-expert, explicitly revealed-expert, and identified-best-individual conditions across four collaboration/ranking task classes and varying team compositions. Even when the expert was explicitly revealed, the team did not match the best individual: gaps ranged from 6.3% to 41.1%, and adding members intensified consensus-driven expert dilution. [Source ID: S21 | official URL: https://arxiv.org/abs/2602.01011v4 | Evidence ID: E22 | locator: §4.1 Table 1; §4.2 Table 2; §4.3; Appendix H]
+- `2602.01011v4` was included because it is ICML 2026 direct counterevidence against “known expert + team consensus” and monotonic scale claims. Even when teams were explicitly told who the expert was, they failed to match the best individual across four conditions, with gaps of 6.3%–41.1%; adding members aggravated expert dilution through consensus pressure. Source `S21`, official URL `https://arxiv.org/abs/2602.01011v4`, evidence `E22`, locator `§4.1 Table 1; §4.2 Table 2; §4.3; Appendix H`.
+- `2604.07821v2` was included because it is an ICML 2026 main-conference result directly separating individual capability from zero-cost cooperation and testing protocol/incentive interventions. o3 achieved only 17% of optimal collective performance, versus 50% for o3-mini; explicit protocols doubled performance for some less-capable models, and micro-incentives improved weak cooperators. Source `S24`, official URL `https://arxiv.org/abs/2604.07821v2`, evidence `E25`, locator `Abstract; §4–§6; Table 3`.
+- Boundary: controlled consensus/collaboration tasks do not establish behavior in long-running production tool workflows, and the interventions are not universal cooperation solutions.
 
-This does not establish that consensus is always harmful. The evidence_payload says consensus can sometimes improve robustness, but may trade away the strongest expert signal. Its tasks are controlled experiments, not production organizations, so production authority design and long-horizon external validity remain unknown. [Source ID: S21 | official URL: https://arxiv.org/abs/2602.01011v4 | Evidence ID: E22 | locator: §4.1 Table 1; §4.2 Table 2; §4.3; Appendix H]
+### Q2 — Equal-budget MAS and homogeneous workflows
 
-2604.07821v2 is core because it directly separates individual capability from zero-cost cooperation and includes protocol and incentive interventions. Capability did not predict cooperation: o3 reached only 17% of optimal collective performance, versus 50% for o3-mini. Explicit protocols doubled performance for some lower-capability models, while micro-incentives improved weakly cooperative models. [Source ID: S24 | official URL: https://arxiv.org/abs/2604.07821v2 | Evidence ID: E25 | locator: Abstract; §4–§6; Table 3]
+- No, the manifest does not support saying MAS generally outperforms a single agent under equal thinking-token budgets. Across three model families, two multi-hop datasets, and matched thinking-token budgets, single-agent scaling usually matched or exceeded MAS; MAS advantages mainly appeared when the single agent’s context was deliberately degraded. Source `S22`, official URL `https://arxiv.org/abs/2604.02460v2`, evidence `E23`, locator `§4.4 Table 1; §5.1; §5.3 Figure 3; Appendix F Tables 3–10`.
+- A homogeneous workflow does not necessarily require multiple concurrently running agents. OneFlow sequentially replayed homogeneous MAS workflow nodes with one agent and KV-cache reuse, matching or slightly exceeding the original systems while reducing cache and communication overhead. Source `S23`, official URL `https://arxiv.org/abs/2601.12307v1`, evidence `E24`, locator `§4.2 Tables 1–2; §4.2.3 Table 3; §4.2.4 Table 4`.
+- Boundaries: the equal-budget evidence concerns multi-hop reasoning, not persistent action, heterogeneous permissions, or external state. OneFlow’s result is confined to homogeneous workflows; heterogeneous models, independent information sources, and genuinely parallel environment interaction may still require multiple agents.
 
-The boundary is important: these are zero-cost collaboration games, not long-running tool workflows. The protocol and micro-incentive effects therefore do not establish a universal cooperation remedy. [Source ID: S24 | official URL: https://arxiv.org/abs/2604.07821v2 | Evidence ID: E25 | locator: Abstract; §4–§6; Table 3]
+### Q3 — Messages exchanged versus information integrated
 
-Together, the two core papers counter two simple assumptions: known expertise plus consensus does not guarantee preservation of the expert answer, and stronger individual capability does not guarantee stronger unpriced cooperation.
+- Silo-Bench distributes private information into agent silos and varies team size and communication protocol, then separately diagnoses whether communication occurred and whether the communicated information produced correct joint reasoning—the Communication–Reasoning Gap. It used 30 tasks, 6 team sizes × 3 protocols × 3 models = 54 configurations and 1,620 experiments. Its major failures were Premature Submission 37.2%, Consensus Failure 29.9%, and Computation Error 28.6%. Source `S25`, official URL `https://arxiv.org/abs/2603.01045v2`, evidence `E26`, locator `§3–§5; §5.2 Table 4; Figures 4–6`.
+- HiddenBench distributes required hidden-profile facts across agents and compares that team with a single agent given all information. Across 65 tasks and 15 models, distributed MAS accuracy was 30.1% versus 80.7% for the full-information single agent; larger models did not reliably remove the integration failure. Source `S26`, official URL `https://arxiv.org/abs/2505.11556v4`, evidence `E27`, locator `Abstract; §3; §4.2; Tables 1–2; §5`.
+- Boundaries: both are controlled benchmarks. Silo-Bench does not cover the richer permissions, latency, and asynchronous failures of production systems; HiddenBench’s 65 tasks do not represent all long-term collaboration, and its task structure differs from Silo-Bench.
 
-### Q2
+### Q4 — LatentMAS necessity, scale and selection boundaries
 
-No. Under equal thinking-token budgets, the evidence does not support saying that MAS universally outperforms a single agent. Across three model families, two multi-hop reasoning datasets, multiple budget points, and information-degradation conditions, single-agent scaling matched or exceeded MAS in most matched-budget conditions. MAS showed a bounded advantage mainly when the single agent’s context was artificially degraded. [Source ID: S22 | official URL: https://arxiv.org/abs/2604.02460v2 | Evidence ID: E23 | locator: §4.4 Table 1; §5.1; §5.3 Figure 3; Appendix F Tables 3–10]
+- No. LatentMAS’s headline results—up to +14.6 accuracy, 70.8%–83.7% fewer output tokens, and roughly 4× speed—show task-level performance, not that learned alignment matrices or cross-agent transfer are generally necessary. Source `S15`, official URL `https://arxiv.org/abs/2511.20639v3`, evidence `E16`, locator `§4.1 Table 1; Appendix D Tables 3–5`.
+- Direct contradiction: a follow-up found no significant degradation with an identity matrix; removing cross-agent transfer was equal or better on some tasks, and text communication beat latent communication on code tasks. Source `S27`, official URL `https://openreview.net/forum?id=manXhfpRH3`, evidence `E28`, locator `§4.1 Table 1; §4.2–§4.3; Appendix C`.
+- The exact proposition “100 production agents are always stronger than 10” is unknown: the manifest contains no exact 100-versus-10 production comparison. It cannot be asserted. Direct evidence also contradicts a general monotonic scale law:
+  - Two diverse agents matched or exceeded 16 homogeneous agents. Source `S17`, official URL `https://arxiv.org/abs/2602.03794v1`, evidence `E18`, locator `§4.1–§4.3; Figures 2–4; Tables 1–2`.
+  - More members worsened known-expert dilution. Source `S21`, official URL `https://arxiv.org/abs/2602.01011v4`, evidence `E22`, locator `§4.1 Table 1; §4.2 Table 2; §4.3; Appendix H`.
+  - Thousand-node operation demonstrates scalability, not a cross-task, equal-budget performance law. Source `S09`, official URL `https://arxiv.org/abs/2406.07155v3`, evidence `E09`, locator `Abstract; §3–§5`.
+- Manifest-level selection counts: 49 candidates and 18 core papers (`selection_protocol.candidate_count/core_count`); these are curation metadata, so no scholarly source/evidence ID applies. They do not justify extrapolation to all papers, post-cutoff revisions, real organizations, production-scale teams, or a universal agent-count law.
 
-That result is not a universal claim that single agents always win either. It is concentrated on multi-hop reasoning and does not replace evaluation of persistent action, heterogeneous permissions, external state, or environment-interaction budgets. [Source ID: S22 | official URL: https://arxiv.org/abs/2604.02460v2 | Evidence ID: E23 | locator: §4.4 Table 1; §5.1; §5.3 Figure 3; Appendix F Tables 3–10]
+### Pointer and promotion audit
 
-A homogeneous workflow also does not necessarily require multiple concurrently running agents. OneFlow replayed homogeneous MAS workflow nodes sequentially through one agent, reused KV cache, matched or slightly exceeded the original systems, and reduced communication/KV-cache overhead. [Source ID: S23 | official URL: https://arxiv.org/abs/2601.12307v1 | Evidence ID: E24 | locator: §4.2 Tables 1–2; §4.2.3 Table 3; §4.2.4 Table 4]
+| Claim | Durable ID | Pointer audit | Reviewed / next review | Revalidation triggers |
+|---|---|---|---|---|
+| C01 | `AGE-185` | `mention://issue/c807b74e-b65f-4424-b2b9-38ada71b0aad` — valid URI/UUID syntax and UUID matches `issue_uuid` | 2026-07-15 / 2026-10-15 | Manifest superseded/retracted; same-budget cross-task counterevidence; application to production continuous-action workflow |
+| C05 | `AGE-186` | `mention://issue/5e7a4332-0f1d-4e0c-831d-e6ed7431395f` — valid URI/UUID syntax and UUID matches `issue_uuid` | 2026-07-15 / 2026-10-15 | Budget definition or baseline changes; cross-task matched-budget counterevidence; persistent-action evaluation |
+| C09 | `AGE-187` | `mention://issue/f0a25456-ddd4-46c1-9ae7-94e6ed43fbd4` — valid URI/UUID syntax and UUID matches `issue_uuid` | 2026-07-15 / 2026-10-15 | Better workflow evaluation method; material trace/cost availability change; later manifest revision |
 
-The foldability boundary is explicit: heterogeneous models and genuinely parallel interactions are not guaranteed to collapse. Distinct permissions, independent information sources, or concurrent environment actions may still require multiple running agents; whether they do in any particular production workflow is unknown from this evidence. [Source ID: S23 | official URL: https://arxiv.org/abs/2601.12307v1 | Evidence ID: E24 | locator: §4.2 Tables 1–2; §4.2.3 Table 3; §4.2.4 Table 4]
+This is a syntax/internal-consistency audit only; live issue existence or permissions are unknown under the one-file boundary. C05 remains `conditional`. C08 and C11 remain `not_eligible`.
 
-### Q3
-
-Silo-Bench tests whether agents can transform siloed private information into correct joint reasoning, explicitly separating message availability from successful reasoning over those messages. Its exact scale is 30 tasks across 6 team sizes × 3 communication protocols × 3 models, yielding 54 configurations and 1,620 experiments. [Source ID: S25 | official URL: https://arxiv.org/abs/2603.01045v2 | Evidence ID: E26 | locator: §3–§5; §5.2 Table 4; Figures 4–6]
-
-Its reported diagnostic is the Communication–Reasoning Gap plus a failure decomposition, not the 30.1%/80.7% accuracy comparison below. The principal failure labels and shares are Premature Submission, 37.2%; Consensus Failure, 29.9%; and Computation Error, 28.6%. Consensus Failure means multiple agents submitted different answers and did not synchronize; it does not mean that the agents reached a shared but wrong consensus. [Source ID: S25 | official URL: https://arxiv.org/abs/2603.01045v2 | Evidence ID: E26 | locator: §3–§5; §5.2 Table 4; Figures 4–6]
-
-The manifest does not provide an aggregate Silo-Bench accuracy or task-completion percentage, so either value is unknown. Its controlled environment also does not capture all production permission, latency, and asynchronous-failure behavior. [Source ID: S25 | official URL: https://arxiv.org/abs/2603.01045v2 | Evidence ID: E26 | locator: §3–§5; §5.2 Table 4; Figures 4–6]
-
-The exact v4 official title of 2505.11556v4 is “Systematic Failures in Collective Reasoning under Distributed Information in Multi-Agent LLMs.” Its HiddenBench setup contains 65 hidden-profile tasks and 15 models, comparing a distributed MAS whose necessary information is split among agents against a single agent given the complete information. [Source ID: S26 | official URL: https://arxiv.org/abs/2505.11556v4 | Evidence ID: E27 | locator: Abstract; §3; §4.2; Tables 1–2; §5]
-
-Here the reported result terminology is accuracy, not completion: distributed MAS accuracy was 30.1%, while full-information single-agent accuracy was 80.7%. Increasing model scale did not reliably remove the integration failure. [Source ID: S26 | official URL: https://arxiv.org/abs/2505.11556v4 | Evidence ID: E27 | locator: Abstract; §3; §4.2; Tables 1–2; §5]
-
-Thus, Silo-Bench diagnoses where coordination fails after communication, while HiddenBench quantifies the outcome gap between distributed and centrally complete information. They cross-check the same broad distinction—information exchange is not correct integration—but use different task structures and metrics. HiddenBench’s 65 controlled tasks do not represent all long-horizon collaboration, and the manifest establishes no additional experiment axes beyond those listed above. [Source ID: S26 | official URL: https://arxiv.org/abs/2505.11556v4 | Evidence ID: E27 | locator: Abstract; §3; §4.2; Tables 1–2; §5]
-
-### Q4
-
-No. LatentMAS headline results do not prove that learned alignment matrices or cross-agent transfer are universally necessary. The original work reported, over nine benchmarks, up to +14.6 accuracy, a 70.8%–83.7% reduction in output tokens, and roughly 4–4.3× speed. Those are system-level headline results, not necessity tests for every internal component. [Source ID: S15 | official URL: https://arxiv.org/abs/2511.20639v3 | Evidence ID: E16 | locator: §4.1 Table 1; Appendix D Tables 3–5]
-
-Direct counterevidence found no significant degradation from replacing the learned alignment matrix with an identity matrix. On some tasks, removing cross-agent transfer was equivalent or better, and on code tasks textual communication outperformed latent communication. Universal necessity is therefore contradicted directly. [Source ID: S27 | official URL: https://openreview.net/forum?id=manXhfpRH3 | Evidence ID: E28 | locator: §4.1 Table 1; §4.2–§4.3; Appendix C]
-
-At the 2026-07-15 cutoff, the evidence also does not support claiming that 100 production agents are necessarily stronger than 10. A system operating at thousand-node scale establishes scalability, not an equal-budget, cross-task performance law. [Source ID: S09 | official URL: https://arxiv.org/abs/2406.07155v3 | Evidence ID: E09 | locator: Abstract; §3–§5]
-
-Across 260 configurations, six agentic benchmarks, and three LLM families, MAS effects relative to single-agent systems ranged from +80.8% to -70.0%, showing that architecture-task alignment can reverse the direction of benefit. [Source ID: S16 | official URL: https://arxiv.org/abs/2512.08296v3 | Evidence ID: E17 | locator: §4.2–§4.4; Figure 1; Table 2]
-
-Additional counterevidence shows that two diverse agents could match or exceed sixteen homogeneous agents, although that result comes from a workshop paper and its diversity measure is not yet established as a production-online metric. [Source ID: S17 | official URL: https://arxiv.org/abs/2602.03794v1 | Evidence ID: E18 | locator: §4.1–§4.3; Figures 2–4; Tables 1–2]
-
-Larger teams can also worsen explicitly identified expert dilution rather than strengthen performance. [Source ID: S21 | official URL: https://arxiv.org/abs/2602.01011v4 | Evidence ID: E22 | locator: §4.1 Table 1; §4.2 Table 2; §4.3; Appendix H]
-
-The evidence_payload’s curation ledger contains 49 candidate papers and 18 core papers, specifically 8 foundation/typical and 10 frontier papers. These are literature-selection counts, not evidence that any particular production agent count is optimal.
-
-Unknown and non-extrapolable at the cutoff: there is no direct 10-versus-100 production-agent comparison in this snapshot; no established monotonic production scaling law; and no supported universal answer for long-horizon work with permissions, asynchronous external actions, correlated failures, latency, auditability, interoperability, safety, or full lifecycle cost. Those propositions remain unknown.
-
-### COMPLIANCE STATEMENT
-
-I read only the specified local manifest. I did not inspect any other file, Git history, issue/comment, conversation, report, research note, paper original, or internet source. I used the top-level manifest_version and snapshot_digest only to identify the snapshot. Every substantive research claim came from evidence_payload and includes its source ID, official URL, evidence ID, and locator. Unsupported propositions were marked unknown. No files were edited.
+Self-assessment: Q1 PASS · Q2 PASS · Q3 PASS · Q4 PASS · pointer audit PASS.
 
 ## PM manual review
 
-`4/4 PASS`. PM-Paper resolved every cited evidence ID to its source ID, official URL and stable locator in the immutable snapshot. The review specifically confirmed the v4 title `Systematic Failures in Collective Reasoning under Distributed Information in Multi-Agent LLMs`, accuracy rather than completion for 30.1%/80.7%, the 6 × 3 × 3 SILO-BENCH axes, and the exact Table 4 labels and shares. The machine-readable review is `consumer-attestation.v2.json`; its digest is independently recomputable and excluded from the evidence snapshot digest.
+- Result: 4/4 PASS; durable pointer audit PASS.
+- Method: resolved every cited evidence ID to its source ID, official URL and stable locator inside the same immutable snapshot; checked titles, metrics, failure semantics, selection counts, unknowns and scope boundaries.
+- Platform pointer check: Multica issue reads independently confirmed AGE-185/C01, AGE-186/C05 and AGE-187/C09 resolve to the listed UUIDs and link back to AGE-174. No long-term knowledge prose or atomic paper evidence is duplicated in this package.
