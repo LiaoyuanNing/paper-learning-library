@@ -24,7 +24,12 @@ test("reader includes accessible source and local learning filters", () => {
 test("detail view separates arXiv and AI-generated content with honest provenance", () => {
   assert.match(app, /arXiv 原始信息/);
   assert.match(app, /AI 生成内容/);
-  assert.match(app, /unknown \(runtime default\)/);
+  assert.match(app, /ai\.source_model/);
+  assert.match(app, /ai\.provider/);
+  assert.match(app, /workflow_version/);
+  assert.match(app, /PUBLISHED_AI_REVIEW_LABELS/);
+  assert.match(app, /inputEvidenceLinks/);
+  assert.match(app, /历史模型身份豁免/);
   assert.match(app, /AGE-23/);
   assert.match(app, /full_text_stored/);
   assert.match(app, /learning_highlights_zh/);

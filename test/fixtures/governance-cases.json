@@ -1,0 +1,89 @@
+{
+  "base_record": "site/data/paper_learning_mvp_sample.json#records[0]",
+  "scenarios": [
+    {
+      "name": "missing_generated_at",
+      "operation": "delete",
+      "path": "ai_generated.generated_at",
+      "error": "generated_at"
+    },
+    {
+      "name": "ambiguous_model_without_grandfathering",
+      "operation": "delete",
+      "path": "ai_generated.legacy_grandfathered",
+      "error": "legacy_grandfathered"
+    },
+    {
+      "name": "missing_source_model",
+      "operation": "delete",
+      "path": "ai_generated.source_model",
+      "error": "source_model"
+    },
+    {
+      "name": "missing_provider",
+      "operation": "delete",
+      "path": "ai_generated.provider",
+      "error": "provider"
+    },
+    {
+      "name": "unlicensed_full_text",
+      "operation": "set",
+      "path": "copyright.full_text_stored",
+      "value": true,
+      "error": "full_text_license"
+    },
+    {
+      "name": "test_only_content",
+      "operation": "set",
+      "path": "ai_generated.abstract_zh",
+      "value": "[TEST ONLY] Fake translated abstract.",
+      "error": "test/mock/fake"
+    },
+    {
+      "name": "ai_field_in_raw_layer",
+      "operation": "set",
+      "path": "abstract_zh",
+      "value": "AI content in raw layer",
+      "error": "must be nested under ai_generated"
+    },
+    {
+      "name": "unapproved_review",
+      "operation": "set",
+      "path": "ai_generated.review.status",
+      "value": "pending",
+      "error": "must be approved"
+    },
+    {
+      "name": "licensed_full_text_record",
+      "operation": "set_many",
+      "values": {
+        "copyright.full_text_stored": true,
+        "copyright.full_text_license": {
+          "license_id": "CC-BY-4.0",
+          "reuse_basis": "Per-record publisher license allows archival reuse.",
+          "verified_at": "2026-07-15T00:00:00Z",
+          "verified_source": "https://example.org/license"
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "new_exact_model_record",
+      "operation": "set_many",
+      "values": {
+        "ai_generated.source_model": "gpt-5.1-2026-07-01",
+        "ai_generated.provider": "OpenAI",
+        "ai_generated.workflow_version": "reader-generation-v2"
+      },
+      "deletes": [
+        "ai_generated.legacy_grandfathered"
+      ],
+      "valid": true
+    },
+    {
+      "name": "grandfathered_historical_unknown_record",
+      "operation": "none",
+      "valid": true
+    }
+  ]
+}
