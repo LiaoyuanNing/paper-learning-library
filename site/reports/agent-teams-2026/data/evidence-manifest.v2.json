@@ -2,16 +2,15 @@
   "schema_version": "1.0.0",
   "evidence_pack_id": "age-174-agent-teams-2026",
   "manifest_version": "2.0.0",
-  "snapshot_digest": "sha256:118f88a9b4151ec49c76b77189da8cddc388aeb891d583c9cb897dccdec992ec",
-  "digest_method": "SHA-256 of recursively key-sorted JSON after omitting top-level snapshot_digest, stable_url, and validation.manifest_consumer_trial; these self-referential validation fields are excluded so stable_url can point to the first immutable evidence snapshot commit",
+  "snapshot_digest": "sha256:ab68be862fa703b3ad26e055c54f66f9d17aa514f84f3c6d345274edae55db30",
+  "digest_method": "SHA-256 of recursively key-sorted evidence payload after omitting top-level snapshot_digest, stable_url, evidence_snapshot_url, evidence_snapshot, validation.manifest_consumer_trial, and validation.consumer_attestation",
   "supersedes": [
     {
       "manifest_version": "1.0.0",
-      "snapshot_digest": "sha256:194c0198cd92e9864523734a8608d621cc5838f69d6e4010bd82ef21eaa65218",
-      "immutable_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/age-174-v1/site/reports/agent-teams-2026/data/evidence-manifest.v1.json"
+      "snapshot_digest": "sha256:194c019808da705ac100cccd215155c5b09f67a86f9499abb0d808ab2a855170",
+      "immutable_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/a7af1b76ac31a216935b74af14593da9fef0cee5/site/reports/agent-teams-2026/data/evidence-manifest.v1.json"
     }
   ],
-  "stable_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/f6ee325dd1100c30de818429ce016e6e43536403/site/reports/agent-teams-2026/data/evidence-manifest.v2.json",
   "request": {
     "request_id": "AGE-174",
     "questions": [
@@ -22,85 +21,129 @@
     "audience": "Multica workspace owner、Agent Team 产品与工程负责人",
     "scope": "以可通信、可行动、有持续状态的 LLM agent team 为主；覆盖 2023–2026 奠基论文与 2025-01-15 至 2026-07-15 前沿研究",
     "knowledge_cutoff": "2026-07-15",
-    "retrieved_at": "2026-07-15T13:30:00Z"
+    "retrieved_on": "2026-07-15",
+    "time_precision": "day"
   },
   "retrieval": [
     {
       "query_id": "Q01",
       "query": "LLM multi-agent collaboration",
-      "source": "official arXiv and venue pages (oo unavailable; arxiv-cli returned empty result sets)",
-      "run_at": "2026-07-15T02:10:00Z",
-      "coverage_note": "角色、组织与通用协作"
+      "source": "official arXiv and venue pages (oo unavailable; arxiv-cli plus primary-source fallback)",
+      "coverage_note": "角色、组织与通用协作",
+      "run_on": "2026-07-15",
+      "time_precision": "day"
     },
     {
       "query_id": "Q02",
       "query": "large language model multi-agent communication",
-      "source": "official arXiv and venue pages (oo unavailable; arxiv-cli returned empty result sets)",
-      "run_at": "2026-07-15T02:16:00Z",
-      "coverage_note": "消息协议、拓扑与 latent communication"
+      "source": "official arXiv and venue pages (oo unavailable; arxiv-cli plus primary-source fallback)",
+      "coverage_note": "消息协议、拓扑与 latent communication",
+      "run_on": "2026-07-15",
+      "time_precision": "day"
     },
     {
       "query_id": "Q03",
       "query": "large language model agent debate consensus",
-      "source": "official arXiv and venue pages (oo unavailable; arxiv-cli returned empty result sets)",
-      "run_at": "2026-07-15T02:22:00Z",
-      "coverage_note": "辩论、异构模型、从众与错误共识"
+      "source": "official arXiv and venue pages (oo unavailable; arxiv-cli plus primary-source fallback)",
+      "coverage_note": "辩论、异构模型、从众与错误共识",
+      "run_on": "2026-07-15",
+      "time_precision": "day"
     },
     {
       "query_id": "Q04",
       "query": "LLM agent dynamic team routing",
-      "source": "official arXiv and venue pages (oo unavailable; arxiv-cli returned empty result sets)",
-      "run_at": "2026-07-15T02:28:00Z",
-      "coverage_note": "动态选人、架构搜索、路由与早停"
+      "source": "official arXiv and venue pages (oo unavailable; arxiv-cli plus primary-source fallback)",
+      "coverage_note": "动态选人、架构搜索、路由与早停",
+      "run_on": "2026-07-15",
+      "time_precision": "day"
     },
     {
       "query_id": "Q05",
       "query": "multi-agent LLM benchmark collaboration",
-      "source": "official arXiv and venue pages (oo unavailable; arxiv-cli returned empty result sets)",
-      "run_at": "2026-07-15T02:34:00Z",
-      "coverage_note": "协作过程评测与失败 taxonomy"
+      "source": "official arXiv and venue pages (oo unavailable; arxiv-cli plus primary-source fallback)",
+      "coverage_note": "协作过程评测与失败 taxonomy",
+      "run_on": "2026-07-15",
+      "time_precision": "day"
     },
     {
       "query_id": "Q06",
       "query": "LLM multi-agent shared memory",
-      "source": "official arXiv and venue pages (oo unavailable; arxiv-cli returned empty result sets)",
-      "run_at": "2026-07-15T02:40:00Z",
-      "coverage_note": "共享状态、文件系统与权限化记忆"
+      "source": "official arXiv and venue pages (oo unavailable; arxiv-cli plus primary-source fallback)",
+      "coverage_note": "共享状态、文件系统与权限化记忆",
+      "run_on": "2026-07-15",
+      "time_precision": "day"
     },
     {
       "query_id": "Q07",
       "query": "LLM agent orchestration planning",
-      "source": "official arXiv and venue pages (oo unavailable; arxiv-cli returned empty result sets)",
-      "run_at": "2026-07-15T02:46:00Z",
-      "coverage_note": "SOP、计划、工件与编排"
+      "source": "official arXiv and venue pages (oo unavailable; arxiv-cli plus primary-source fallback)",
+      "coverage_note": "SOP、计划、工件与编排",
+      "run_on": "2026-07-15",
+      "time_precision": "day"
     },
     {
       "query_id": "Q08",
       "query": "LLM multi-agent safety failure",
-      "source": "official arXiv and venue pages (oo unavailable; arxiv-cli returned empty result sets)",
-      "run_at": "2026-07-15T02:52:00Z",
-      "coverage_note": "错误传播、终止、验证与安全"
+      "source": "official arXiv and venue pages (oo unavailable; arxiv-cli plus primary-source fallback)",
+      "coverage_note": "错误传播、终止、验证与安全",
+      "run_on": "2026-07-15",
+      "time_precision": "day"
     },
     {
       "query_id": "Q09",
       "query": "multi-agent expert dilution reveal expert consensus",
       "source": "official arXiv and OpenReview",
-      "run_at": "2026-07-15T11:40:00Z",
+      "run_on": "2026-07-15",
+      "time_precision": "day",
       "coverage_note": "专家稀释与共识压力"
     },
     {
       "query_id": "Q10",
       "query": "single agent multi-agent equal thinking token budget",
       "source": "official arXiv",
-      "run_at": "2026-07-15T11:50:00Z",
+      "run_on": "2026-07-15",
+      "time_precision": "day",
       "coverage_note": "matched-budget 强单体基线"
     },
     {
       "query_id": "Q11",
       "query": "single agent baseline multi-agent workflow homogeneous collapse",
       "source": "official arXiv",
-      "run_at": "2026-07-15T12:00:00Z",
+      "run_on": "2026-07-15",
+      "time_precision": "day",
       "coverage_note": "同质 workflow 可折叠边界"
+    },
+    {
+      "query_id": "Q12",
+      "query": "zero-cost collaboration capability protocol incentive LLM agents",
+      "source": "official arXiv and ICML",
+      "run_on": "2026-07-15",
+      "time_precision": "day",
+      "coverage_note": "能力与合作脱钩、协议和微激励"
+    },
+    {
+      "query_id": "Q13",
+      "query": "distributed coordination communication reasoning gap multi-agent LLM",
+      "source": "official arXiv and ACL Anthology",
+      "run_on": "2026-07-15",
+      "time_precision": "day",
+      "coverage_note": "分布式信息整合与 Communication–Reasoning Gap"
+    },
+    {
+      "query_id": "Q14",
+      "query": "HiddenBench hidden profile collective reasoning multi-agent",
+      "source": "official arXiv",
+      "run_on": "2026-07-15",
+      "time_precision": "day",
+      "coverage_note": "非对称信息下的集体推理失败"
+    },
+    {
+      "query_id": "Q15",
+      "query": "LatentMAS learned alignment matrix identity no transfer",
+      "source": "OpenReview CompLearn 2026",
+      "run_on": "2026-07-15",
+      "time_precision": "day",
+      "coverage_note": "LatentMAS 直接反证"
     }
   ],
   "sources": [
@@ -120,6 +163,7 @@
       "official_url": "https://arxiv.org/abs/2303.17760v2",
       "venue_url": "https://proceedings.neurips.cc/paper/2023/hash/a3621ee907def47c1b952ade25c67698-Abstract-Conference.html",
       "accessed_at": "2026-07-15",
+      "source_kind": "arxiv",
       "submission_year": 2023,
       "venue_year": 2023,
       "venue": "NeurIPS",
@@ -141,6 +185,7 @@
       "official_url": "https://arxiv.org/abs/2305.14325v1",
       "venue_url": "https://proceedings.mlr.press/v235/du24e.html",
       "accessed_at": "2026-07-15",
+      "source_kind": "arxiv",
       "submission_year": 2023,
       "venue_year": 2024,
       "venue": "ICML",
@@ -171,6 +216,7 @@
       "official_url": "https://arxiv.org/abs/2307.07924v5",
       "venue_url": "https://aclanthology.org/2024.acl-long.810/",
       "accessed_at": "2026-07-15",
+      "source_kind": "arxiv",
       "submission_year": 2023,
       "venue_year": 2024,
       "venue": "ACL",
@@ -202,6 +248,7 @@
       "official_url": "https://arxiv.org/abs/2308.00352v7",
       "venue_url": "https://openreview.net/forum?id=VtmBAGCN7o",
       "accessed_at": "2026-07-15",
+      "source_kind": "arxiv",
       "submission_year": 2023,
       "venue_year": 2024,
       "venue": "ICLR",
@@ -232,6 +279,7 @@
       "official_url": "https://arxiv.org/abs/2308.08155v2",
       "venue_url": "https://openreview.net/forum?id=BAakY1hNKS",
       "accessed_at": "2026-07-15",
+      "source_kind": "arxiv",
       "submission_year": 2023,
       "venue_year": 2024,
       "venue": "COLM",
@@ -251,6 +299,7 @@
       "official_url": "https://arxiv.org/abs/2309.13007v3",
       "venue_url": "https://aclanthology.org/2024.acl-long.381/",
       "accessed_at": "2026-07-15",
+      "source_kind": "arxiv",
       "submission_year": 2023,
       "venue_year": 2024,
       "venue": "ACL",
@@ -272,6 +321,7 @@
       "official_url": "https://arxiv.org/abs/2310.02170v2",
       "venue_url": "https://openreview.net/forum?id=XII0Wp1XA9",
       "accessed_at": "2026-07-15",
+      "source_kind": "arxiv",
       "submission_year": 2023,
       "venue_year": 2024,
       "venue": "COLM",
@@ -293,6 +343,7 @@
       "official_url": "https://arxiv.org/abs/2402.05120v2",
       "venue_url": "https://openreview.net/forum?id=bgzUSZ8aeg",
       "accessed_at": "2026-07-15",
+      "source_kind": "arxiv",
       "submission_year": 2024,
       "venue_year": 2024,
       "venue": "TMLR",
@@ -321,6 +372,7 @@
       "official_url": "https://arxiv.org/abs/2406.07155v3",
       "venue_url": "https://openreview.net/forum?id=K3n5jPkrU6",
       "accessed_at": "2026-07-15",
+      "source_kind": "arxiv",
       "submission_year": 2024,
       "venue_year": 2025,
       "venue": "ICLR",
@@ -343,6 +395,7 @@
       "official_url": "https://arxiv.org/abs/2502.04180v2",
       "venue_url": "https://openreview.net/forum?id=imcyVlzpXh",
       "accessed_at": "2026-07-15",
+      "source_kind": "arxiv",
       "submission_year": 2025,
       "venue_year": 2025,
       "venue": "ICML",
@@ -366,6 +419,7 @@
       "official_url": "https://arxiv.org/abs/2502.11133v1",
       "venue_url": null,
       "accessed_at": "2026-07-15",
+      "source_kind": "arxiv",
       "submission_year": 2025,
       "venue_year": null,
       "venue": null,
@@ -393,6 +447,7 @@
       "official_url": "https://arxiv.org/abs/2503.01935v1",
       "venue_url": "https://aclanthology.org/2025.acl-long.421/",
       "accessed_at": "2026-07-15",
+      "source_kind": "arxiv",
       "submission_year": 2025,
       "venue_year": 2025,
       "venue": "ACL",
@@ -422,6 +477,7 @@
       "official_url": "https://arxiv.org/abs/2503.13657v3",
       "venue_url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/b1041e52d3be19f0a9bc491657488e4a-Abstract-Datasets_and_Benchmarks_Track.html",
       "accessed_at": "2026-07-15",
+      "source_kind": "arxiv",
       "submission_year": 2025,
       "venue_year": 2025,
       "venue": "NeurIPS",
@@ -444,6 +500,7 @@
       "official_url": "https://arxiv.org/abs/2505.21471v2",
       "venue_url": "https://aclanthology.org/2026.acl-long.468/",
       "accessed_at": "2026-07-15",
+      "source_kind": "arxiv",
       "submission_year": 2025,
       "venue_year": 2026,
       "venue": "ACL",
@@ -473,6 +530,7 @@
       "official_url": "https://arxiv.org/abs/2511.20639v3",
       "venue_url": "https://openreview.net/forum?id=e7pAjJZJWb",
       "accessed_at": "2026-07-15",
+      "source_kind": "arxiv",
       "submission_year": 2025,
       "venue_year": 2026,
       "venue": "ICML",
@@ -509,6 +567,7 @@
       "official_url": "https://arxiv.org/abs/2512.08296v3",
       "venue_url": null,
       "accessed_at": "2026-07-15",
+      "source_kind": "arxiv",
       "submission_year": 2025,
       "venue_year": null,
       "venue": null,
@@ -533,6 +592,7 @@
       "official_url": "https://arxiv.org/abs/2602.03794v1",
       "venue_url": "https://openreview.net/forum?id=9BN2W5BCfE",
       "accessed_at": "2026-07-15",
+      "source_kind": "arxiv",
       "submission_year": 2026,
       "venue_year": 2026,
       "venue": "ICLR",
@@ -556,6 +616,7 @@
       "official_url": "https://arxiv.org/abs/2602.01566v2",
       "venue_url": "https://aclanthology.org/2026.acl-long.288/",
       "accessed_at": "2026-07-15",
+      "source_kind": "arxiv",
       "submission_year": 2026,
       "venue_year": 2026,
       "venue": "ACL",
@@ -588,6 +649,7 @@
       "official_url": "https://arxiv.org/abs/2308.10848v3",
       "venue_url": "https://openreview.net/forum?id=EHg5GDnyq1",
       "accessed_at": "2026-07-15",
+      "source_kind": "arxiv",
       "submission_year": 2023,
       "venue_year": 2024,
       "venue": "ICLR",
@@ -614,6 +676,7 @@
       "official_url": "https://arxiv.org/abs/2606.18829v1",
       "venue_url": null,
       "accessed_at": "2026-07-15",
+      "source_kind": "arxiv",
       "submission_year": 2026,
       "venue_year": null,
       "venue": null,
@@ -621,6 +684,7 @@
     },
     {
       "source_id": "S21",
+      "source_kind": "arxiv",
       "paper_id": "2602.01011",
       "title": "Multi-Agent Teams Hold Experts Back",
       "authors": [
@@ -644,6 +708,7 @@
     },
     {
       "source_id": "S22",
+      "source_kind": "arxiv",
       "paper_id": "2604.02460",
       "title": "Single-Agent LLMs Outperform Multi-Agent Systems on Multi-Hop Reasoning Under Equal Thinking Token Budgets",
       "authors": [
@@ -662,6 +727,7 @@
     },
     {
       "source_id": "S23",
+      "source_kind": "arxiv",
       "paper_id": "2601.12307",
       "title": "Rethinking the Value of Multi-Agent Workflow: A Strong Single Agent Baseline",
       "authors": [
@@ -685,6 +751,94 @@
       "track": null,
       "official_url": "https://arxiv.org/abs/2601.12307v1",
       "venue_url": null,
+      "accessed_at": "2026-07-15"
+    },
+    {
+      "source_id": "S24",
+      "source_kind": "arxiv",
+      "paper_id": "2604.07821",
+      "title": "More Capable, Less Cooperative? When LLMs Fail At Zero-Cost Collaboration",
+      "authors": [
+        "Advait Yadav",
+        "Sid Black",
+        "Oliver Sourbut"
+      ],
+      "version": "v2",
+      "submission_year": 2026,
+      "venue_year": 2026,
+      "publication_status": "published",
+      "venue": "ICML",
+      "track": "Main Conference Poster",
+      "official_url": "https://arxiv.org/abs/2604.07821v2",
+      "venue_url": "https://icml.cc/virtual/2026/poster/60576",
+      "accessed_at": "2026-07-15"
+    },
+    {
+      "source_id": "S25",
+      "source_kind": "arxiv",
+      "paper_id": "2603.01045",
+      "title": "Silo-Bench: A Scalable Environment for Evaluating Distributed Coordination in Multi-Agent LLM Systems",
+      "authors": [
+        "Yuzhe Zhang",
+        "Feiran Liu",
+        "Yi Shan",
+        "Xinyi Huang",
+        "Xin Yang",
+        "Yueqi Zhu",
+        "Xuxin Cheng",
+        "Cao Liu",
+        "Ke Zeng",
+        "Terry Jingchen Zhang",
+        "Wenyuan Jiang"
+      ],
+      "version": "v2",
+      "submission_year": 2026,
+      "venue_year": 2026,
+      "publication_status": "published",
+      "venue": "ACL",
+      "track": "Long Paper",
+      "official_url": "https://arxiv.org/abs/2603.01045v2",
+      "venue_url": "https://aclanthology.org/2026.acl-long.1354/",
+      "accessed_at": "2026-07-15"
+    },
+    {
+      "source_id": "S26",
+      "source_kind": "arxiv",
+      "paper_id": "2505.11556",
+      "title": "HiddenBench: Assessing Collective Reasoning in Multi-Agent LLMs via Hidden Profile Tasks",
+      "authors": [
+        "Yuxuan Li",
+        "Aoi Naito",
+        "Hirokazu Shirado"
+      ],
+      "version": "v4",
+      "submission_year": 2025,
+      "venue_year": 2026,
+      "publication_status": "published",
+      "venue": "ICML",
+      "track": "Main Conference Poster",
+      "official_url": "https://arxiv.org/abs/2505.11556v4",
+      "venue_url": "https://icml.cc/virtual/2026/papers.html",
+      "accessed_at": "2026-07-15"
+    },
+    {
+      "source_id": "S27",
+      "source_kind": "openreview",
+      "paper_id": null,
+      "external_id": "manXhfpRH3",
+      "title": "On the Role of Learned Alignment Matrices in LatentMAS",
+      "authors": [
+        "Spursh Deshpande",
+        "Wenhao Lu"
+      ],
+      "version": "OpenReview revision 2026-06-20",
+      "submission_year": 2026,
+      "venue_year": 2026,
+      "publication_status": "workshop",
+      "venue": "ICML",
+      "track": "CompLearn Workshop Poster",
+      "official_url": "https://openreview.net/forum?id=manXhfpRH3",
+      "venue_url": "https://openreview.net/forum?id=manXhfpRH3",
       "accessed_at": "2026-07-15"
     }
   ],
@@ -945,8 +1099,8 @@
       "research_question": "agent 是否必须用自然语言通信，还是可共享 latent working memory？",
       "mechanism": "在连续 hidden representation 中传递信息，减少文本化与重复编码。",
       "experiment": "9 个 benchmarks；多种协作拓扑与模型；与文本通信比较。",
-      "result": "论文报告最高 +14.6 准确率、输出 token 减少 70.8%–83.7%、速度约 4–4.3 倍。",
-      "limitations": "latent 状态难审计、难跨模型互操作；可解释性、权限与注入风险仍未解决。",
+      "result": "原论文在 9 个 benchmark 报告最高 +14.6 准确率、输出 token 减少 70.8%–83.7%、速度约 4–4.3 倍；后续直接复核显示这些收益并不稳定依赖 learned alignment matrix。",
+      "limitations": "CompLearn 2026 复核中，identity matrix 无显著下降；部分任务移除跨 agent transfer 相当或更好，代码任务文本通信优于 latent。latent 状态的审计、互操作与安全问题仍未解决。",
       "selection": {
         "decision": "included",
         "reasons": [
@@ -977,36 +1131,34 @@
     {
       "paper_id": "2602.03794",
       "source_id": "S17",
-      "group": "frontier",
+      "group": null,
       "research_question": "为什么同质 agent 扩展饱和，而多样性可能继续带来收益？",
       "mechanism": "以有效信息通道 K* 描述输出相关性与互补证据。",
       "experiment": "不同模型、提示、工具的同质/异质配置与规模曲线。",
       "result": "论文报告 2 个多样化 agent 可匹配或超过 16 个同质 agent。",
       "limitations": "workshop 论文；K* 与实际产品任务的在线可估计性仍需验证。",
       "selection": {
-        "decision": "included",
+        "decision": "extended",
         "reasons": [
-          "解释规模饱和",
-          "多样性可测框架",
-          "直接挑战堆数量"
+          "多样性机制保留为扩展证据",
+          "workshop 证据弱于 2026 顶会直接协调失败研究"
         ]
       }
     },
     {
       "paper_id": "2602.01566",
       "source_id": "S18",
-      "group": "frontier",
+      "group": null,
       "research_question": "文件系统能否作为长周期研究的外部记忆与跨 agent 协调介质？",
       "mechanism": "Context Builder 构建层级知识库；Report Writer 分段读取并写作。",
       "experiment": "DeepResearch Bench 与 DeepConsult；不同 backbone 和 Context Builder 计算预算。",
       "result": "在两个开放研究 benchmark 报告 SOTA，且报告质量与 Context Builder 计算量正相关。",
       "limitations": "两 agent、研究写作单域；文件系统的权限、污染、删除与冲突治理未被充分评价。",
       "selection": {
-        "decision": "included",
+        "decision": "extended",
         "reasons": [
-          "持久工件/共享记忆代表",
-          "正式 ACL",
-          "与本项目研究 episode 同构"
+          "深度研究编排保留为扩展证据",
+          "主题专门性弱于 2026 顶会直接协调失败研究"
         ]
       }
     },
@@ -1085,6 +1237,60 @@
           "直接 strong single-agent baseline",
           "揭示同质 workflow 可折叠",
           "补足复杂 MAS 对照契约"
+        ]
+      }
+    },
+    {
+      "paper_id": "2604.07821",
+      "source_id": "S24",
+      "group": "frontier",
+      "research_question": "模型能力提升是否自然带来无需额外激励的合作能力？",
+      "mechanism": "在零成本协作博弈中分离个体能力与合作表现，并测试协议和微激励干预。",
+      "experiment": "多类 LLM、最优集体基线，以及结构化协议和微激励条件。",
+      "result": "能力不能预测合作：o3 仅达到最优集体表现的 17%；结构化协议可使部分低能力模型翻倍，微激励可改善弱合作模型。",
+      "limitations": "零成本博弈不覆盖长期工具工作流；干预效果不能外推为通用合作解法。",
+      "selection": {
+        "decision": "included",
+        "reasons": [
+          "ICML 2026 主会",
+          "直接分离能力与合作",
+          "包含协议与激励干预"
+        ]
+      }
+    },
+    {
+      "paper_id": "2603.01045",
+      "source_id": "S25",
+      "group": "frontier",
+      "research_question": "agent 能否把分布式私有信息转化为可靠的联合推理？",
+      "mechanism": "Silo-Bench 将信息分布到 agent silo，并区分通信是否到位与推理是否正确。",
+      "experiment": "30 个任务、54 个配置、1,620 次实验；覆盖拓扑、模型和信息分配。",
+      "result": "Communication–Reasoning Gap 显示消息到达不等于信息被正确整合；过早结论、错误共识和计算错误是主要失败面。",
+      "limitations": "基准任务仍是受控环境；生产系统的权限、延迟和异步失败更复杂。",
+      "selection": {
+        "decision": "included",
+        "reasons": [
+          "ACL 2026 Main/Long",
+          "直接评测分布式协调",
+          "大规模配置与失败分解"
+        ]
+      }
+    },
+    {
+      "paper_id": "2505.11556",
+      "source_id": "S26",
+      "group": null,
+      "research_question": "多 agent 能否在信息分散且输入非结构化时完成多步指令？",
+      "mechanism": "HiddenBench 将完成任务所需信息分散到不同 agent，并与获得完整信息的单 agent 对照。",
+      "experiment": "65 个任务；比较分布式 MAS 与拥有完整输入的单 agent。",
+      "result": "分布式 MAS 完成率 30.1%，完整信息单 agent 为 80.7%；扩大模型并未消除信息整合失败。",
+      "limitations": "65 个受控 hidden-profile 任务不能代表全部长期协作；与 Silo-Bench 的任务结构不同。",
+      "selection": {
+        "decision": "extended",
+        "reasons": [
+          "ICML 2026，直接研究分布式信息整合失败",
+          "与 Silo-Bench 形成前沿交叉验证",
+          "与核心 Silo-Bench 边界高度重叠，保留 18 篇核心上限"
         ]
       }
     },
@@ -1341,34 +1547,6 @@
       }
     },
     {
-      "paper_id": "2604.07821",
-      "title": "More Capable, Less Cooperative? When LLMs Fail At Zero-Cost Collaboration",
-      "version": "v2",
-      "submission_year": 2026,
-      "publication_status": "accepted",
-      "source_url": "https://arxiv.org/abs/2604.07821v2",
-      "selection": {
-        "decision": "extended",
-        "reasons": [
-          "ICML 2026；零成本合作失败，下一轮优先深读"
-        ]
-      }
-    },
-    {
-      "paper_id": "2603.01045",
-      "title": "Silo-Bench: A Scalable Environment for Evaluating Distributed Coordination in Multi-Agent LLM Systems",
-      "version": "v2",
-      "submission_year": 2026,
-      "publication_status": "accepted",
-      "source_url": "https://arxiv.org/abs/2603.01045v2",
-      "selection": {
-        "decision": "extended",
-        "reasons": [
-          "ACL 2026；分布式信息整合税，下一轮优先深读"
-        ]
-      }
-    },
-    {
       "paper_id": "2502.20073",
       "title": "Collab-Overcooked: Benchmarking and Evaluating Large Language Models as Collaborative Agents",
       "version": "v3",
@@ -1597,11 +1775,13 @@
     {
       "evidence_id": "E14",
       "source_id": "S13",
-      "locator": "Appendix H Table 5; Appendix J",
+      "locator": "§6.2 Table 4",
       "kind": "paper_result",
-      "faithful_summary": "相同底模下结构干预最高提高 15.6%，ChatDev 明确终止权的干预提高 9.4%，表明系统设计本身影响失败率。",
+      "faithful_summary": "MAST 对 ChatDev 的 improved prompt 同时调整角色层级、仅允许上级结束对话，并要求 verifier 关注 edge cases；ProgramDev 由 25.0% 升至 34.4%（+9.4pp）。这是组合式 role/prompt intervention，不能归因于终止权单项。",
       "verified_by": [
-        "Reader"
+        "Reader",
+        "Critic",
+        "PM-Paper"
       ],
       "verified_at": "2026-07-15"
     },
@@ -1728,6 +1908,58 @@
         "PM-Paper"
       ],
       "verified_at": "2026-07-15"
+    },
+    {
+      "evidence_id": "E25",
+      "source_id": "S24",
+      "locator": "Abstract; §4–§6; Table 3",
+      "kind": "contrary_result",
+      "faithful_summary": "个体能力不预测零成本合作：o3 仅达到最优集体表现的 17%，而 o3-mini 为 50%；显式协议可使部分低能力模型表现翻倍，微激励能改善弱合作模型。",
+      "verified_by": [
+        "Reader",
+        "Critic",
+        "PM-Paper"
+      ],
+      "verified_at": "2026-07-15"
+    },
+    {
+      "evidence_id": "E26",
+      "source_id": "S25",
+      "locator": "§3–§5; §5.2 Table 4; Figures 4–6",
+      "kind": "contrary_result",
+      "faithful_summary": "Silo-Bench 用 30 个任务、54 个配置和 1,620 次实验识别 Communication–Reasoning Gap：agent 会交换信息，却常不能把分布式状态整合为正确答案；过早结论、错误共识和计算错误是主要失败面。",
+      "verified_by": [
+        "Reader",
+        "Critic",
+        "PM-Paper"
+      ],
+      "verified_at": "2026-07-15"
+    },
+    {
+      "evidence_id": "E27",
+      "source_id": "S26",
+      "locator": "Abstract; §3; §4.2; Tables 1–2; §5",
+      "kind": "contrary_result",
+      "faithful_summary": "HiddenBench 的 65 个 hidden-profile 任务显示分布式 MAS 完成率 30.1%，而获得完整信息的单 agent 为 80.7%；信息不对称下的整合失败不会随模型规模可靠消失。",
+      "verified_by": [
+        "Reader",
+        "Critic",
+        "PM-Paper"
+      ],
+      "verified_at": "2026-07-15"
+    },
+    {
+      "evidence_id": "E28",
+      "source_id": "S27",
+      "locator": "§4.1 Table 1; §4.2–§4.3; Appendix C",
+      "kind": "contrary_result",
+      "faithful_summary": "对 LatentMAS 的直接复核发现 identity matrix 不造成显著下降；部分任务移除跨 agent transfer 相当或更好，代码任务中文本通信优于 latent communication。",
+      "verified_by": [
+        "Reader",
+        "Critic",
+        "PM-Paper"
+      ],
+      "verified_at": "2026-07-15"
     }
   ],
   "claims": [
@@ -1773,7 +2005,7 @@
     {
       "claim_id": "C02",
       "type": "synthesis",
-      "text": "角色与 SOP 的可靠价值来自明确接口、结构化工件、终止权和可执行反馈，而不是角色名称本身。",
+      "text": "角色与 SOP 的可靠价值来自明确接口、结构化工件、权限、终止条件和可执行反馈，而不是角色名称本身；现有 MAST 证据是组合式 role/prompt intervention，未隔离终止权单项因果。",
       "strength": "conditional",
       "scope": "证据最集中于阶段化的软件工程和双角色任务",
       "supporting_evidence_ids": [
@@ -1784,7 +2016,7 @@
       "contradicting_evidence_ids": [
         "E24"
       ],
-      "limitations": "开放任务、真实组织和长期演进证据不足。",
+      "limitations": "开放任务、真实组织和长期演进证据不足；+9.4pp 不能归因于单个终止权变更。",
       "status": "validated",
       "show_in_summary": true,
       "counter_search": {
@@ -1802,14 +2034,17 @@
     {
       "claim_id": "C03",
       "type": "synthesis",
-      "text": "同质 agent 的数量或 workflow 容易饱和、折叠甚至稀释已知专家；真实互补信息和可验证专长比席位数更关键。",
+      "text": "同质 agent 的数量或 workflow 容易饱和、折叠甚至稀释已知专家；即使消息成功传递，分布式信息也可能无法被正确整合。真实互补信息、合作协议和可验证专长比席位数更关键。",
       "strength": "conditional",
       "scope": "推理与聚合任务；多样性需要真实互补而非 persona 文案差异",
       "supporting_evidence_ids": [
         "E08",
         "E18",
         "E22",
-        "E24"
+        "E24",
+        "E25",
+        "E26",
+        "E27"
       ],
       "contradicting_evidence_ids": [
         "E09",
@@ -1830,13 +2065,13 @@
           }
         ],
         "no_contrary_note": null,
-        "revision_reason": "检索 agent count、diversity、expert reveal 与 topology scaling；保留可运行/部分正收益，否定单调规模律。"
+        "revision_reason": "检索 agent count、diversity、expert reveal、zero-cost cooperation、distributed information 与 topology scaling；保留可运行/部分正收益，否定单调规模律。"
       }
     },
     {
       "claim_id": "C04",
       "type": "synthesis",
-      "text": "辩论只在候选差异可被证据区分时有益；共识、置信度和更长讨论不是正确性证明，还可能稀释已识别专家。",
+      "text": "现有正收益主要集中于候选差异可交叉检查的任务；共识、置信度和更长讨论不是正确性证明，还可能稀释已识别专家或掩盖信息整合失败。",
       "strength": "conditional",
       "scope": "数学、事实问答和可交叉检查推理",
       "supporting_evidence_ids": [
@@ -1846,7 +2081,9 @@
       "contradicting_evidence_ids": [
         "E20",
         "E22",
-        "E23"
+        "E23",
+        "E26",
+        "E27"
       ],
       "limitations": "现代模型、开放行动任务与恶意参与者上的复验有限。",
       "status": "validated",
@@ -1863,10 +2100,16 @@
           },
           {
             "evidence_id": "E23"
+          },
+          {
+            "evidence_id": "E26"
+          },
+          {
+            "evidence_id": "E27"
           }
         ],
         "no_contrary_note": null,
-        "revision_reason": "检索 debate、consensus、persuasion、expert dilution 与 matched-budget；加入正确 agent 被说服和专家稀释。"
+        "revision_reason": "检索 debate、consensus、persuasion、expert dilution、distributed information 与 matched-budget；删除未经必要条件实验支持的‘只在’，改为观察性范围。"
       }
     },
     {
@@ -1987,7 +2230,9 @@
       "scope": "可观测的 agent workflow",
       "supporting_evidence_ids": [
         "E12",
-        "E13"
+        "E13",
+        "E26",
+        "E27"
       ],
       "contradicting_evidence_ids": [],
       "limitations": "开放任务仍需人工与 LLM judge，评测本身也可能偏差。",
@@ -1998,7 +2243,7 @@
         "outcome": "no_direct_contrary_found",
         "findings": [],
         "no_contrary_note": "在上述范围与截止日内未发现直接反证；这不等于不存在反证或已系统穷尽。",
-        "revision_reason": "检索 outcome-only、coordination score、trace/cost/failure evaluation；未发现支持单指标充分性的直接反证。"
+        "revision_reason": "检索 outcome-only、coordination score、trace/cost/failure evaluation；Silo-Bench/HiddenBench 补强过程诊断，未发现支持单指标充分性的直接反证。"
       }
     },
     {
@@ -2009,7 +2254,10 @@
       "scope": "7 个主流框架的编码、数学与通用 agent 轨迹",
       "supporting_evidence_ids": [
         "E13",
-        "E14"
+        "E14",
+        "E25",
+        "E26",
+        "E27"
       ],
       "contradicting_evidence_ids": [],
       "limitations": "taxonomy 非穷尽，自动标签主要表示症状而非根因。",
@@ -2020,13 +2268,13 @@
         "outcome": "no_direct_contrary_found",
         "findings": [],
         "no_contrary_note": "在上述范围与截止日内未发现直接反证；这不等于不存在反证或已系统穷尽。",
-        "revision_reason": "检索 hallucination-only 与 system-level failure taxonomy；未发现将多 agent 故障完整归为底模幻觉的直接反证。"
+        "revision_reason": "检索 hallucination-only、cooperation failure、communication-reasoning gap 与 system-level failure taxonomy；未发现将多 agent 故障完整归为底模幻觉的直接反证。"
       }
     },
     {
       "claim_id": "C11",
       "type": "synthesis",
-      "text": "latent communication、自动架构搜索与权限化共享记忆很有潜力，但审计、互操作、安全和线上复验仍未形成共识。",
+      "text": "latent communication、自动架构搜索与权限化共享记忆仍有探索价值，但部分 LatentMAS 任务不依赖 learned alignment 或跨 agent transfer，且代码任务文本通信更好；审计、互操作、安全和线上复验仍未形成共识。",
       "strength": "contested",
       "scope": "2025–2026 新兴机制",
       "supporting_evidence_ids": [
@@ -2036,9 +2284,10 @@
       ],
       "contradicting_evidence_ids": [
         "E23",
-        "E24"
+        "E24",
+        "E28"
       ],
-      "limitations": "多为单篇论文或预印本，产品化风险高。",
+      "limitations": "LatentMAS 的 headline 结果已有直接负向复核；其他机制也多为单篇论文或预印本。",
       "status": "qualified",
       "show_in_summary": true,
       "counter_search": {
@@ -2050,10 +2299,13 @@
           },
           {
             "evidence_id": "E24"
+          },
+          {
+            "evidence_id": "E28"
           }
         ],
         "no_contrary_note": null,
-        "revision_reason": "检索 latent/search/memory 新机制的 simple baseline、audit 和 matched-budget；潜力存在，但简化方案可匹配部分复杂机制。"
+        "revision_reason": "检索 latent/search/memory 新机制的 simple baseline、audit 和 matched-budget；直接 LatentMAS 复核否定 learned alignment 的稳定必要性，因此收窄前沿判断。"
       }
     },
     {
@@ -2082,20 +2334,21 @@
       "claim_id": "R02",
       "type": "recommendation",
       "title": "把角色写成契约，不写成人设",
-      "text": "每个角色声明输入、输出工件、工具、权限、专长证据、升级与 stop condition；已知专家可直接保留最终判断或触发独立复核。",
+      "text": "每个角色声明输入、输出工件、工具、权限、专长证据、升级与 stop condition；已知专家可保留最终判断或触发独立复核。",
       "strength": "conditional",
       "scope": "可阶段化的 Multica issue 与工作流",
       "supporting_evidence_ids": [
         "E03",
         "E04",
         "E14",
-        "E22"
+        "E22",
+        "E25"
       ],
       "contradicting_evidence_ids": [],
-      "limitations": "探索性任务可能需要允许临时跨界。",
+      "limitations": "探索性任务可能需要临时跨界；协议效果依模型能力和任务而变。",
       "status": "validated",
       "show_in_summary": false,
-      "evidence_basis": "角色消融、SOP、终止权与专家稀释共同表明：契约必须包含专长权重，而不只角色名称。",
+      "evidence_basis": "角色/SOP、专家稀释和协议干预支持显式契约；MAST 的 +9.4pp 来自组合式 role/prompt intervention，未隔离终止权单项。",
       "assumptions": "工件和状态转移能被机器或人检查。",
       "side_effects": "前期建模成本上升；契约过细会降低适应性。"
     },
@@ -2145,19 +2398,20 @@
       "type": "recommendation",
       "title": "Critic 必须独立且能看原始证据",
       "text": "执行者不能自报完成；Critic 应有独立 source access、反例检索、可执行测试和拒绝权。",
-      "strength": "strong",
+      "strength": "conditional",
       "scope": "高风险或可客观验收的工作",
       "supporting_evidence_ids": [
         "E02",
         "E13",
         "E14",
-        "E22"
+        "E22",
+        "E26"
       ],
       "contradicting_evidence_ids": [],
-      "limitations": "多个同源 judge 仍可能共享偏差。",
+      "limitations": "多个同源 judge 仍可能共享偏差；独立 Critic 的净增益需按任务单独消融。",
       "status": "validated",
       "show_in_summary": false,
-      "evidence_basis": "错误共识与错误验证是稳定故障面，外部可执行反馈更可靠。",
+      "evidence_basis": "失败 taxonomy、专家稀释和信息整合失败支持独立复核；MAST 仅提供组合式 verifier/role/prompt 干预，不能证明独立 Critic 单项因果。",
       "assumptions": "Critic 与执行者有不同信息路径或工具。",
       "side_effects": "延迟和成本增加；需防止无限审查循环。"
     },
@@ -2254,7 +2508,7 @@
           "E17"
         ],
         "no_contrary_note": null,
-        "revision_reason": "检索 agent count、diversity、expert reveal 与 topology scaling；保留可运行/部分正收益，否定单调规模律。"
+        "revision_reason": "检索 agent count、diversity、expert reveal、zero-cost cooperation、distributed information 与 topology scaling；保留可运行/部分正收益，否定单调规模律。"
       },
       {
         "claim_id": "C04",
@@ -2263,10 +2517,12 @@
         "finding_evidence_ids": [
           "E20",
           "E22",
-          "E23"
+          "E23",
+          "E26",
+          "E27"
         ],
         "no_contrary_note": null,
-        "revision_reason": "检索 debate、consensus、persuasion、expert dilution 与 matched-budget；加入正确 agent 被说服和专家稀释。"
+        "revision_reason": "检索 debate、consensus、persuasion、expert dilution、distributed information 与 matched-budget；删除未经必要条件实验支持的‘只在’，改为观察性范围。"
       },
       {
         "claim_id": "C05",
@@ -2312,7 +2568,7 @@
         "scope": "arXiv/ACL/ICML/ICLR/NeurIPS 官方来源；2023–2026 奠基集与 2025-01-15 至 2026-07-15 前沿窗口；按 claim 主题检索正反结果、简单基线和外推边界。",
         "finding_evidence_ids": [],
         "no_contrary_note": "在上述范围与截止日内未发现直接反证；这不等于不存在反证或已系统穷尽。",
-        "revision_reason": "检索 outcome-only、coordination score、trace/cost/failure evaluation；未发现支持单指标充分性的直接反证。"
+        "revision_reason": "检索 outcome-only、coordination score、trace/cost/failure evaluation；Silo-Bench/HiddenBench 补强过程诊断，未发现支持单指标充分性的直接反证。"
       },
       {
         "claim_id": "C10",
@@ -2320,7 +2576,7 @@
         "scope": "arXiv/ACL/ICML/ICLR/NeurIPS 官方来源；2023–2026 奠基集与 2025-01-15 至 2026-07-15 前沿窗口；按 claim 主题检索正反结果、简单基线和外推边界。",
         "finding_evidence_ids": [],
         "no_contrary_note": "在上述范围与截止日内未发现直接反证；这不等于不存在反证或已系统穷尽。",
-        "revision_reason": "检索 hallucination-only 与 system-level failure taxonomy；未发现将多 agent 故障完整归为底模幻觉的直接反证。"
+        "revision_reason": "检索 hallucination-only、cooperation failure、communication-reasoning gap 与 system-level failure taxonomy；未发现将多 agent 故障完整归为底模幻觉的直接反证。"
       },
       {
         "claim_id": "C11",
@@ -2328,42 +2584,19 @@
         "scope": "arXiv/ACL/ICML/ICLR/NeurIPS 官方来源；2023–2026 奠基集与 2025-01-15 至 2026-07-15 前沿窗口；按 claim 主题检索正反结果、简单基线和外推边界。",
         "finding_evidence_ids": [
           "E23",
-          "E24"
+          "E24",
+          "E28"
         ],
         "no_contrary_note": null,
-        "revision_reason": "检索 latent/search/memory 新机制的 simple baseline、audit 和 matched-budget；潜力存在，但简化方案可匹配部分复杂机制。"
+        "revision_reason": "检索 latent/search/memory 新机制的 simple baseline、audit 和 matched-budget；直接 LatentMAS 复核否定 learned alignment 的稳定必要性，因此收窄前沿判断。"
       }
     ],
-    "manifest_consumer_trial": {
-      "status": "passed",
-      "questions_file": "research/agent-teams-2026/manifest-consumer-questions.v2.md",
-      "record_file": "research/agent-teams-2026/manifest-consumer-validation.v2.md",
-      "manifest_version": "2.0.0",
-      "snapshot_digest": "sha256:118f88a9b4151ec49c76b77189da8cddc388aeb891d583c9cb897dccdec992ec",
-      "immutable_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/f6ee325dd1100c30de818429ce016e6e43536403/site/reports/agent-teams-2026/data/evidence-manifest.v2.json",
-      "consumer_agent": {
-        "identity": "/root/manifest_consumer_v2_final",
-        "runtime": "Codex native sub-agent",
-        "prior_involvement": "none"
-      },
-      "consumer_scope": "manifest v2 only; no report, other research files, Git, issue, conversation history, paper originals or internet",
-      "question_results": [
-        "expert_dilution:PASS",
-        "matched_budget:PASS",
-        "workflow_collapse:PASS",
-        "negative_answerability:PASS"
-      ],
-      "manual_review": {
-        "reviewer": "PM-Paper",
-        "result": "4/4 PASS",
-        "method": "Resolved every cited evidence ID to source ID and checked URL, locator, answer and boundary against the manifest."
-      }
-    },
     "metadata_audit": {
       "status": "passed",
-      "record_file": "research/agent-teams-2026/metadata-audit.v2.json",
-      "source_count": 23,
+      "record_url": "PENDING_AUDIT_URL",
+      "source_count": 27,
       "required_fields": [
+        "source_kind",
         "title",
         "authors",
         "version",
@@ -2375,17 +2608,29 @@
         "official_url",
         "venue_url"
       ]
+    },
+    "consumer_attestation": {
+      "status": "pending_independent_trial",
+      "consumer_identity": "PENDING_CONSUMER_IDENTITY",
+      "prior_involvement": "none",
+      "manifest_version": "2.0.0",
+      "snapshot_digest": "sha256:ab68be862fa703b3ad26e055c54f66f9d17aa514f84f3c6d345274edae55db30",
+      "input_url": "PENDING_EVIDENCE_SNAPSHOT_URL",
+      "attestation_url": "PENDING_ATTESTATION_URL",
+      "attestation_digest": "PENDING_ATTESTATION_DIGEST",
+      "transcript_url": "PENDING_TRANSCRIPT_URL",
+      "scope": "immutable evidence snapshot only; no report, research notes, Git history, issue, conversation history, paper originals or internet"
     }
   },
   "outputs": {
-    "report_url": "./",
-    "manifest_url": "./data/evidence-manifest.v2.json",
-    "generated_at": "2026-07-15T13:30:00Z",
+    "report_url": "https://liaoyuanning.github.io/paper-learning-library/reports/agent-teams-2026/",
+    "manifest_url": "https://liaoyuanning.github.io/paper-learning-library/reports/agent-teams-2026/data/evidence-manifest.v2.json",
     "model_disclosure": "AI 辅助生成：GPT-5 Codex（Multica PM-Paper runtime）；Scout、Reader、Critic 分工；PM-Paper 综合与验收",
     "copyright_policy": "仅保存元数据、必要短证据定位、结构化提取和综合判断；不存储论文全文",
+    "generated_on": "2026-07-15",
+    "time_precision": "day",
     "release_state": "review_candidate_not_deployed",
-    "metadata_audit": "research/agent-teams-2026/metadata-audit.v2.json",
-    "consumer_validation": "research/agent-teams-2026/manifest-consumer-validation.v2.md"
+    "metadata_audit_url": "PENDING_AUDIT_URL"
   },
   "promotion_candidates": [
     {
@@ -2440,8 +2685,8 @@
       "即使明确告诉团队谁是专家，共识也可能稀释专家判断；受控实验的最大差距达到 41.1%。",
       "相同 thinking-token 预算下，强单智能体在多跳推理中常匹配或超过 MAS。",
       "同一模型组成的 workflow 可能由一个 Agent 顺序执行并复用 KV cache，而不损失效果。",
-      "更多讨论可能更差：错误同伴会说服正确 agent，共识不是 correctness proxy。",
-      "真正需要团队的理由应是独立信息、异构权限/工具或并行环境交互，而不是角色数量。"
+      "能力更强不等于更会合作：零成本协作中 o3 只达到最优集体表现的 17%。",
+      "消息送达不等于联合推理成功；Silo-Bench 和 HiddenBench 均揭示分布式信息整合断层。"
     ],
     "timeline": [
       {
@@ -2462,7 +2707,7 @@
       {
         "period": "2026",
         "title": "可治理的协作介质",
-        "text": "LatentMAS、Scaling、Diversity、FS-Researcher、Experts Back、matched-budget 与 OneFlow 同时推进效率机制和强反证边界。"
+        "text": "LatentMAS、Scaling、Experts Back、matched-budget、OneFlow、More Capable、Silo-Bench 与 HiddenBench 同时推进效率机制和直接反证边界。"
       }
     ],
     "taxonomy": [
@@ -2563,37 +2808,50 @@
       }
     ],
     "method": [
-      "边界先于检索：前沿窗口固定为 2025-01-15 至 2026-07-15；v2 在原八条路径之外重开专家稀释、matched-budget 与同质 workflow 可折叠三条反证召回。",
-      "先宽后窄：machine-readable 候选池 48 篇；18 篇核心由 8 篇奠基/典型与 10 篇前沿组成。MacNet、MasRouter、ExtAgents 退出核心但保留扩展记录；三篇直接边界证据进入核心。",
+      "边界先于检索：前沿窗口固定为 2025-01-15 至 2026-07-15；v2 又窄召回合作失败、分布式信息整合和 latent alignment 反证。",
+      "先宽后窄：machine-readable 候选池 49 篇；18 篇核心由 8 篇奠基/典型与 10 篇前沿组成。Diversity 与 FS-Researcher 转为扩展，ICML More Capable 和 ACL Silo-Bench 进入核心；HiddenBench 保留扩展并进入证据链。",
       "逐 claim Critic：C01–C11 均记录 counter_search 范围、outcome、发现/未发现和修正理由；未发现反证不被表述为已证明。",
-      "一手元数据审计：S01–S23 的 title、authors、version、submission/venue year、publication status、venue/track 与 URL 逐项对照 arXiv 和官方 venue；测试要求 audit 与 manifest 完全一致。",
-      "机器证据优先：网页从 manifest v2 渲染；claim → evidence → source 使用闭合 ID。digest 排除自身、stable_url 与独立消费回填记录，后者固定到首个不可变 evidence snapshot commit SHA。"
+      "一手元数据审计：S01–S27 的 title、authors、version、submission/venue year、publication status、venue/track 与 URL 逐项对照 arXiv、OpenReview 和官方 venue；测试要求 audit 与 manifest 完全一致。",
+      "机器证据优先：网页从 manifest v2 渲染；claim → evidence → source 使用闭合 ID。digest-covered evidence snapshot 与独立 consumer attestation 分文件、分指纹，并固定到 commit SHA。"
     ],
     "episode_loop": [
-      "现有知识差距：专家稀释、matched-budget 与同质 workflow 可折叠边界缺少直接证据。",
-      "新检索：11 条主题 query + 48 篇 machine-readable 候选 ledger。",
-      "综合：18 篇核心重排为 8 篇奠基/典型与 10 篇前沿，三篇直接反证进入核心。",
-      "质量门：全量元数据审计、逐 claim Critic、固定 locator、digest 与独立 manifest 消费测试。",
-      "资产化：报告、manifest v2、完整候选决策、query、审计和独立消费 transcript。"
+      "现有知识差距：能力与合作脱钩、分布式信息整合断层和 LatentMAS 直接反证未闭环。",
+      "新检索：15 条主题 query + 49 篇 machine-readable 候选 ledger。",
+      "综合：18 篇核心重排为 8 篇奠基/典型与 10 篇前沿；两篇 2026 顶会工作进入核心，HiddenBench 进入扩展证据链。",
+      "质量门：全量元数据审计、逐 claim Critic、固定 locator、snapshot digest 与独立 attestation 三元组测试。",
+      "资产化：报告、manifest v2、evidence snapshot、候选决策、query、审计和独立 consumer attestation/transcript。"
     ],
     "limitations": [
       "知识截止为 2026-07-15；之后的 arXiv 修订、录用状态和代码发布未纳入。",
-      "oo-arxiv 依赖的 oo CLI 不可用；arxiv-cli 对已知 ID 与关键词返回空结果，已用 arXiv 与会议官方页逐篇补核，但不能声称系统综述级穷尽。",
+      "oo-arxiv 依赖的 oo CLI 不可用；arxiv-cli 对部分已知 ID 返回空结果，使用官方一手页面复核，已用 arXiv 与会议官方页逐篇补核，但不能声称系统综述级穷尽。",
       "现有 benchmark 偏数学、代码、QA 和软件工程；真实组织的激励冲突、权限、安全和长期学习证据不足。",
       "多篇早期研究使用 2023 年 GPT-3.5/GPT-4；其绝对数字不能直接外推到 2026 模型。",
       "开源代码不等于完全可复现；商业模型漂移、系统 prompt、随机性、并发和 token 预算都会改变结果。",
       "本文的 Multica 建议是论文证据与产品约束的推断，不是论文作者直接结论；每条均标注前提和副作用。",
-      "v2 是 open PR 的 review candidate，未 merge、未 tag、未 deploy；公开 Pages 仍是 v1，不能把本文件的相对 report_url 当成已发布 URL。"
+      "v2 是 open PR 的 review candidate，未 merge、未 tag、未 deploy；公开 Pages 仍是 v1，outputs 的绝对公开 URL 是发布目标而非当前已部署证明。"
     ]
   },
   "selection_protocol": {
-    "candidate_count": 48,
+    "candidate_count": 49,
     "core_count": 18,
+    "source_count": 27,
     "decision_enum": [
       "included",
       "extended",
       "excluded"
     ],
     "note": "extended/excluded 均为未进入 18 篇核心；每条保留版本、状态、URL 与理由。"
+  },
+  "promotion": {
+    "state": "candidate",
+    "durable_knowledge_id": null,
+    "bidirectional_pointer_status": "pending_librarian_promotion_after_master_content_approval"
+  },
+  "evidence_snapshot_url": "PENDING_EVIDENCE_SNAPSHOT_URL",
+  "evidence_snapshot": {
+    "status": "pending_commit_pin",
+    "manifest_version": "2.0.0",
+    "snapshot_digest": "sha256:ab68be862fa703b3ad26e055c54f66f9d17aa514f84f3c6d345274edae55db30",
+    "immutable_url": "PENDING_EVIDENCE_SNAPSHOT_URL"
   }
 }

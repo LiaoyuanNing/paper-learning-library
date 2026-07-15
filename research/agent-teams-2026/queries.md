@@ -3,7 +3,7 @@
 - 截止日：2026-07-15
 - “近 18 个月”：2025-01-15 至 2026-07-15
 - 范围：有通信/行动/持续状态的 LLM agent team；经典 MARL、纯 ensemble、纯人类团队不系统覆盖
-- 工具：优先 oo-arxiv；本环境缺 `oo`，回退 `arxiv-cli`。批量 API 遇 429 后转为逐篇 arXiv 与正式 venue 官方页核验。
+- 工具：优先 oo-arxiv；本环境缺 `oo`，回退 `arxiv-cli`。CLI 对部分已知 ID 返回空结果时，转为逐篇 arXiv 与正式 venue 官方页核验。
 
 ## 实际查询
 
@@ -16,6 +16,13 @@ multi-agent LLM benchmark collaboration
 LLM multi-agent shared memory
 LLM agent orchestration planning
 LLM multi-agent safety failure
+multi-agent expert dilution reveal expert consensus
+single agent multi-agent equal thinking token budget
+single agent baseline multi-agent workflow homogeneous collapse
+zero-cost collaboration capability protocol incentive LLM agents
+distributed coordination communication reasoning gap multi-agent LLM
+HiddenBench hidden profile collective reasoning multi-agent
+LatentMAS learned alignment matrix identity no transfer
 ```
 
 概念复核：

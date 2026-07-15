@@ -7,7 +7,7 @@
 - [Agent Team 前沿研究：组建更多 Agent，不等于拥有更好的团队](https://liaoyuanning.github.io/paper-learning-library/reports/agent-teams-2026/)
 - [机器可读证据包](https://liaoyuanning.github.io/paper-learning-library/reports/agent-teams-2026/data/evidence-manifest.v1.json)
 
-报告正文直接从版本化 evidence manifest 渲染；每条综合主张必须闭合到 evidence 与固定版本的一手来源。检索式、37 篇候选 ledger、独立消费验收与更新协议位于 `research/agent-teams-2026/`。
+报告正文直接从版本化 evidence manifest 渲染；每条综合主张必须闭合到 evidence 与固定版本的一手来源。公开 Pages 仍是 v1；repo 中的 v2 review candidate 含 49 篇 machine-readable 候选、独立 evidence snapshot/consumer attestation，位于 `research/agent-teams-2026/`。
 
 ## 本地验证与预览
 

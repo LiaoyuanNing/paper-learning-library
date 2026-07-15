@@ -28,7 +28,7 @@ function renderReport(manifest) {
 
   document.querySelector("#knowledge-cutoff").textContent = manifest.request.knowledge_cutoff;
   document.querySelector("#paper-count").textContent = `${manifest.papers.filter((paper) => paper.selection.decision === "included").length} 篇`;
-  document.querySelector("#model-disclosure").textContent = `${manifest.outputs.model_disclosure} · 生成于 ${manifest.outputs.generated_at.slice(0, 10)}`;
+  document.querySelector("#model-disclosure").textContent = `${manifest.outputs.model_disclosure} · 生成于 ${manifest.outputs.generated_on}`;
   document.querySelector("#footer-version").textContent = `Manifest ${manifest.manifest_version} · ${manifest.snapshot_digest.slice(0, 19)}…`;
 
   const citationsFor = (claim) => {

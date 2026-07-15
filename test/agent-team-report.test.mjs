@@ -1,14 +1,26 @@
 import assert from "node:assert/strict";
+import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
-const [manifest, audit, html, script, css] = await Promise.all([
-  readFile(new URL("../site/reports/agent-teams-2026/data/evidence-manifest.v2.json", import.meta.url), "utf8").then(JSON.parse),
-  readFile(new URL("../research/agent-teams-2026/metadata-audit.v2.json", import.meta.url), "utf8").then(JSON.parse),
-  readFile(new URL("../site/reports/agent-teams-2026/index.html", import.meta.url), "utf8"),
-  readFile(new URL("../site/reports/agent-teams-2026/report.js", import.meta.url), "utf8"),
-  readFile(new URL("../site/reports/agent-teams-2026/report.css", import.meta.url), "utf8"),
+const root = new URL("../", import.meta.url);
+const manifestPath = new URL("site/reports/agent-teams-2026/data/evidence-manifest.v2.json", root);
+const snapshotPath = new URL("site/reports/agent-teams-2026/data/evidence-snapshot.v2.json", root);
+const auditPath = new URL("research/agent-teams-2026/metadata-audit.v2.json", root);
+const attestationPath = new URL("research/agent-teams-2026/consumer-attestation.v2.json", root);
+const transcriptPath = new URL("research/agent-teams-2026/manifest-consumer-validation.v2.md", root);
+
+const [manifest, localSnapshot, audit, attestation, transcript, v1Manifest, html, script, css] = await Promise.all([
+  readFile(manifestPath, "utf8").then(JSON.parse),
+  readFile(snapshotPath, "utf8").then(JSON.parse),
+  readFile(auditPath, "utf8").then(JSON.parse),
+  readFile(attestationPath, "utf8").then(JSON.parse),
+  readFile(transcriptPath, "utf8"),
+  readFile(new URL("site/reports/agent-teams-2026/data/evidence-manifest.v1.json", root), "utf8").then(JSON.parse),
+  readFile(new URL("site/reports/agent-teams-2026/index.html", root), "utf8"),
+  readFile(new URL("site/reports/agent-teams-2026/report.js", root), "utf8"),
+  readFile(new URL("site/reports/agent-teams-2026/report.css", root), "utf8"),
 ]);
 
 function unique(items, label) {
@@ -23,24 +35,81 @@ function canonicalize(value) {
   return value;
 }
 
-function digest(value) {
-  const snapshot = structuredClone(value);
-  delete snapshot.snapshot_digest;
-  delete snapshot.stable_url;
-  delete snapshot.validation?.manifest_consumer_trial;
-  return `sha256:${createHash("sha256").update(JSON.stringify(canonicalize(snapshot))).digest("hex")}`;
+function sha256(value) {
+  return `sha256:${createHash("sha256").update(JSON.stringify(canonicalize(value))).digest("hex")}`;
 }
 
-test("v2 manifest has a SemVer contract, immutable entry and closed evidence graph", () => {
+function evidencePayload(value) {
+  const payload = structuredClone(value);
+  delete payload.snapshot_digest;
+  delete payload.stable_url;
+  delete payload.evidence_snapshot_url;
+  delete payload.evidence_snapshot;
+  delete payload.validation?.manifest_consumer_trial;
+  delete payload.validation?.consumer_attestation;
+  return payload;
+}
+
+function attestationPayload(value) {
+  const payload = structuredClone(value);
+  delete payload.attestation_digest;
+  return payload;
+}
+
+function immutableRaw(url, expectedPath) {
+  const parsed = new URL(url);
+  assert.equal(parsed.protocol, "https:");
+  assert.equal(parsed.hostname, "raw.githubusercontent.com");
+  const [, owner, repo, ref, ...parts] = parsed.pathname.split("/");
+  assert.equal(`${owner}/${repo}`, "LiaoyuanNing/paper-learning-library");
+  assert.match(ref, /^[0-9a-f]{40}$/);
+  const path = parts.join("/");
+  assert.equal(path, expectedPath);
+  return { ref, path };
+}
+
+function gitShowJson(url, expectedPath) {
+  const { ref, path } = immutableRaw(url, expectedPath);
+  return JSON.parse(execFileSync("git", ["show", `${ref}:${path}`], { cwd: new URL(root), encoding: "utf8" }));
+}
+
+function gitShowText(url, expectedPath) {
+  const { ref, path } = immutableRaw(url, expectedPath);
+  return execFileSync("git", ["show", `${ref}:${path}`], { cwd: new URL(root), encoding: "utf8" });
+}
+
+test("v1 supersedes digest is independently recomputed with the v1 algorithm", () => {
+  const v1Payload = structuredClone(v1Manifest);
+  delete v1Payload.snapshot_digest;
+  const recomputed = sha256(v1Payload);
+  assert.equal(recomputed, "sha256:194c019808da705ac100cccd215155c5b09f67a86f9499abb0d808ab2a855170");
+  assert.equal(manifest.supersedes[0].manifest_version, "1.0.0");
+  assert.equal(manifest.supersedes[0].snapshot_digest, recomputed);
+  immutableRaw(manifest.supersedes[0].immutable_url, "site/reports/agent-teams-2026/data/evidence-manifest.v1.json");
+});
+
+test("v2 evidence snapshot is an immutable digest-covered payload", () => {
   assert.equal(manifest.schema_version, "1.0.0");
   assert.equal(manifest.manifest_version, "2.0.0");
   assert.equal(manifest.request.knowledge_cutoff, "2026-07-15");
-  assert.equal(manifest.snapshot_digest, digest(manifest));
-  assert.equal(manifest.validation.manifest_consumer_trial.snapshot_digest, manifest.snapshot_digest);
-  assert.match(manifest.stable_url, /^https:\/\/raw\.githubusercontent\.com\/LiaoyuanNing\/paper-learning-library\/[0-9a-f]{40}\/site\/reports\/agent-teams-2026\/data\/evidence-manifest\.v2\.json$/);
-  assert.equal(manifest.supersedes[0].manifest_version, "1.0.0");
-  assert.match(manifest.supersedes[0].immutable_url, /\/age-174-v1\//);
+  assert.equal(manifest.request.time_precision, "day");
+  assert.equal("retrieved_at" in manifest.request, false);
+  assert.equal(manifest.snapshot_digest, sha256(evidencePayload(manifest)));
+  assert.equal(manifest.evidence_snapshot.snapshot_digest, manifest.snapshot_digest);
+  assert.equal(manifest.evidence_snapshot.immutable_url, manifest.evidence_snapshot_url);
 
+  const remoteSnapshot = gitShowJson(
+    manifest.evidence_snapshot_url,
+    "site/reports/agent-teams-2026/data/evidence-snapshot.v2.json",
+  );
+  assert.deepEqual(remoteSnapshot, localSnapshot);
+  assert.equal(remoteSnapshot.manifest_version, manifest.manifest_version);
+  assert.equal(remoteSnapshot.snapshot_digest, manifest.snapshot_digest);
+  assert.equal(remoteSnapshot.snapshot_digest, sha256(remoteSnapshot.evidence_payload));
+  assert.deepEqual(remoteSnapshot.evidence_payload, evidencePayload(manifest));
+});
+
+test("source, evidence, claim and candidate graphs are closed and audited", () => {
   const sourceIds = manifest.sources.map((item) => item.source_id);
   const evidenceIds = manifest.evidence.map((item) => item.evidence_id);
   const claimIds = manifest.claims.map((item) => item.claim_id);
@@ -66,32 +135,51 @@ test("v2 manifest has a SemVer contract, immutable entry and closed evidence gra
     }
   }
   for (const id of manifest.report.claim_links) assert.ok(claims.has(id));
+
+  const included = manifest.papers.filter((paper) => paper.selection.decision === "included");
+  assert.equal(manifest.papers.length, 49);
+  assert.equal(manifest.selection_protocol.candidate_count, 49);
+  assert.equal(included.length, 18);
+  assert.equal(included.filter((paper) => paper.group === "foundation").length, 8);
+  assert.equal(included.filter((paper) => paper.group === "frontier").length, 10);
+  for (const paperId of ["2602.01011", "2604.02460", "2601.12307", "2604.07821", "2603.01045"]) {
+    assert.ok(included.some((paper) => paper.paper_id === paperId), `${paperId} must be core`);
+  }
+  for (const paperId of ["2406.07155", "2502.11133", "2505.21471", "2602.03794", "2602.01566", "2505.11556"]) {
+    assert.equal(included.some((paper) => paper.paper_id === paperId), false, `${paperId} must be extended`);
+  }
+
+  const synthesis = manifest.claims.filter((claim) => claim.type === "synthesis");
+  assert.equal(manifest.validation.critic_checks.length, 11);
+  for (const claim of synthesis) {
+    assert.ok(claim.counter_search.scope && claim.counter_search.revision_reason);
+    if (claim.counter_search.findings.length === 0) assert.ok(claim.counter_search.no_contrary_note);
+  }
+  assert.equal(synthesis.find((claim) => claim.claim_id === "C05").strength, "conditional");
+  assert.doesNotMatch(synthesis.find((claim) => claim.claim_id === "C04").text, /只在/);
+  assert.ok(synthesis.find((claim) => claim.claim_id === "C11").contradicting_evidence_ids.includes("E28"));
+  assert.match(manifest.evidence.find((item) => item.evidence_id === "E14").faithful_summary, /组合式/);
 });
 
-test("all primary source metadata is explicit and matches the auditable record", () => {
-  const statusEnum = new Set(["published", "accepted", "preprint", "workshop"]);
-  assert.equal(audit.schema_version, "1.0.0");
-  assert.equal(audit.manifest_version, manifest.manifest_version);
+test("all source metadata matches the immutable audit, including non-arXiv evidence", () => {
+  const remoteAudit = gitShowJson(manifest.outputs.metadata_audit_url, "research/agent-teams-2026/metadata-audit.v2.json");
+  assert.deepEqual(remoteAudit, audit);
   assert.equal(audit.records.length, manifest.sources.length);
   const auditById = new Map(audit.records.map((record) => [record.source_id, record]));
-  const fields = ["title", "authors", "version", "submission_year", "venue_year", "publication_status", "venue", "track", "official_url", "venue_url"];
-
+  const fields = ["source_kind", "title", "authors", "version", "submission_year", "venue_year", "publication_status", "venue", "track", "official_url", "venue_url"];
   for (const source of manifest.sources) {
-    assert.match(source.official_url, /^https:\/\/arxiv\.org\/abs\/\d{4}\.\d{4,5}v\d+$/);
-    assert.match(source.version, /^v\d+$/);
-    assert.ok(statusEnum.has(source.publication_status));
-    assert.equal(Number.isInteger(source.submission_year), true);
-    assert.equal("year" in source, false, `${source.source_id} must not use ambiguous year`);
-    if (source.publication_status === "preprint") {
-      assert.equal(source.venue_year, null);
-      assert.equal(source.venue, null);
-      assert.equal(source.track, null);
+    assert.ok(["arxiv", "openreview"].includes(source.source_kind));
+    if (source.source_kind === "arxiv") {
+      assert.match(source.official_url, /^https:\/\/arxiv\.org\/abs\/\d{4}\.\d{4,5}v\d+$/);
+      assert.match(source.version, /^v\d+$/);
     } else {
-      assert.equal(Number.isInteger(source.venue_year), true);
-      assert.ok(source.venue && source.track && source.venue_url);
+      assert.equal(source.source_id, "S27");
+      assert.match(source.official_url, /^https:\/\/openreview\.net\/forum\?id=/);
+      assert.ok(source.external_id);
     }
+    assert.equal(Number.isInteger(source.submission_year), true);
+    assert.equal("year" in source, false);
     const record = auditById.get(source.source_id);
-    assert.ok(record, `${source.source_id} audit record missing`);
     assert.deepEqual(record.checked_fields, fields);
     assert.deepEqual(record.snapshot, Object.fromEntries(fields.map((key) => [key, source[key]])));
   }
@@ -101,56 +189,59 @@ test("all primary source metadata is explicit and matches the auditable record",
   assert.equal(byId.get("S14").title, "Scaling External Knowledge Input Beyond Context Windows of LLMs via Multi-Agent Collaboration");
   assert.equal(byId.get("S16").submission_year, 2025);
   assert.equal(byId.get("S16").venue_year, null);
+  assert.deepEqual(byId.get("S25").authors.slice(0, 3), ["Yuzhe Zhang", "Feiran Liu", "Yi Shan"]);
+  assert.match(byId.get("S26").title, /^HiddenBench: Assessing Collective Reasoning/);
 });
 
-test("core reselection, full candidate mapping and per-claim Critic checks are complete", () => {
-  const included = manifest.papers.filter((paper) => paper.selection.decision === "included");
-  assert.equal(manifest.papers.length, 48);
-  assert.equal(included.length, 18);
-  assert.equal(included.filter((paper) => paper.group === "foundation").length, 8);
-  assert.equal(included.filter((paper) => paper.group === "frontier").length, 10);
-  for (const paperId of ["2602.01011", "2604.02460", "2601.12307"]) assert.ok(included.some((paper) => paper.paper_id === paperId));
-  for (const paperId of ["2406.07155", "2502.11133", "2505.21471"]) assert.equal(included.some((paper) => paper.paper_id === paperId), false);
-
-  const statuses = new Set(["published", "accepted", "preprint", "workshop"]);
-  for (const paper of manifest.papers) {
-    const source = paper.source_id && manifest.sources.find((item) => item.source_id === paper.source_id);
-    assert.match(paper.paper_id, /^\d{4}\.\d{4,5}$/);
-    assert.ok(["included", "extended", "excluded"].includes(paper.selection.decision));
-    assert.ok(paper.selection.reasons.length > 0);
-    assert.match(source?.version ?? paper.version, /^v\d+$/);
-    assert.ok(statuses.has(source?.publication_status ?? paper.publication_status));
-    assert.match(source?.official_url ?? paper.source_url, /^https:\/\/arxiv\.org\/abs\//);
+test("consumer attestation is immutable, independently digested and bound to the snapshot triple", () => {
+  const pointer = manifest.validation.consumer_attestation;
+  const remoteAttestation = gitShowJson(pointer.attestation_url, "research/agent-teams-2026/consumer-attestation.v2.json");
+  const remoteTranscript = gitShowText(pointer.transcript_url, "research/agent-teams-2026/manifest-consumer-validation.v2.md");
+  assert.deepEqual(remoteAttestation, attestation);
+  assert.equal(remoteTranscript, transcript);
+  assert.equal(attestation.attestation_digest, sha256(attestationPayload(attestation)));
+  assert.equal(pointer.attestation_digest, attestation.attestation_digest);
+  for (const item of [pointer, attestation]) {
+    assert.equal(item.consumer_identity, attestation.consumer_identity);
+    assert.equal(item.manifest_version, manifest.manifest_version);
+    assert.equal(item.snapshot_digest, manifest.snapshot_digest);
+    assert.equal(item.input_url, manifest.evidence_snapshot_url);
   }
-
-  const synthesis = manifest.claims.filter((claim) => claim.type === "synthesis");
-  assert.deepEqual(synthesis.map((claim) => claim.claim_id), ["C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08", "C09", "C10", "C11"]);
-  assert.equal(manifest.validation.critic_checks.length, synthesis.length);
-  for (const claim of synthesis) {
-    assert.ok(claim.counter_search.scope);
-    assert.ok(["contrary_found", "qualified", "no_direct_contrary_found"].includes(claim.counter_search.outcome));
-    assert.ok(claim.counter_search.revision_reason);
-    if (claim.counter_search.findings.length === 0) assert.ok(claim.counter_search.no_contrary_note);
+  assert.equal(attestation.question_results.length, 4);
+  assert.ok(attestation.question_results.every((item) => item.result === "PASS"));
+  assert.equal(attestation.manual_review.result, "4/4 PASS");
+  for (const exact of [attestation.consumer_identity, manifest.manifest_version, manifest.snapshot_digest, manifest.evidence_snapshot_url]) {
+    assert.ok(transcript.includes(exact), `transcript must contain ${exact}`);
   }
-  assert.equal(synthesis.find((claim) => claim.claim_id === "C05").strength, "conditional");
 });
 
-test("independent consumer record and report surfaces bind to the same v2 snapshot", () => {
-  const trial = manifest.validation.manifest_consumer_trial;
-  assert.equal(trial.status, "passed");
-  assert.equal(trial.manifest_version, manifest.manifest_version);
-  assert.equal(trial.snapshot_digest, manifest.snapshot_digest);
-  assert.equal(trial.immutable_url, manifest.stable_url);
-  assert.ok(trial.consumer_agent?.identity);
-  assert.deepEqual(trial.question_results, ["expert_dilution:PASS", "matched_budget:PASS", "workflow_collapse:PASS", "negative_answerability:PASS"]);
+test("all machine output URLs resolve to the intended absolute artifact", () => {
+  const expectedPublic = {
+    report_url: "/paper-learning-library/reports/agent-teams-2026/",
+    manifest_url: "/paper-learning-library/reports/agent-teams-2026/data/evidence-manifest.v2.json",
+  };
+  for (const [key, pathname] of Object.entries(expectedPublic)) {
+    const url = new URL(manifest.outputs[key]);
+    assert.equal(url.protocol, "https:");
+    assert.equal(url.hostname, "liaoyuanning.github.io");
+    assert.equal(url.pathname, pathname);
+  }
+  immutableRaw(manifest.outputs.metadata_audit_url, "research/agent-teams-2026/metadata-audit.v2.json");
+  immutableRaw(manifest.evidence_snapshot_url, "site/reports/agent-teams-2026/data/evidence-snapshot.v2.json");
+  immutableRaw(manifest.validation.consumer_attestation.attestation_url, "research/agent-teams-2026/consumer-attestation.v2.json");
+  immutableRaw(manifest.validation.consumer_attestation.transcript_url, "research/agent-teams-2026/manifest-consumer-validation.v2.md");
+  assert.equal(manifest.outputs.release_state, "review_candidate_not_deployed");
+  assert.equal(manifest.promotion.state, "candidate");
+  assert.equal(manifest.promotion.durable_knowledge_id, null);
+});
 
+test("report surfaces render the v2 manifest without unsafe HTML", () => {
   for (const marker of ["main-content", "summary-groups", "paper-grid", "recommendations", "references", "limitations-list"]) {
     assert.match(html, new RegExp(`id="${marker}"`));
   }
   assert.match(html, /skip-link/);
-  assert.match(html, /evidence-manifest\.v2\.json/g);
-  assert.doesNotMatch(html, /evidence-manifest\.v1\.json/);
   assert.match(script, /fetch\("\.\/data\/evidence-manifest\.v2\.json"\)/);
+  assert.match(script, /generated_on/);
   assert.match(script, /textContent/);
   assert.doesNotMatch(script, /innerHTML/);
   assert.match(css, /@media \(max-width: 390px\)/);
@@ -168,4 +259,5 @@ test("evidence pack never stores paper full text", () => {
     }
   };
   visit(manifest);
+  visit(localSnapshot);
 });

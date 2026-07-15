@@ -1,7 +1,8 @@
 {
   "schema_version": "1.0.0",
   "manifest_version": "2.0.0",
-  "audited_at": "2026-07-15T13:10:00Z",
+  "audited_on": "2026-07-15",
+  "time_precision": "day",
   "auditor": "PM-Paper",
   "evidence_policy": "arXiv versioned abstract page for title/authors/version/submission year; official proceedings/OpenReview for venue year/status/track/URL; preprint when no official venue was found by cutoff",
   "tool_observations": {
@@ -22,10 +23,13 @@
   "records": [
     {
       "source_id": "S01",
+      "source_kind": "arxiv",
       "paper_id": "2303.17760",
+      "external_id": null,
       "checked_url": "https://arxiv.org/abs/2303.17760v2",
       "venue_checked_url": "https://proceedings.neurips.cc/paper/2023/hash/a3621ee907def47c1b952ade25c67698-Abstract-Conference.html",
       "checked_fields": [
+        "source_kind",
         "title",
         "authors",
         "version",
@@ -40,6 +44,7 @@
       "outcome": "verified",
       "corrected_fields": [],
       "snapshot": {
+        "source_kind": "arxiv",
         "title": "CAMEL: Communicative Agents for 'Mind' Exploration of Large Scale Language Model Society",
         "authors": [
           "Guohao Li",
@@ -60,10 +65,13 @@
     },
     {
       "source_id": "S02",
+      "source_kind": "arxiv",
       "paper_id": "2305.14325",
+      "external_id": null,
       "checked_url": "https://arxiv.org/abs/2305.14325v1",
       "venue_checked_url": "https://proceedings.mlr.press/v235/du24e.html",
       "checked_fields": [
+        "source_kind",
         "title",
         "authors",
         "version",
@@ -78,6 +86,7 @@
       "outcome": "verified",
       "corrected_fields": [],
       "snapshot": {
+        "source_kind": "arxiv",
         "title": "Improving Factuality and Reasoning in Language Models through Multiagent Debate",
         "authors": [
           "Yilun Du",
@@ -98,10 +107,13 @@
     },
     {
       "source_id": "S03",
+      "source_kind": "arxiv",
       "paper_id": "2307.07924",
+      "external_id": null,
       "checked_url": "https://arxiv.org/abs/2307.07924v5",
       "venue_checked_url": "https://aclanthology.org/2024.acl-long.810/",
       "checked_fields": [
+        "source_kind",
         "title",
         "authors",
         "version",
@@ -116,6 +128,7 @@
       "outcome": "verified",
       "corrected_fields": [],
       "snapshot": {
+        "source_kind": "arxiv",
         "title": "ChatDev: Communicative Agents for Software Development",
         "authors": [
           "Chen Qian",
@@ -145,10 +158,13 @@
     },
     {
       "source_id": "S04",
+      "source_kind": "arxiv",
       "paper_id": "2308.00352",
+      "external_id": null,
       "checked_url": "https://arxiv.org/abs/2308.00352v7",
       "venue_checked_url": "https://openreview.net/forum?id=VtmBAGCN7o",
       "checked_fields": [
+        "source_kind",
         "title",
         "authors",
         "version",
@@ -165,6 +181,7 @@
         "authors"
       ],
       "snapshot": {
+        "source_kind": "arxiv",
         "title": "MetaGPT: Meta Programming for A Multi-Agent Collaborative Framework",
         "authors": [
           "Sirui Hong",
@@ -195,10 +212,13 @@
     },
     {
       "source_id": "S05",
+      "source_kind": "arxiv",
       "paper_id": "2308.08155",
+      "external_id": null,
       "checked_url": "https://arxiv.org/abs/2308.08155v2",
       "venue_checked_url": "https://openreview.net/forum?id=BAakY1hNKS",
       "checked_fields": [
+        "source_kind",
         "title",
         "authors",
         "version",
@@ -215,6 +235,7 @@
         "authors"
       ],
       "snapshot": {
+        "source_kind": "arxiv",
         "title": "AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation",
         "authors": [
           "Qingyun Wu",
@@ -244,10 +265,13 @@
     },
     {
       "source_id": "S06",
+      "source_kind": "arxiv",
       "paper_id": "2309.13007",
+      "external_id": null,
       "checked_url": "https://arxiv.org/abs/2309.13007v3",
       "venue_checked_url": "https://aclanthology.org/2024.acl-long.381/",
       "checked_fields": [
+        "source_kind",
         "title",
         "authors",
         "version",
@@ -262,6 +286,7 @@
       "outcome": "verified",
       "corrected_fields": [],
       "snapshot": {
+        "source_kind": "arxiv",
         "title": "ReConcile: Round-Table Conference Improves Reasoning via Consensus among Diverse LLMs",
         "authors": [
           "Justin Chih-Yao Chen",
@@ -280,10 +305,13 @@
     },
     {
       "source_id": "S07",
+      "source_kind": "arxiv",
       "paper_id": "2310.02170",
+      "external_id": null,
       "checked_url": "https://arxiv.org/abs/2310.02170v2",
       "venue_checked_url": "https://openreview.net/forum?id=XII0Wp1XA9",
       "checked_fields": [
+        "source_kind",
         "title",
         "authors",
         "version",
@@ -298,6 +326,7 @@
       "outcome": "verified",
       "corrected_fields": [],
       "snapshot": {
+        "source_kind": "arxiv",
         "title": "A Dynamic LLM-Powered Agent Network for Task-Oriented Agent Collaboration",
         "authors": [
           "Zijun Liu",
@@ -318,10 +347,13 @@
     },
     {
       "source_id": "S08",
+      "source_kind": "arxiv",
       "paper_id": "2402.05120",
+      "external_id": null,
       "checked_url": "https://arxiv.org/abs/2402.05120v2",
       "venue_checked_url": "https://openreview.net/forum?id=bgzUSZ8aeg",
       "checked_fields": [
+        "source_kind",
         "title",
         "authors",
         "version",
@@ -338,6 +370,7 @@
         "authors"
       ],
       "snapshot": {
+        "source_kind": "arxiv",
         "title": "More Agents Is All You Need",
         "authors": [
           "Junyou Li",
@@ -358,10 +391,13 @@
     },
     {
       "source_id": "S09",
+      "source_kind": "arxiv",
       "paper_id": "2406.07155",
+      "external_id": null,
       "checked_url": "https://arxiv.org/abs/2406.07155v3",
       "venue_checked_url": "https://openreview.net/forum?id=K3n5jPkrU6",
       "checked_fields": [
+        "source_kind",
         "title",
         "authors",
         "version",
@@ -379,6 +415,7 @@
         "authors"
       ],
       "snapshot": {
+        "source_kind": "arxiv",
         "title": "Scaling Large Language Model-based Multi-Agent Collaboration",
         "authors": [
           "Chen Qian",
@@ -406,10 +443,13 @@
     },
     {
       "source_id": "S10",
+      "source_kind": "arxiv",
       "paper_id": "2502.04180",
+      "external_id": null,
       "checked_url": "https://arxiv.org/abs/2502.04180v2",
       "venue_checked_url": "https://openreview.net/forum?id=imcyVlzpXh",
       "checked_fields": [
+        "source_kind",
         "title",
         "authors",
         "version",
@@ -424,6 +464,7 @@
       "outcome": "verified",
       "corrected_fields": [],
       "snapshot": {
+        "source_kind": "arxiv",
         "title": "Multi-agent Architecture Search via Agentic Supernet",
         "authors": [
           "Guibin Zhang",
@@ -445,10 +486,13 @@
     },
     {
       "source_id": "S11",
+      "source_kind": "arxiv",
       "paper_id": "2502.11133",
+      "external_id": null,
       "checked_url": "https://arxiv.org/abs/2502.11133v1",
       "venue_checked_url": null,
       "checked_fields": [
+        "source_kind",
         "title",
         "authors",
         "version",
@@ -463,6 +507,7 @@
       "outcome": "verified",
       "corrected_fields": [],
       "snapshot": {
+        "source_kind": "arxiv",
         "title": "MasRouter: Learning to Route LLMs for Multi-Agent Systems",
         "authors": [
           "Yanwei Yue",
@@ -485,10 +530,13 @@
     },
     {
       "source_id": "S12",
+      "source_kind": "arxiv",
       "paper_id": "2503.01935",
+      "external_id": null,
       "checked_url": "https://arxiv.org/abs/2503.01935v1",
       "venue_checked_url": "https://aclanthology.org/2025.acl-long.421/",
       "checked_fields": [
+        "source_kind",
         "title",
         "authors",
         "version",
@@ -505,6 +553,7 @@
         "title"
       ],
       "snapshot": {
+        "source_kind": "arxiv",
         "title": "MultiAgentBench: Evaluating the Collaboration and Competition of LLM agents",
         "authors": [
           "Kunlun Zhu",
@@ -531,10 +580,13 @@
     },
     {
       "source_id": "S13",
+      "source_kind": "arxiv",
       "paper_id": "2503.13657",
+      "external_id": null,
       "checked_url": "https://arxiv.org/abs/2503.13657v3",
       "venue_checked_url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/b1041e52d3be19f0a9bc491657488e4a-Abstract-Datasets_and_Benchmarks_Track.html",
       "checked_fields": [
+        "source_kind",
         "title",
         "authors",
         "version",
@@ -551,6 +603,7 @@
         "authors"
       ],
       "snapshot": {
+        "source_kind": "arxiv",
         "title": "Why Do Multi-Agent LLM Systems Fail?",
         "authors": [
           "Mert Cemri",
@@ -579,10 +632,13 @@
     },
     {
       "source_id": "S14",
+      "source_kind": "arxiv",
       "paper_id": "2505.21471",
+      "external_id": null,
       "checked_url": "https://arxiv.org/abs/2505.21471v2",
       "venue_checked_url": "https://aclanthology.org/2026.acl-long.468/",
       "checked_fields": [
+        "source_kind",
         "title",
         "authors",
         "version",
@@ -599,6 +655,7 @@
         "title"
       ],
       "snapshot": {
+        "source_kind": "arxiv",
         "title": "Scaling External Knowledge Input Beyond Context Windows of LLMs via Multi-Agent Collaboration",
         "authors": [
           "Zijun Liu",
@@ -620,10 +677,13 @@
     },
     {
       "source_id": "S15",
+      "source_kind": "arxiv",
       "paper_id": "2511.20639",
+      "external_id": null,
       "checked_url": "https://arxiv.org/abs/2511.20639v3",
       "venue_checked_url": "https://openreview.net/forum?id=e7pAjJZJWb",
       "checked_fields": [
+        "source_kind",
         "title",
         "authors",
         "version",
@@ -640,6 +700,7 @@
         "venue_url"
       ],
       "snapshot": {
+        "source_kind": "arxiv",
         "title": "Latent Collaboration in Multi-Agent Systems",
         "authors": [
           "Jiaru Zou",
@@ -668,10 +729,13 @@
     },
     {
       "source_id": "S16",
+      "source_kind": "arxiv",
       "paper_id": "2512.08296",
+      "external_id": null,
       "checked_url": "https://arxiv.org/abs/2512.08296v3",
       "venue_checked_url": null,
       "checked_fields": [
+        "source_kind",
         "title",
         "authors",
         "version",
@@ -689,6 +753,7 @@
         "venue_year"
       ],
       "snapshot": {
+        "source_kind": "arxiv",
         "title": "Towards a Science of Scaling Agent Systems",
         "authors": [
           "Yubin Kim",
@@ -724,10 +789,13 @@
     },
     {
       "source_id": "S17",
+      "source_kind": "arxiv",
       "paper_id": "2602.03794",
+      "external_id": null,
       "checked_url": "https://arxiv.org/abs/2602.03794v1",
       "venue_checked_url": "https://openreview.net/forum?id=9BN2W5BCfE",
       "checked_fields": [
+        "source_kind",
         "title",
         "authors",
         "version",
@@ -744,6 +812,7 @@
         "venue_url"
       ],
       "snapshot": {
+        "source_kind": "arxiv",
         "title": "Understanding Agent Scaling in LLM-Based Multi-Agent Systems via Diversity",
         "authors": [
           "Yingxuan Yang",
@@ -767,10 +836,13 @@
     },
     {
       "source_id": "S18",
+      "source_kind": "arxiv",
       "paper_id": "2602.01566",
+      "external_id": null,
       "checked_url": "https://arxiv.org/abs/2602.01566v2",
       "venue_checked_url": "https://aclanthology.org/2026.acl-long.288/",
       "checked_fields": [
+        "source_kind",
         "title",
         "authors",
         "version",
@@ -785,6 +857,7 @@
       "outcome": "verified",
       "corrected_fields": [],
       "snapshot": {
+        "source_kind": "arxiv",
         "title": "FS-Researcher: Test-Time Scaling for Long-Horizon Research Tasks with File-System-Based Agents",
         "authors": [
           "Chiwei Zhu",
@@ -807,10 +880,13 @@
     },
     {
       "source_id": "S19",
+      "source_kind": "arxiv",
       "paper_id": "2308.10848",
+      "external_id": null,
       "checked_url": "https://arxiv.org/abs/2308.10848v3",
       "venue_checked_url": "https://openreview.net/forum?id=EHg5GDnyq1",
       "checked_fields": [
+        "source_kind",
         "title",
         "authors",
         "version",
@@ -827,6 +903,7 @@
         "authors"
       ],
       "snapshot": {
+        "source_kind": "arxiv",
         "title": "AgentVerse: Facilitating Multi-Agent Collaboration and Exploring Emergent Behaviors",
         "authors": [
           "Weize Chen",
@@ -858,10 +935,13 @@
     },
     {
       "source_id": "S20",
+      "source_kind": "arxiv",
       "paper_id": "2606.18829",
+      "external_id": null,
       "checked_url": "https://arxiv.org/abs/2606.18829v1",
       "venue_checked_url": null,
       "checked_fields": [
+        "source_kind",
         "title",
         "authors",
         "version",
@@ -876,6 +956,7 @@
       "outcome": "verified",
       "corrected_fields": [],
       "snapshot": {
+        "source_kind": "arxiv",
         "title": "GateMem: Benchmarking Memory Governance in Multi-Principal Shared-Memory Agents",
         "authors": [
           "Zhe Ren",
@@ -901,10 +982,13 @@
     },
     {
       "source_id": "S21",
+      "source_kind": "arxiv",
       "paper_id": "2602.01011",
+      "external_id": null,
       "checked_url": "https://arxiv.org/abs/2602.01011v4",
       "venue_checked_url": "https://openreview.net/forum?id=Xn8kmKvO9g",
       "checked_fields": [
+        "source_kind",
         "title",
         "authors",
         "version",
@@ -919,6 +1003,7 @@
       "outcome": "verified",
       "corrected_fields": [],
       "snapshot": {
+        "source_kind": "arxiv",
         "title": "Multi-Agent Teams Hold Experts Back",
         "authors": [
           "Aneesh Pappu",
@@ -941,10 +1026,13 @@
     },
     {
       "source_id": "S22",
+      "source_kind": "arxiv",
       "paper_id": "2604.02460",
+      "external_id": null,
       "checked_url": "https://arxiv.org/abs/2604.02460v2",
       "venue_checked_url": null,
       "checked_fields": [
+        "source_kind",
         "title",
         "authors",
         "version",
@@ -959,6 +1047,7 @@
       "outcome": "verified",
       "corrected_fields": [],
       "snapshot": {
+        "source_kind": "arxiv",
         "title": "Single-Agent LLMs Outperform Multi-Agent Systems on Multi-Hop Reasoning Under Equal Thinking Token Budgets",
         "authors": [
           "Dat Tran",
@@ -976,10 +1065,13 @@
     },
     {
       "source_id": "S23",
+      "source_kind": "arxiv",
       "paper_id": "2601.12307",
+      "external_id": null,
       "checked_url": "https://arxiv.org/abs/2601.12307v1",
       "venue_checked_url": null,
       "checked_fields": [
+        "source_kind",
         "title",
         "authors",
         "version",
@@ -994,6 +1086,7 @@
       "outcome": "verified",
       "corrected_fields": [],
       "snapshot": {
+        "source_kind": "arxiv",
         "title": "Rethinking the Value of Multi-Agent Workflow: A Strong Single Agent Baseline",
         "authors": [
           "Jiawei Xu",
@@ -1016,6 +1109,173 @@
         "track": null,
         "official_url": "https://arxiv.org/abs/2601.12307v1",
         "venue_url": null
+      }
+    },
+    {
+      "source_id": "S24",
+      "source_kind": "arxiv",
+      "paper_id": "2604.07821",
+      "external_id": null,
+      "checked_url": "https://arxiv.org/abs/2604.07821v2",
+      "venue_checked_url": "https://icml.cc/virtual/2026/poster/60576",
+      "checked_fields": [
+        "source_kind",
+        "title",
+        "authors",
+        "version",
+        "submission_year",
+        "venue_year",
+        "publication_status",
+        "venue",
+        "track",
+        "official_url",
+        "venue_url"
+      ],
+      "outcome": "verified",
+      "corrected_fields": [],
+      "snapshot": {
+        "source_kind": "arxiv",
+        "title": "More Capable, Less Cooperative? When LLMs Fail At Zero-Cost Collaboration",
+        "authors": [
+          "Advait Yadav",
+          "Sid Black",
+          "Oliver Sourbut"
+        ],
+        "version": "v2",
+        "submission_year": 2026,
+        "venue_year": 2026,
+        "publication_status": "published",
+        "venue": "ICML",
+        "track": "Main Conference Poster",
+        "official_url": "https://arxiv.org/abs/2604.07821v2",
+        "venue_url": "https://icml.cc/virtual/2026/poster/60576"
+      }
+    },
+    {
+      "source_id": "S25",
+      "source_kind": "arxiv",
+      "paper_id": "2603.01045",
+      "external_id": null,
+      "checked_url": "https://arxiv.org/abs/2603.01045v2",
+      "venue_checked_url": "https://aclanthology.org/2026.acl-long.1354/",
+      "checked_fields": [
+        "source_kind",
+        "title",
+        "authors",
+        "version",
+        "submission_year",
+        "venue_year",
+        "publication_status",
+        "venue",
+        "track",
+        "official_url",
+        "venue_url"
+      ],
+      "outcome": "verified",
+      "corrected_fields": [],
+      "snapshot": {
+        "source_kind": "arxiv",
+        "title": "Silo-Bench: A Scalable Environment for Evaluating Distributed Coordination in Multi-Agent LLM Systems",
+        "authors": [
+          "Yuzhe Zhang",
+          "Feiran Liu",
+          "Yi Shan",
+          "Xinyi Huang",
+          "Xin Yang",
+          "Yueqi Zhu",
+          "Xuxin Cheng",
+          "Cao Liu",
+          "Ke Zeng",
+          "Terry Jingchen Zhang",
+          "Wenyuan Jiang"
+        ],
+        "version": "v2",
+        "submission_year": 2026,
+        "venue_year": 2026,
+        "publication_status": "published",
+        "venue": "ACL",
+        "track": "Long Paper",
+        "official_url": "https://arxiv.org/abs/2603.01045v2",
+        "venue_url": "https://aclanthology.org/2026.acl-long.1354/"
+      }
+    },
+    {
+      "source_id": "S26",
+      "source_kind": "arxiv",
+      "paper_id": "2505.11556",
+      "external_id": null,
+      "checked_url": "https://arxiv.org/abs/2505.11556v4",
+      "venue_checked_url": "https://icml.cc/virtual/2026/papers.html",
+      "checked_fields": [
+        "source_kind",
+        "title",
+        "authors",
+        "version",
+        "submission_year",
+        "venue_year",
+        "publication_status",
+        "venue",
+        "track",
+        "official_url",
+        "venue_url"
+      ],
+      "outcome": "verified",
+      "corrected_fields": [],
+      "snapshot": {
+        "source_kind": "arxiv",
+        "title": "HiddenBench: Assessing Collective Reasoning in Multi-Agent LLMs via Hidden Profile Tasks",
+        "authors": [
+          "Yuxuan Li",
+          "Aoi Naito",
+          "Hirokazu Shirado"
+        ],
+        "version": "v4",
+        "submission_year": 2025,
+        "venue_year": 2026,
+        "publication_status": "published",
+        "venue": "ICML",
+        "track": "Main Conference Poster",
+        "official_url": "https://arxiv.org/abs/2505.11556v4",
+        "venue_url": "https://icml.cc/virtual/2026/papers.html"
+      }
+    },
+    {
+      "source_id": "S27",
+      "source_kind": "openreview",
+      "paper_id": null,
+      "external_id": "manXhfpRH3",
+      "checked_url": "https://openreview.net/forum?id=manXhfpRH3",
+      "venue_checked_url": "https://openreview.net/forum?id=manXhfpRH3",
+      "checked_fields": [
+        "source_kind",
+        "title",
+        "authors",
+        "version",
+        "submission_year",
+        "venue_year",
+        "publication_status",
+        "venue",
+        "track",
+        "official_url",
+        "venue_url"
+      ],
+      "outcome": "verified",
+      "corrected_fields": [],
+      "snapshot": {
+        "source_kind": "openreview",
+        "title": "On the Role of Learned Alignment Matrices in LatentMAS",
+        "authors": [
+          "Spursh Deshpande",
+          "Wenhao Lu"
+        ],
+        "version": "OpenReview revision 2026-06-20",
+        "submission_year": 2026,
+        "venue_year": 2026,
+        "publication_status": "workshop",
+        "venue": "ICML",
+        "track": "CompLearn Workshop Poster",
+        "official_url": "https://openreview.net/forum?id=manXhfpRH3",
+        "venue_url": "https://openreview.net/forum?id=manXhfpRH3"
       }
     }
   ]

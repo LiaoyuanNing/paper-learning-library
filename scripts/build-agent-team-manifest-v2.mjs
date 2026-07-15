@@ -4,8 +4,15 @@ import { readFile, writeFile } from "node:fs/promises";
 const root = new URL("../", import.meta.url);
 const inputUrl = new URL("site/reports/agent-teams-2026/data/evidence-manifest.v1.json", root);
 const outputUrl = new URL("site/reports/agent-teams-2026/data/evidence-manifest.v2.json", root);
+const snapshotOutputUrl = new URL("site/reports/agent-teams-2026/data/evidence-snapshot.v2.json", root);
 const auditUrl = new URL("research/agent-teams-2026/metadata-audit.v2.json", root);
-const stableUrl = process.argv[2] ?? "PENDING_COMMIT_PIN";
+const evidenceSnapshotUrl = process.argv[2] ?? "PENDING_EVIDENCE_SNAPSHOT_URL";
+const auditRef = process.argv[3] ?? "PENDING_AUDIT_REF";
+const attestationRef = process.argv[4] ?? "PENDING_ATTESTATION_REF";
+const attestationDigest = process.argv[5] ?? "PENDING_ATTESTATION_DIGEST";
+const consumerIdentity = process.argv[6] ?? "PENDING_CONSUMER_IDENTITY";
+const repository = "LiaoyuanNing/paper-learning-library";
+const rawUrl = (ref, path) => `https://raw.githubusercontent.com/${repository}/${ref}/${path}`;
 const manifest = JSON.parse(await readFile(inputUrl, "utf8"));
 
 const canonicalize = (value) => {
@@ -16,12 +23,19 @@ const canonicalize = (value) => {
   return value;
 };
 
-const digest = (value) => {
-  const snapshot = structuredClone(value);
-  delete snapshot.snapshot_digest;
-  delete snapshot.stable_url;
-  delete snapshot.validation?.manifest_consumer_trial;
-  return `sha256:${createHash("sha256").update(JSON.stringify(canonicalize(snapshot))).digest("hex")}`;
+const evidencePayload = (value) => {
+  const payload = structuredClone(value);
+  delete payload.snapshot_digest;
+  delete payload.stable_url;
+  delete payload.evidence_snapshot_url;
+  delete payload.evidence_snapshot;
+  delete payload.validation?.manifest_consumer_trial;
+  delete payload.validation?.consumer_attestation;
+  return payload;
+};
+
+const digestEvidencePayload = (value) => {
+  return `sha256:${createHash("sha256").update(JSON.stringify(canonicalize(evidencePayload(value)))).digest("hex")}`;
 };
 
 const venueBySource = {
@@ -87,6 +101,7 @@ manifest.sources = manifest.sources.map((source) => {
   const next = {
     ...source,
     ...corrections[source.source_id],
+    source_kind: "arxiv",
     submission_year,
     venue_year,
     publication_status,
@@ -100,6 +115,7 @@ manifest.sources = manifest.sources.map((source) => {
 manifest.sources.push(
   {
     source_id: "S21",
+    source_kind: "arxiv",
     paper_id: "2602.01011",
     title: "Multi-Agent Teams Hold Experts Back",
     authors: ["Aneesh Pappu", "Batu El", "Hancheng Cao", "Carmelo di Nolfo", "Yanchao Sun", "Meng Cao", "James Zou"],
@@ -115,6 +131,7 @@ manifest.sources.push(
   },
   {
     source_id: "S22",
+    source_kind: "arxiv",
     paper_id: "2604.02460",
     title: "Single-Agent LLMs Outperform Multi-Agent Systems on Multi-Hop Reasoning Under Equal Thinking Token Budgets",
     authors: ["Dat Tran", "Douwe Kiela"],
@@ -130,6 +147,7 @@ manifest.sources.push(
   },
   {
     source_id: "S23",
+    source_kind: "arxiv",
     paper_id: "2601.12307",
     title: "Rethinking the Value of Multi-Agent Workflow: A Strong Single Agent Baseline",
     authors: ["Jiawei Xu", "Arief Koesdwiady", "Sisong Bei", "Yan Han", "Baixiang Huang", "Dakuo Wang", "Yutong Chen", "Zheshen Wang", "Peihao Wang", "Pan Li", "Ying Ding"],
@@ -143,10 +161,75 @@ manifest.sources.push(
     venue_url: null,
     accessed_at: "2026-07-15",
   },
+  {
+    source_id: "S24",
+    source_kind: "arxiv",
+    paper_id: "2604.07821",
+    title: "More Capable, Less Cooperative? When LLMs Fail At Zero-Cost Collaboration",
+    authors: ["Advait Yadav", "Sid Black", "Oliver Sourbut"],
+    version: "v2",
+    submission_year: 2026,
+    venue_year: 2026,
+    publication_status: "published",
+    venue: "ICML",
+    track: "Main Conference Poster",
+    official_url: "https://arxiv.org/abs/2604.07821v2",
+    venue_url: "https://icml.cc/virtual/2026/poster/60576",
+    accessed_at: "2026-07-15",
+  },
+  {
+    source_id: "S25",
+    source_kind: "arxiv",
+    paper_id: "2603.01045",
+    title: "Silo-Bench: A Scalable Environment for Evaluating Distributed Coordination in Multi-Agent LLM Systems",
+    authors: ["Yuzhe Zhang", "Feiran Liu", "Yi Shan", "Xinyi Huang", "Xin Yang", "Yueqi Zhu", "Xuxin Cheng", "Cao Liu", "Ke Zeng", "Terry Jingchen Zhang", "Wenyuan Jiang"],
+    version: "v2",
+    submission_year: 2026,
+    venue_year: 2026,
+    publication_status: "published",
+    venue: "ACL",
+    track: "Long Paper",
+    official_url: "https://arxiv.org/abs/2603.01045v2",
+    venue_url: "https://aclanthology.org/2026.acl-long.1354/",
+    accessed_at: "2026-07-15",
+  },
+  {
+    source_id: "S26",
+    source_kind: "arxiv",
+    paper_id: "2505.11556",
+    title: "HiddenBench: Assessing Collective Reasoning in Multi-Agent LLMs via Hidden Profile Tasks",
+    authors: ["Yuxuan Li", "Aoi Naito", "Hirokazu Shirado"],
+    version: "v4",
+    submission_year: 2025,
+    venue_year: 2026,
+    publication_status: "published",
+    venue: "ICML",
+    track: "Main Conference Poster",
+    official_url: "https://arxiv.org/abs/2505.11556v4",
+    venue_url: "https://icml.cc/virtual/2026/papers.html",
+    accessed_at: "2026-07-15",
+  },
+  {
+    source_id: "S27",
+    source_kind: "openreview",
+    paper_id: null,
+    external_id: "manXhfpRH3",
+    title: "On the Role of Learned Alignment Matrices in LatentMAS",
+    authors: ["Spursh Deshpande", "Wenhao Lu"],
+    version: "OpenReview revision 2026-06-20",
+    submission_year: 2026,
+    venue_year: 2026,
+    publication_status: "workshop",
+    venue: "ICML",
+    track: "CompLearn Workshop Poster",
+    official_url: "https://openreview.net/forum?id=manXhfpRH3",
+    venue_url: "https://openreview.net/forum?id=manXhfpRH3",
+    accessed_at: "2026-07-15",
+  },
 );
 
 const sourcePapers = new Map(manifest.papers.map((paper) => [paper.source_id, paper]));
-const includedIds = new Set(["S01", "S02", "S03", "S04", "S05", "S06", "S07", "S08", "S10", "S12", "S13", "S15", "S16", "S17", "S18"]);
+const includedIds = new Set(["S01", "S02", "S03", "S04", "S05", "S06", "S07", "S08", "S10", "S12", "S13", "S15", "S16"]);
 for (const [sourceId, paper] of sourcePapers) {
   if (!includedIds.has(sourceId)) {
     paper.group = null;
@@ -156,7 +239,11 @@ for (const [sourceId, paper] of sourcePapers) {
         ? ["大规模拓扑仍保留为扩展证据", "由 matched-budget 与专家稀释直接边界替换核心席位"]
         : sourceId === "S11"
           ? ["路由方向有价值", "预印本且与 MaAS/DyLAN 机制重叠"]
-          : ["长上下文分片机制保留", "由更直接的 matched-budget 反证替换核心席位"],
+          : sourceId === "S14"
+            ? ["长上下文分片机制保留", "由更直接的 matched-budget 反证替换核心席位"]
+            : sourceId === "S17"
+              ? ["多样性机制保留为扩展证据", "workshop 证据弱于 2026 顶会直接协调失败研究"]
+              : ["深度研究编排保留为扩展证据", "主题专门性弱于 2026 顶会直接协调失败研究"],
     };
   }
 }
@@ -202,8 +289,41 @@ const newCorePapers = [
     limitations: "结论针对同质 workflow；不同权限、并行环境交互和独立信息源仍可能需要团队。",
     selection: { decision: "included", reasons: ["直接 strong single-agent baseline", "揭示同质 workflow 可折叠", "补足复杂 MAS 对照契约"] },
   },
+  {
+    paper_id: "2604.07821", source_id: "S24", group: "frontier",
+    research_question: "模型能力提升是否自然带来无需额外激励的合作能力？",
+    mechanism: "在零成本协作博弈中分离个体能力与合作表现，并测试协议和微激励干预。",
+    experiment: "多类 LLM、最优集体基线，以及结构化协议和微激励条件。",
+    result: "能力不能预测合作：o3 仅达到最优集体表现的 17%；结构化协议可使部分低能力模型翻倍，微激励可改善弱合作模型。",
+    limitations: "零成本博弈不覆盖长期工具工作流；干预效果不能外推为通用合作解法。",
+    selection: { decision: "included", reasons: ["ICML 2026 主会", "直接分离能力与合作", "包含协议与激励干预"] },
+  },
+  {
+    paper_id: "2603.01045", source_id: "S25", group: "frontier",
+    research_question: "agent 能否把分布式私有信息转化为可靠的联合推理？",
+    mechanism: "Silo-Bench 将信息分布到 agent silo，并区分通信是否到位与推理是否正确。",
+    experiment: "30 个任务、54 个配置、1,620 次实验；覆盖拓扑、模型和信息分配。",
+    result: "Communication–Reasoning Gap 显示消息到达不等于信息被正确整合；过早结论、错误共识和计算错误是主要失败面。",
+    limitations: "基准任务仍是受控环境；生产系统的权限、延迟和异步失败更复杂。",
+    selection: { decision: "included", reasons: ["ACL 2026 Main/Long", "直接评测分布式协调", "大规模配置与失败分解"] },
+  },
 ];
 for (const paper of newCorePapers) sourcePapers.set(paper.source_id, paper);
+
+sourcePapers.set("S26", {
+  paper_id: "2505.11556", source_id: "S26", group: null,
+  research_question: "多 agent 能否在信息分散且输入非结构化时完成多步指令？",
+  mechanism: "HiddenBench 将完成任务所需信息分散到不同 agent，并与获得完整信息的单 agent 对照。",
+  experiment: "65 个任务；比较分布式 MAS 与拥有完整输入的单 agent。",
+  result: "分布式 MAS 完成率 30.1%，完整信息单 agent 为 80.7%；扩大模型并未消除信息整合失败。",
+  limitations: "65 个受控 hidden-profile 任务不能代表全部长期协作；与 Silo-Bench 的任务结构不同。",
+  selection: { decision: "extended", reasons: ["ICML 2026，直接研究分布式信息整合失败", "与 Silo-Bench 形成前沿交叉验证", "与核心 Silo-Bench 边界高度重叠，保留 18 篇核心上限"] },
+});
+
+Object.assign(sourcePapers.get("S15"), {
+  result: "原论文在 9 个 benchmark 报告最高 +14.6 准确率、输出 token 减少 70.8%–83.7%、速度约 4–4.3 倍；后续直接复核显示这些收益并不稳定依赖 learned alignment matrix。",
+  limitations: "CompLearn 2026 复核中，identity matrix 无显著下降；部分任务移除跨 agent transfer 相当或更好，代码任务文本通信优于 latent。latent 状态的审计、互操作与安全问题仍未解决。",
+});
 
 const externalCandidates = [
   ["2309.17288", "AutoAgents: A Framework for Automatic Agent Generation", "v3", "published", "自动组队前驱；证据弱于 DyLAN/MaAS"],
@@ -224,8 +344,6 @@ const externalCandidates = [
   ["2505.07313", "Towards Multi-Agent Reasoning Systems for Collaborative Expertise Delegation: An Exploratory Design Study", "v2", "preprint", "探索性 preprint，验证范围较弱"],
   ["2510.13821", "LLM Agent Communication Protocol (LACP) Requires Urgent Standardization: A Telecom-Inspired Protocol is Necessary", "v1", "workshop", "协议 position paper 为主，实证不足"],
   ["2506.03053", "MAEBE: Multi-Agent Emergent Behavior Framework", "v2", "preprint", "同伴压力方向重要，验证与 venue 较弱"],
-  ["2604.07821", "More Capable, Less Cooperative? When LLMs Fail At Zero-Cost Collaboration", "v2", "accepted", "ICML 2026；零成本合作失败，下一轮优先深读"],
-  ["2603.01045", "Silo-Bench: A Scalable Environment for Evaluating Distributed Coordination in Multi-Agent LLM Systems", "v2", "accepted", "ACL 2026；分布式信息整合税，下一轮优先深读"],
   ["2502.20073", "Collab-Overcooked: Benchmarking and Evaluating Large Language Models as Collaborative Agents", "v3", "published", "EMNLP 2025；交互长链评测，扩展保留"],
   ["2408.00989", "On the Resilience of LLM-Based Multi-Agent Collaboration with Faulty Agents", "v4", "preprint", "故障传播与结构韧性，扩展反证"],
   ["2410.07283", "Prompt Infection: LLM-to-LLM Prompt Injection within Multi-Agent Systems", "v1", "preprint", "多 agent 攻击面，安全专题候选"],
@@ -244,6 +362,11 @@ const externalCandidates = [
 manifest.papers = [...sourcePapers.values(), ...externalCandidates];
 
 const evidenceById = new Map(manifest.evidence.map((item) => [item.evidence_id, item]));
+Object.assign(evidenceById.get("E14"), {
+  locator: "§6.2 Table 4",
+  faithful_summary: "MAST 对 ChatDev 的 improved prompt 同时调整角色层级、仅允许上级结束对话，并要求 verifier 关注 edge cases；ProgramDev 由 25.0% 升至 34.4%（+9.4pp）。这是组合式 role/prompt intervention，不能归因于终止权单项。",
+  verified_by: ["Reader", "Critic", "PM-Paper"],
+});
 Object.assign(evidenceById.get("E16"), { locator: "§4.1 Table 1; Appendix D Tables 3–5" });
 Object.assign(evidenceById.get("E17"), { locator: "§4.2–§4.4; Figure 1; Table 2" });
 Object.assign(evidenceById.get("E18"), { locator: "§4.1–§4.3; Figures 2–4; Tables 1–2" });
@@ -265,6 +388,26 @@ manifest.evidence.push(
     faithful_summary: "OneFlow 让单智能体执行同质 MAS workflow，可匹配或略优于原系统并减少 KV-cache/通信开销；异构模型或真实并行交互不保证可折叠。",
     verified_by: ["Reader", "Critic", "PM-Paper"], verified_at: "2026-07-15",
   },
+  {
+    evidence_id: "E25", source_id: "S24", locator: "Abstract; §4–§6; Table 3", kind: "contrary_result",
+    faithful_summary: "个体能力不预测零成本合作：o3 仅达到最优集体表现的 17%，而 o3-mini 为 50%；显式协议可使部分低能力模型表现翻倍，微激励能改善弱合作模型。",
+    verified_by: ["Reader", "Critic", "PM-Paper"], verified_at: "2026-07-15",
+  },
+  {
+    evidence_id: "E26", source_id: "S25", locator: "§3–§5; §5.2 Table 4; Figures 4–6", kind: "contrary_result",
+    faithful_summary: "Silo-Bench 用 30 个任务、54 个配置和 1,620 次实验识别 Communication–Reasoning Gap：agent 会交换信息，却常不能把分布式状态整合为正确答案；过早结论、错误共识和计算错误是主要失败面。",
+    verified_by: ["Reader", "Critic", "PM-Paper"], verified_at: "2026-07-15",
+  },
+  {
+    evidence_id: "E27", source_id: "S26", locator: "Abstract; §3; §4.2; Tables 1–2; §5", kind: "contrary_result",
+    faithful_summary: "HiddenBench 的 65 个 hidden-profile 任务显示分布式 MAS 完成率 30.1%，而获得完整信息的单 agent 为 80.7%；信息不对称下的整合失败不会随模型规模可靠消失。",
+    verified_by: ["Reader", "Critic", "PM-Paper"], verified_at: "2026-07-15",
+  },
+  {
+    evidence_id: "E28", source_id: "S27", locator: "§4.1 Table 1; §4.2–§4.3; Appendix C", kind: "contrary_result",
+    faithful_summary: "对 LatentMAS 的直接复核发现 identity matrix 不造成显著下降；部分任务移除跨 agent transfer 相当或更好，代码任务中文本通信优于 latent communication。",
+    verified_by: ["Reader", "Critic", "PM-Paper"], verified_at: "2026-07-15",
+  },
 );
 
 const claimUpdates = {
@@ -273,17 +416,23 @@ const claimUpdates = {
     supporting_evidence_ids: ["E12", "E13", "E17", "E23", "E24"],
     contradicting_evidence_ids: ["E01", "E03", "E10"],
   },
-  C02: { contradicting_evidence_ids: ["E24"] },
+  C02: {
+    text: "角色与 SOP 的可靠价值来自明确接口、结构化工件、权限、终止条件和可执行反馈，而不是角色名称本身；现有 MAST 证据是组合式 role/prompt intervention，未隔离终止权单项因果。",
+    strength: "conditional",
+    supporting_evidence_ids: ["E03", "E04", "E14"],
+    contradicting_evidence_ids: ["E24"],
+    limitations: "开放任务、真实组织和长期演进证据不足；+9.4pp 不能归因于单个终止权变更。",
+  },
   C03: {
-    text: "同质 agent 的数量或 workflow 容易饱和、折叠甚至稀释已知专家；真实互补信息和可验证专长比席位数更关键。",
-    supporting_evidence_ids: ["E08", "E18", "E22", "E24"],
+    text: "同质 agent 的数量或 workflow 容易饱和、折叠甚至稀释已知专家；即使消息成功传递，分布式信息也可能无法被正确整合。真实互补信息、合作协议和可验证专长比席位数更关键。",
+    supporting_evidence_ids: ["E08", "E18", "E22", "E24", "E25", "E26", "E27"],
     contradicting_evidence_ids: ["E09", "E17"],
     limitations: "专家授权、异构性质量和独立信息量仍缺线上可观测的统一指标。",
   },
   C04: {
-    text: "辩论只在候选差异可被证据区分时有益；共识、置信度和更长讨论不是正确性证明，还可能稀释已识别专家。",
+    text: "现有正收益主要集中于候选差异可交叉检查的任务；共识、置信度和更长讨论不是正确性证明，还可能稀释已识别专家或掩盖信息整合失败。",
     supporting_evidence_ids: ["E02", "E06"],
-    contradicting_evidence_ids: ["E20", "E22", "E23"],
+    contradicting_evidence_ids: ["E20", "E22", "E23", "E26", "E27"],
   },
   C05: {
     text: "复杂 MAS 的增益必须在相同总 thinking-token、工具和采样预算下，对照 best single 与 best-of-n；否则不能归因于协作。",
@@ -296,23 +445,29 @@ const claimUpdates = {
   C06: { contradicting_evidence_ids: ["E24"] },
   C07: { contradicting_evidence_ids: ["E16"] },
   C08: { contradicting_evidence_ids: [] },
-  C09: { contradicting_evidence_ids: [] },
-  C10: { contradicting_evidence_ids: [] },
-  C11: { contradicting_evidence_ids: ["E23", "E24"] },
+  C09: { supporting_evidence_ids: ["E12", "E13", "E26", "E27"], contradicting_evidence_ids: [] },
+  C10: { supporting_evidence_ids: ["E13", "E14", "E25", "E26", "E27"], contradicting_evidence_ids: [] },
+  C11: {
+    text: "latent communication、自动架构搜索与权限化共享记忆仍有探索价值，但部分 LatentMAS 任务不依赖 learned alignment 或跨 agent transfer，且代码任务文本通信更好；审计、互操作、安全和线上复验仍未形成共识。",
+    strength: "contested",
+    supporting_evidence_ids: ["E10", "E16", "E21"],
+    contradicting_evidence_ids: ["E23", "E24", "E28"],
+    limitations: "LatentMAS 的 headline 结果已有直接负向复核；其他机制也多为单篇论文或预印本。",
+  },
 };
 
 const counterSearch = {
   C01: ["contrary_found", ["E01", "E03", "E10"], "检索 single-agent、best-of-n、matched-budget 与正向 MAS；保留‘取决于’而非‘普遍失败’。"],
   C02: ["contrary_found", ["E24"], "检索 role/SOP ablation 与 single-agent workflow replay；同质 workflow 可折叠，因此限定为接口与工件价值。"],
-  C03: ["contrary_found", ["E09", "E17"], "检索 agent count、diversity、expert reveal 与 topology scaling；保留可运行/部分正收益，否定单调规模律。"],
-  C04: ["contrary_found", ["E20", "E22", "E23"], "检索 debate、consensus、persuasion、expert dilution 与 matched-budget；加入正确 agent 被说服和专家稀释。"],
+  C03: ["contrary_found", ["E09", "E17"], "检索 agent count、diversity、expert reveal、zero-cost cooperation、distributed information 与 topology scaling；保留可运行/部分正收益，否定单调规模律。"],
+  C04: ["contrary_found", ["E20", "E22", "E23", "E26", "E27"], "检索 debate、consensus、persuasion、expert dilution、distributed information 与 matched-budget；删除未经必要条件实验支持的‘只在’，改为观察性范围。"],
   C05: ["contrary_found", ["E17"], "检索 equal token/call budgets、single scaling、best-of-n 与复杂 MAS；补入直接配平证据后仍因任务范围将 strong 降为 conditional。"],
   C06: ["qualified", ["E24"], "检索 routing/search/early-stop 的离线成本与同质 workflow 折叠；要求重复任务可摊销并保留 simple baseline。"],
   C07: ["qualified", ["E16"], "检索 structured artifact、free chat、latent communication 与 auditability；latent state 可能更高效，因此结论限定为可控性而非绝对性能。"],
   C08: ["no_direct_contrary_found", [], "检索 shared memory、ACL、provenance、deletion 与 memory utility；未发现否定治理必要性的直接反证，因证据新仍维持 contested。"],
-  C09: ["no_direct_contrary_found", [], "检索 outcome-only、coordination score、trace/cost/failure evaluation；未发现支持单指标充分性的直接反证。"],
-  C10: ["no_direct_contrary_found", [], "检索 hallucination-only 与 system-level failure taxonomy；未发现将多 agent 故障完整归为底模幻觉的直接反证。"],
-  C11: ["contrary_found", ["E23", "E24"], "检索 latent/search/memory 新机制的 simple baseline、audit 和 matched-budget；潜力存在，但简化方案可匹配部分复杂机制。"],
+  C09: ["no_direct_contrary_found", [], "检索 outcome-only、coordination score、trace/cost/failure evaluation；Silo-Bench/HiddenBench 补强过程诊断，未发现支持单指标充分性的直接反证。"],
+  C10: ["no_direct_contrary_found", [], "检索 hallucination-only、cooperation failure、communication-reasoning gap 与 system-level failure taxonomy；未发现将多 agent 故障完整归为底模幻觉的直接反证。"],
+  C11: ["contrary_found", ["E23", "E24", "E28"], "检索 latent/search/memory 新机制的 simple baseline、audit 和 matched-budget；直接 LatentMAS 复核否定 learned alignment 的稳定必要性，因此收窄前沿判断。"],
 };
 
 for (const claim of manifest.claims.filter((item) => item.type === "synthesis")) {
@@ -333,70 +488,92 @@ Object.assign(recommendations.R01, {
   evidence_basis: "专家团队可低于最佳个体；配平 thinking tokens 后单体常匹配/超过 MAS；同质 workflow 还可折叠。",
 });
 Object.assign(recommendations.R02, {
-  text: "每个角色声明输入、输出工件、工具、权限、专长证据、升级与 stop condition；已知专家可直接保留最终判断或触发独立复核。",
-  supporting_evidence_ids: ["E03", "E04", "E14", "E22"],
-  evidence_basis: "角色消融、SOP、终止权与专家稀释共同表明：契约必须包含专长权重，而不只角色名称。",
+  text: "每个角色声明输入、输出工件、工具、权限、专长证据、升级与 stop condition；已知专家可保留最终判断或触发独立复核。",
+  strength: "conditional",
+  supporting_evidence_ids: ["E03", "E04", "E14", "E22", "E25"],
+  evidence_basis: "角色/SOP、专家稀释和协议干预支持显式契约；MAST 的 +9.4pp 来自组合式 role/prompt intervention，未隔离终止权单项。",
+  limitations: "探索性任务可能需要临时跨界；协议效果依模型能力和任务而变。",
 });
 Object.assign(recommendations.R03, {
   text: "router 先选最小角色/模型/拓扑与预算；同质 workflow 先尝试单智能体执行，只有验证失败、权限分离或证据冲突时扩容。",
   supporting_evidence_ids: ["E07", "E10", "E11", "E24"],
 });
-Object.assign(recommendations.R05, { supporting_evidence_ids: ["E02", "E13", "E14", "E22"] });
+Object.assign(recommendations.R05, {
+  strength: "conditional",
+  supporting_evidence_ids: ["E02", "E13", "E14", "E22", "E26"],
+  evidence_basis: "失败 taxonomy、专家稀释和信息整合失败支持独立复核；MAST 仅提供组合式 verifier/role/prompt 干预，不能证明独立 Critic 单项因果。",
+  limitations: "多个同源 judge 仍可能共享偏差；独立 Critic 的净增益需按任务单独消融。",
+});
 Object.assign(recommendations.R08, { supporting_evidence_ids: ["E13", "E20", "E22", "E23"] });
 
 manifest.schema_version = "1.0.0";
 manifest.manifest_version = "2.0.0";
-manifest.request.retrieved_at = "2026-07-15T13:30:00Z";
+delete manifest.stable_url;
+delete manifest.request.retrieved_at;
+manifest.request.retrieved_on = "2026-07-15";
+manifest.request.time_precision = "day";
 manifest.retrieval = [
-  ...manifest.retrieval.map((item) => ({ ...item, source: "official arXiv and venue pages (oo unavailable; arxiv-cli returned empty result sets)" })),
-  { query_id: "Q09", query: "multi-agent expert dilution reveal expert consensus", source: "official arXiv and OpenReview", run_at: "2026-07-15T11:40:00Z", coverage_note: "专家稀释与共识压力" },
-  { query_id: "Q10", query: "single agent multi-agent equal thinking token budget", source: "official arXiv", run_at: "2026-07-15T11:50:00Z", coverage_note: "matched-budget 强单体基线" },
-  { query_id: "Q11", query: "single agent baseline multi-agent workflow homogeneous collapse", source: "official arXiv", run_at: "2026-07-15T12:00:00Z", coverage_note: "同质 workflow 可折叠边界" },
+  ...manifest.retrieval.map(({ run_at, ...item }) => ({ ...item, source: "official arXiv and venue pages (oo unavailable; arxiv-cli plus primary-source fallback)", run_on: "2026-07-15", time_precision: "day" })),
+  { query_id: "Q09", query: "multi-agent expert dilution reveal expert consensus", source: "official arXiv and OpenReview", run_on: "2026-07-15", time_precision: "day", coverage_note: "专家稀释与共识压力" },
+  { query_id: "Q10", query: "single agent multi-agent equal thinking token budget", source: "official arXiv", run_on: "2026-07-15", time_precision: "day", coverage_note: "matched-budget 强单体基线" },
+  { query_id: "Q11", query: "single agent baseline multi-agent workflow homogeneous collapse", source: "official arXiv", run_on: "2026-07-15", time_precision: "day", coverage_note: "同质 workflow 可折叠边界" },
+  { query_id: "Q12", query: "zero-cost collaboration capability protocol incentive LLM agents", source: "official arXiv and ICML", run_on: "2026-07-15", time_precision: "day", coverage_note: "能力与合作脱钩、协议和微激励" },
+  { query_id: "Q13", query: "distributed coordination communication reasoning gap multi-agent LLM", source: "official arXiv and ACL Anthology", run_on: "2026-07-15", time_precision: "day", coverage_note: "分布式信息整合与 Communication–Reasoning Gap" },
+  { query_id: "Q14", query: "HiddenBench hidden profile collective reasoning multi-agent", source: "official arXiv", run_on: "2026-07-15", time_precision: "day", coverage_note: "非对称信息下的集体推理失败" },
+  { query_id: "Q15", query: "LatentMAS learned alignment matrix identity no transfer", source: "OpenReview CompLearn 2026", run_on: "2026-07-15", time_precision: "day", coverage_note: "LatentMAS 直接反证" },
 ];
-manifest.digest_method = "SHA-256 of recursively key-sorted JSON after omitting top-level snapshot_digest, stable_url, and validation.manifest_consumer_trial; these self-referential validation fields are excluded so stable_url can point to the first immutable evidence snapshot commit";
-manifest.stable_url = stableUrl;
+manifest.digest_method = "SHA-256 of recursively key-sorted evidence payload after omitting top-level snapshot_digest, stable_url, evidence_snapshot_url, evidence_snapshot, validation.manifest_consumer_trial, and validation.consumer_attestation";
 manifest.supersedes = [{
   manifest_version: "1.0.0",
-  snapshot_digest: "sha256:194c0198cd92e9864523734a8608d621cc5838f69d6e4010bd82ef21eaa65218",
-  immutable_url: "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/age-174-v1/site/reports/agent-teams-2026/data/evidence-manifest.v1.json",
+  snapshot_digest: "sha256:194c019808da705ac100cccd215155c5b09f67a86f9499abb0d808ab2a855170",
+  immutable_url: "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/a7af1b76ac31a216935b74af14593da9fef0cee5/site/reports/agent-teams-2026/data/evidence-manifest.v1.json",
 }];
-manifest.outputs.manifest_url = "./data/evidence-manifest.v2.json";
-manifest.outputs.report_url = "./";
-manifest.outputs.generated_at = "2026-07-15T13:30:00Z";
+manifest.outputs.manifest_url = "https://liaoyuanning.github.io/paper-learning-library/reports/agent-teams-2026/data/evidence-manifest.v2.json";
+manifest.outputs.report_url = "https://liaoyuanning.github.io/paper-learning-library/reports/agent-teams-2026/";
+delete manifest.outputs.generated_at;
+manifest.outputs.generated_on = "2026-07-15";
+manifest.outputs.time_precision = "day";
 manifest.outputs.release_state = "review_candidate_not_deployed";
-manifest.outputs.metadata_audit = "research/agent-teams-2026/metadata-audit.v2.json";
-manifest.outputs.consumer_validation = "research/agent-teams-2026/manifest-consumer-validation.v2.md";
+manifest.outputs.metadata_audit_url = auditRef.startsWith("PENDING_") ? "PENDING_AUDIT_URL" : rawUrl(auditRef, "research/agent-teams-2026/metadata-audit.v2.json");
+delete manifest.outputs.metadata_audit;
+delete manifest.outputs.consumer_validation;
 manifest.selection_protocol = {
   candidate_count: manifest.papers.length,
   core_count: manifest.papers.filter((paper) => paper.selection.decision === "included").length,
+  source_count: manifest.sources.length,
   decision_enum: ["included", "extended", "excluded"],
   note: "extended/excluded 均为未进入 18 篇核心；每条保留版本、状态、URL 与理由。",
+};
+manifest.promotion = {
+  state: "candidate",
+  durable_knowledge_id: null,
+  bidirectional_pointer_status: "pending_librarian_promotion_after_master_content_approval",
 };
 
 manifest.report.counterintuitive = [
   "即使明确告诉团队谁是专家，共识也可能稀释专家判断；受控实验的最大差距达到 41.1%。",
   "相同 thinking-token 预算下，强单智能体在多跳推理中常匹配或超过 MAS。",
   "同一模型组成的 workflow 可能由一个 Agent 顺序执行并复用 KV cache，而不损失效果。",
-  "更多讨论可能更差：错误同伴会说服正确 agent，共识不是 correctness proxy。",
-  "真正需要团队的理由应是独立信息、异构权限/工具或并行环境交互，而不是角色数量。",
+  "能力更强不等于更会合作：零成本协作中 o3 只达到最优集体表现的 17%。",
+  "消息送达不等于联合推理成功；Silo-Bench 和 HiddenBench 均揭示分布式信息整合断层。",
 ];
-manifest.report.timeline[3].text = "LatentMAS、Scaling、Diversity、FS-Researcher、Experts Back、matched-budget 与 OneFlow 同时推进效率机制和强反证边界。";
+manifest.report.timeline[3].text = "LatentMAS、Scaling、Experts Back、matched-budget、OneFlow、More Capable、Silo-Bench 与 HiddenBench 同时推进效率机制和直接反证边界。";
 manifest.report.method = [
-  "边界先于检索：前沿窗口固定为 2025-01-15 至 2026-07-15；v2 在原八条路径之外重开专家稀释、matched-budget 与同质 workflow 可折叠三条反证召回。",
-  `先宽后窄：machine-readable 候选池 ${manifest.papers.length} 篇；18 篇核心由 8 篇奠基/典型与 10 篇前沿组成。MacNet、MasRouter、ExtAgents 退出核心但保留扩展记录；三篇直接边界证据进入核心。`,
+  "边界先于检索：前沿窗口固定为 2025-01-15 至 2026-07-15；v2 又窄召回合作失败、分布式信息整合和 latent alignment 反证。",
+  `先宽后窄：machine-readable 候选池 ${manifest.papers.length} 篇；18 篇核心由 8 篇奠基/典型与 10 篇前沿组成。Diversity 与 FS-Researcher 转为扩展，ICML More Capable 和 ACL Silo-Bench 进入核心；HiddenBench 保留扩展并进入证据链。`,
   "逐 claim Critic：C01–C11 均记录 counter_search 范围、outcome、发现/未发现和修正理由；未发现反证不被表述为已证明。",
-  "一手元数据审计：S01–S23 的 title、authors、version、submission/venue year、publication status、venue/track 与 URL 逐项对照 arXiv 和官方 venue；测试要求 audit 与 manifest 完全一致。",
-  "机器证据优先：网页从 manifest v2 渲染；claim → evidence → source 使用闭合 ID。digest 排除自身、stable_url 与独立消费回填记录，后者固定到首个不可变 evidence snapshot commit SHA。",
+  "一手元数据审计：S01–S27 的 title、authors、version、submission/venue year、publication status、venue/track 与 URL 逐项对照 arXiv、OpenReview 和官方 venue；测试要求 audit 与 manifest 完全一致。",
+  "机器证据优先：网页从 manifest v2 渲染；claim → evidence → source 使用闭合 ID。digest-covered evidence snapshot 与独立 consumer attestation 分文件、分指纹，并固定到 commit SHA。",
 ];
 manifest.report.episode_loop = [
-  "现有知识差距：专家稀释、matched-budget 与同质 workflow 可折叠边界缺少直接证据。",
-  `新检索：11 条主题 query + ${manifest.papers.length} 篇 machine-readable 候选 ledger。`,
-  "综合：18 篇核心重排为 8 篇奠基/典型与 10 篇前沿，三篇直接反证进入核心。",
-  "质量门：全量元数据审计、逐 claim Critic、固定 locator、digest 与独立 manifest 消费测试。",
-  "资产化：报告、manifest v2、完整候选决策、query、审计和独立消费 transcript。",
+  "现有知识差距：能力与合作脱钩、分布式信息整合断层和 LatentMAS 直接反证未闭环。",
+  `新检索：15 条主题 query + ${manifest.papers.length} 篇 machine-readable 候选 ledger。`,
+  "综合：18 篇核心重排为 8 篇奠基/典型与 10 篇前沿；两篇 2026 顶会工作进入核心，HiddenBench 进入扩展证据链。",
+  "质量门：全量元数据审计、逐 claim Critic、固定 locator、snapshot digest 与独立 attestation 三元组测试。",
+  "资产化：报告、manifest v2、evidence snapshot、候选决策、query、审计和独立 consumer attestation/transcript。",
 ];
-manifest.report.limitations = manifest.report.limitations.map((item) => item.replace("oo-arxiv 依赖的 oo CLI 不可用；arxiv-cli 批量查询后遇到 HTTP 429", "oo-arxiv 依赖的 oo CLI 不可用；arxiv-cli 对已知 ID 与关键词返回空结果"));
-manifest.report.limitations.push("v2 是 open PR 的 review candidate，未 merge、未 tag、未 deploy；公开 Pages 仍是 v1，不能把本文件的相对 report_url 当成已发布 URL。");
+manifest.report.limitations = manifest.report.limitations.map((item) => item.replace("oo-arxiv 依赖的 oo CLI 不可用；arxiv-cli 批量查询后遇到 HTTP 429", "oo-arxiv 依赖的 oo CLI 不可用；arxiv-cli 对部分已知 ID 返回空结果，使用官方一手页面复核"));
+manifest.report.limitations.push("v2 是 open PR 的 review candidate，未 merge、未 tag、未 deploy；公开 Pages 仍是 v1，outputs 的绝对公开 URL 是发布目标而非当前已部署证明。");
 
 manifest.validation.critic_checks = manifest.claims.filter((item) => item.type === "synthesis").map((claim) => ({
   claim_id: claim.claim_id,
@@ -408,33 +585,32 @@ manifest.validation.critic_checks = manifest.claims.filter((item) => item.type =
 }));
 manifest.validation.metadata_audit = {
   status: "passed",
-  record_file: "research/agent-teams-2026/metadata-audit.v2.json",
+  record_url: manifest.outputs.metadata_audit_url,
   source_count: manifest.sources.length,
-  required_fields: ["title", "authors", "version", "submission_year", "venue_year", "publication_status", "venue", "track", "official_url", "venue_url"],
+  required_fields: ["source_kind", "title", "authors", "version", "submission_year", "venue_year", "publication_status", "venue", "track", "official_url", "venue_url"],
 };
-manifest.validation.manifest_consumer_trial = {
-  status: "passed",
-  questions_file: "research/agent-teams-2026/manifest-consumer-questions.v2.md",
-  record_file: "research/agent-teams-2026/manifest-consumer-validation.v2.md",
-  manifest_version: "2.0.0",
-  snapshot_digest: null,
-  immutable_url: stableUrl,
-  consumer_agent: {
-    identity: "/root/manifest_consumer_v2_final",
-    runtime: "Codex native sub-agent",
-    prior_involvement: "none",
-  },
-  consumer_scope: "manifest v2 only; no report, other research files, Git, issue, conversation history, paper originals or internet",
-  question_results: ["expert_dilution:PASS", "matched_budget:PASS", "workflow_collapse:PASS", "negative_answerability:PASS"],
-  manual_review: {
-    reviewer: "PM-Paper",
-    result: "4/4 PASS",
-    method: "Resolved every cited evidence ID to source ID and checked URL, locator, answer and boundary against the manifest.",
-  },
-};
+delete manifest.validation.manifest_consumer_trial;
 
-manifest.snapshot_digest = digest(manifest);
-manifest.validation.manifest_consumer_trial.snapshot_digest = manifest.snapshot_digest;
+manifest.snapshot_digest = digestEvidencePayload(manifest);
+manifest.evidence_snapshot_url = evidenceSnapshotUrl;
+manifest.evidence_snapshot = {
+  status: evidenceSnapshotUrl.startsWith("PENDING_") ? "pending_commit_pin" : "immutable_candidate",
+  manifest_version: "2.0.0",
+  snapshot_digest: manifest.snapshot_digest,
+  immutable_url: evidenceSnapshotUrl,
+};
+manifest.validation.consumer_attestation = {
+  status: attestationRef.startsWith("PENDING_") ? "pending_independent_trial" : "passed_candidate_trial",
+  consumer_identity: consumerIdentity,
+  prior_involvement: "none",
+  manifest_version: manifest.manifest_version,
+  snapshot_digest: manifest.snapshot_digest,
+  input_url: evidenceSnapshotUrl,
+  attestation_url: attestationRef.startsWith("PENDING_") ? "PENDING_ATTESTATION_URL" : rawUrl(attestationRef, "research/agent-teams-2026/consumer-attestation.v2.json"),
+  attestation_digest: attestationDigest,
+  transcript_url: attestationRef.startsWith("PENDING_") ? "PENDING_TRANSCRIPT_URL" : rawUrl(attestationRef, "research/agent-teams-2026/manifest-consumer-validation.v2.md"),
+  scope: "immutable evidence snapshot only; no report, research notes, Git history, issue, conversation history, paper originals or internet",
+};
 
 const correctedFields = {
   S04: ["authors"], S05: ["authors"], S08: ["authors"], S09: ["title", "authors"], S12: ["title"],
@@ -443,7 +619,8 @@ const correctedFields = {
 const audit = {
   schema_version: "1.0.0",
   manifest_version: manifest.manifest_version,
-  audited_at: "2026-07-15T13:10:00Z",
+  audited_on: "2026-07-15",
+  time_precision: "day",
   auditor: "PM-Paper",
   evidence_policy: "arXiv versioned abstract page for title/authors/version/submission year; official proceedings/OpenReview for venue year/status/track/URL; preprint when no official venue was found by cutoff",
   tool_observations: { oo: "unavailable", arxiv_cli: "installed but returned empty arrays for known IDs and keyword probes", fallback: "official arXiv and venue pages" },
@@ -451,18 +628,29 @@ const audit = {
   year_semantics: { submission_year: "year of arXiv v1 submission", venue_year: "official publication/acceptance venue year; null for preprint" },
   records: manifest.sources.map((source) => ({
     source_id: source.source_id,
+    source_kind: source.source_kind,
     paper_id: source.paper_id,
+    external_id: source.external_id ?? null,
     checked_url: source.official_url,
     venue_checked_url: source.venue_url,
-    checked_fields: ["title", "authors", "version", "submission_year", "venue_year", "publication_status", "venue", "track", "official_url", "venue_url"],
+    checked_fields: ["source_kind", "title", "authors", "version", "submission_year", "venue_year", "publication_status", "venue", "track", "official_url", "venue_url"],
     outcome: correctedFields[source.source_id] ? "corrected" : "verified",
     corrected_fields: correctedFields[source.source_id] ?? [],
-    snapshot: Object.fromEntries(["title", "authors", "version", "submission_year", "venue_year", "publication_status", "venue", "track", "official_url", "venue_url"].map((key) => [key, source[key]])),
+    snapshot: Object.fromEntries(["source_kind", "title", "authors", "version", "submission_year", "venue_year", "publication_status", "venue", "track", "official_url", "venue_url"].map((key) => [key, source[key]])),
   })),
+};
+
+const snapshot = {
+  snapshot_schema_version: "1.0.0",
+  manifest_version: manifest.manifest_version,
+  digest_method: manifest.digest_method,
+  snapshot_digest: manifest.snapshot_digest,
+  evidence_payload: evidencePayload(manifest),
 };
 
 await Promise.all([
   writeFile(outputUrl, `${JSON.stringify(manifest, null, 2)}\n`),
+  writeFile(snapshotOutputUrl, `${JSON.stringify(snapshot, null, 2)}\n`),
   writeFile(auditUrl, `${JSON.stringify(audit, null, 2)}\n`),
 ]);
-console.log(JSON.stringify({ output: outputUrl.pathname, audit: auditUrl.pathname, digest: manifest.snapshot_digest, stable_url: stableUrl, candidates: manifest.papers.length }, null, 2));
+console.log(JSON.stringify({ output: outputUrl.pathname, snapshot: snapshotOutputUrl.pathname, audit: auditUrl.pathname, digest: manifest.snapshot_digest, evidence_snapshot_url: evidenceSnapshotUrl, candidates: manifest.papers.length }, null, 2));
