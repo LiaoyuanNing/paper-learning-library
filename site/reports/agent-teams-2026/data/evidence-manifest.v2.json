@@ -1,0 +1,2583 @@
+{
+  "schema_version": "1.0.0",
+  "evidence_pack_id": "age-174-agent-teams-2026",
+  "manifest_version": "2.0.0",
+  "snapshot_digest": "sha256:a41b16aff38b6a5e61a8f174863bdb973c8f3678aa39cef784c6091aa1af422a",
+  "digest_method": "SHA-256 of recursively key-sorted JSON after omitting top-level snapshot_digest, stable_url, and validation.manifest_consumer_trial.snapshot_digest; stable_url is excluded so it can point to the first immutable snapshot commit without a self-referential hash",
+  "supersedes": [
+    {
+      "manifest_version": "1.0.0",
+      "snapshot_digest": "sha256:194c0198cd92e9864523734a8608d621cc5838f69d6e4010bd82ef21eaa65218",
+      "immutable_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/age-174-v1/site/reports/agent-teams-2026/data/evidence-manifest.v1.json"
+    }
+  ],
+  "stable_url": "PENDING_COMMIT_PIN",
+  "request": {
+    "request_id": "AGE-174",
+    "questions": [
+      "LLM Agent Team 的角色分工、通信、协调、共享记忆、计划分解、批判/辩论、动态组队与规模效应有哪些相对可靠的结论？",
+      "近 18 个月有哪些值得优先跟进的新机制、评测与失败研究？",
+      "这些证据对 Multica Agent Team 的产品与架构设计有什么可执行启示？"
+    ],
+    "audience": "Multica workspace owner、Agent Team 产品与工程负责人",
+    "scope": "以可通信、可行动、有持续状态的 LLM agent team 为主；覆盖 2023–2026 奠基论文与 2025-01-15 至 2026-07-15 前沿研究",
+    "knowledge_cutoff": "2026-07-15",
+    "retrieved_at": "2026-07-15T13:30:00Z"
+  },
+  "retrieval": [
+    {
+      "query_id": "Q01",
+      "query": "LLM multi-agent collaboration",
+      "source": "official arXiv and venue pages (oo unavailable; arxiv-cli returned empty result sets)",
+      "run_at": "2026-07-15T02:10:00Z",
+      "coverage_note": "角色、组织与通用协作"
+    },
+    {
+      "query_id": "Q02",
+      "query": "large language model multi-agent communication",
+      "source": "official arXiv and venue pages (oo unavailable; arxiv-cli returned empty result sets)",
+      "run_at": "2026-07-15T02:16:00Z",
+      "coverage_note": "消息协议、拓扑与 latent communication"
+    },
+    {
+      "query_id": "Q03",
+      "query": "large language model agent debate consensus",
+      "source": "official arXiv and venue pages (oo unavailable; arxiv-cli returned empty result sets)",
+      "run_at": "2026-07-15T02:22:00Z",
+      "coverage_note": "辩论、异构模型、从众与错误共识"
+    },
+    {
+      "query_id": "Q04",
+      "query": "LLM agent dynamic team routing",
+      "source": "official arXiv and venue pages (oo unavailable; arxiv-cli returned empty result sets)",
+      "run_at": "2026-07-15T02:28:00Z",
+      "coverage_note": "动态选人、架构搜索、路由与早停"
+    },
+    {
+      "query_id": "Q05",
+      "query": "multi-agent LLM benchmark collaboration",
+      "source": "official arXiv and venue pages (oo unavailable; arxiv-cli returned empty result sets)",
+      "run_at": "2026-07-15T02:34:00Z",
+      "coverage_note": "协作过程评测与失败 taxonomy"
+    },
+    {
+      "query_id": "Q06",
+      "query": "LLM multi-agent shared memory",
+      "source": "official arXiv and venue pages (oo unavailable; arxiv-cli returned empty result sets)",
+      "run_at": "2026-07-15T02:40:00Z",
+      "coverage_note": "共享状态、文件系统与权限化记忆"
+    },
+    {
+      "query_id": "Q07",
+      "query": "LLM agent orchestration planning",
+      "source": "official arXiv and venue pages (oo unavailable; arxiv-cli returned empty result sets)",
+      "run_at": "2026-07-15T02:46:00Z",
+      "coverage_note": "SOP、计划、工件与编排"
+    },
+    {
+      "query_id": "Q08",
+      "query": "LLM multi-agent safety failure",
+      "source": "official arXiv and venue pages (oo unavailable; arxiv-cli returned empty result sets)",
+      "run_at": "2026-07-15T02:52:00Z",
+      "coverage_note": "错误传播、终止、验证与安全"
+    },
+    {
+      "query_id": "Q09",
+      "query": "multi-agent expert dilution reveal expert consensus",
+      "source": "official arXiv and OpenReview",
+      "run_at": "2026-07-15T11:40:00Z",
+      "coverage_note": "专家稀释与共识压力"
+    },
+    {
+      "query_id": "Q10",
+      "query": "single agent multi-agent equal thinking token budget",
+      "source": "official arXiv",
+      "run_at": "2026-07-15T11:50:00Z",
+      "coverage_note": "matched-budget 强单体基线"
+    },
+    {
+      "query_id": "Q11",
+      "query": "single agent baseline multi-agent workflow homogeneous collapse",
+      "source": "official arXiv",
+      "run_at": "2026-07-15T12:00:00Z",
+      "coverage_note": "同质 workflow 可折叠边界"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "S01",
+      "paper_id": "2303.17760",
+      "title": "CAMEL: Communicative Agents for 'Mind' Exploration of Large Scale Language Model Society",
+      "authors": [
+        "Guohao Li",
+        "Hasan Abed Al Kader Hammoud",
+        "Hani Itani",
+        "Dmitrii Khizbullin",
+        "Bernard Ghanem"
+      ],
+      "version": "v2",
+      "publication_status": "published",
+      "official_url": "https://arxiv.org/abs/2303.17760v2",
+      "venue_url": "https://proceedings.neurips.cc/paper/2023/hash/a3621ee907def47c1b952ade25c67698-Abstract-Conference.html",
+      "accessed_at": "2026-07-15",
+      "submission_year": 2023,
+      "venue_year": 2023,
+      "venue": "NeurIPS",
+      "track": "Conference"
+    },
+    {
+      "source_id": "S02",
+      "paper_id": "2305.14325",
+      "title": "Improving Factuality and Reasoning in Language Models through Multiagent Debate",
+      "authors": [
+        "Yilun Du",
+        "Shuang Li",
+        "Antonio Torralba",
+        "Joshua B. Tenenbaum",
+        "Igor Mordatch"
+      ],
+      "version": "v1",
+      "publication_status": "published",
+      "official_url": "https://arxiv.org/abs/2305.14325v1",
+      "venue_url": "https://proceedings.mlr.press/v235/du24e.html",
+      "accessed_at": "2026-07-15",
+      "submission_year": 2023,
+      "venue_year": 2024,
+      "venue": "ICML",
+      "track": "Conference"
+    },
+    {
+      "source_id": "S03",
+      "paper_id": "2307.07924",
+      "title": "ChatDev: Communicative Agents for Software Development",
+      "authors": [
+        "Chen Qian",
+        "Wei Liu",
+        "Hongzhang Liu",
+        "Nuo Chen",
+        "Yufan Dang",
+        "Jiahao Li",
+        "Cheng Yang",
+        "Weize Chen",
+        "Yusheng Su",
+        "Xin Cong",
+        "Juyuan Xu",
+        "Dahai Li",
+        "Zhiyuan Liu",
+        "Maosong Sun"
+      ],
+      "version": "v5",
+      "publication_status": "published",
+      "official_url": "https://arxiv.org/abs/2307.07924v5",
+      "venue_url": "https://aclanthology.org/2024.acl-long.810/",
+      "accessed_at": "2026-07-15",
+      "submission_year": 2023,
+      "venue_year": 2024,
+      "venue": "ACL",
+      "track": "Long Paper"
+    },
+    {
+      "source_id": "S04",
+      "paper_id": "2308.00352",
+      "title": "MetaGPT: Meta Programming for A Multi-Agent Collaborative Framework",
+      "authors": [
+        "Sirui Hong",
+        "Mingchen Zhuge",
+        "Jiaqi Chen",
+        "Xiawu Zheng",
+        "Yuheng Cheng",
+        "Ceyao Zhang",
+        "Jinlin Wang",
+        "Zili Wang",
+        "Steven Ka Shing Yau",
+        "Zijuan Lin",
+        "Liyang Zhou",
+        "Chenyu Ran",
+        "Lingfeng Xiao",
+        "Chenglin Wu",
+        "Jürgen Schmidhuber"
+      ],
+      "version": "v7",
+      "publication_status": "published",
+      "official_url": "https://arxiv.org/abs/2308.00352v7",
+      "venue_url": "https://openreview.net/forum?id=VtmBAGCN7o",
+      "accessed_at": "2026-07-15",
+      "submission_year": 2023,
+      "venue_year": 2024,
+      "venue": "ICLR",
+      "track": "Oral"
+    },
+    {
+      "source_id": "S05",
+      "paper_id": "2308.08155",
+      "title": "AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation",
+      "authors": [
+        "Qingyun Wu",
+        "Gagan Bansal",
+        "Jieyu Zhang",
+        "Yiran Wu",
+        "Beibin Li",
+        "Erkang Zhu",
+        "Li Jiang",
+        "Xiaoyun Zhang",
+        "Shaokun Zhang",
+        "Jiale Liu",
+        "Ahmed Hassan Awadallah",
+        "Ryen W White",
+        "Doug Burger",
+        "Chi Wang"
+      ],
+      "version": "v2",
+      "publication_status": "published",
+      "official_url": "https://arxiv.org/abs/2308.08155v2",
+      "venue_url": "https://openreview.net/forum?id=BAakY1hNKS",
+      "accessed_at": "2026-07-15",
+      "submission_year": 2023,
+      "venue_year": 2024,
+      "venue": "COLM",
+      "track": "Conference"
+    },
+    {
+      "source_id": "S06",
+      "paper_id": "2309.13007",
+      "title": "ReConcile: Round-Table Conference Improves Reasoning via Consensus among Diverse LLMs",
+      "authors": [
+        "Justin Chih-Yao Chen",
+        "Swarnadeep Saha",
+        "Mohit Bansal"
+      ],
+      "version": "v3",
+      "publication_status": "published",
+      "official_url": "https://arxiv.org/abs/2309.13007v3",
+      "venue_url": "https://aclanthology.org/2024.acl-long.381/",
+      "accessed_at": "2026-07-15",
+      "submission_year": 2023,
+      "venue_year": 2024,
+      "venue": "ACL",
+      "track": "Long Paper"
+    },
+    {
+      "source_id": "S07",
+      "paper_id": "2310.02170",
+      "title": "A Dynamic LLM-Powered Agent Network for Task-Oriented Agent Collaboration",
+      "authors": [
+        "Zijun Liu",
+        "Yanzhe Zhang",
+        "Peng Li",
+        "Yang Liu",
+        "Diyi Yang"
+      ],
+      "version": "v2",
+      "publication_status": "published",
+      "official_url": "https://arxiv.org/abs/2310.02170v2",
+      "venue_url": "https://openreview.net/forum?id=XII0Wp1XA9",
+      "accessed_at": "2026-07-15",
+      "submission_year": 2023,
+      "venue_year": 2024,
+      "venue": "COLM",
+      "track": "Conference"
+    },
+    {
+      "source_id": "S08",
+      "paper_id": "2402.05120",
+      "title": "More Agents Is All You Need",
+      "authors": [
+        "Junyou Li",
+        "Qin Zhang",
+        "Yangbin Yu",
+        "Qiang Fu",
+        "Deheng Ye"
+      ],
+      "version": "v2",
+      "publication_status": "published",
+      "official_url": "https://arxiv.org/abs/2402.05120v2",
+      "venue_url": "https://openreview.net/forum?id=bgzUSZ8aeg",
+      "accessed_at": "2026-07-15",
+      "submission_year": 2024,
+      "venue_year": 2024,
+      "venue": "TMLR",
+      "track": "Journal"
+    },
+    {
+      "source_id": "S09",
+      "paper_id": "2406.07155",
+      "title": "Scaling Large Language Model-based Multi-Agent Collaboration",
+      "authors": [
+        "Chen Qian",
+        "Zihao Xie",
+        "YiFei Wang",
+        "Wei Liu",
+        "Kunlun Zhu",
+        "Hanchen Xia",
+        "Yufan Dang",
+        "Zhuoyun Du",
+        "Weize Chen",
+        "Cheng Yang",
+        "Zhiyuan Liu",
+        "Maosong Sun"
+      ],
+      "version": "v3",
+      "publication_status": "published",
+      "official_url": "https://arxiv.org/abs/2406.07155v3",
+      "venue_url": "https://openreview.net/forum?id=K3n5jPkrU6",
+      "accessed_at": "2026-07-15",
+      "submission_year": 2024,
+      "venue_year": 2025,
+      "venue": "ICLR",
+      "track": "Conference"
+    },
+    {
+      "source_id": "S10",
+      "paper_id": "2502.04180",
+      "title": "Multi-agent Architecture Search via Agentic Supernet",
+      "authors": [
+        "Guibin Zhang",
+        "Luyang Niu",
+        "Junfeng Fang",
+        "Kun Wang",
+        "Lei Bai",
+        "Xiang Wang"
+      ],
+      "version": "v2",
+      "publication_status": "published",
+      "official_url": "https://arxiv.org/abs/2502.04180v2",
+      "venue_url": "https://openreview.net/forum?id=imcyVlzpXh",
+      "accessed_at": "2026-07-15",
+      "submission_year": 2025,
+      "venue_year": 2025,
+      "venue": "ICML",
+      "track": "Conference"
+    },
+    {
+      "source_id": "S11",
+      "paper_id": "2502.11133",
+      "title": "MasRouter: Learning to Route LLMs for Multi-Agent Systems",
+      "authors": [
+        "Yanwei Yue",
+        "Guibin Zhang",
+        "Boyang Liu",
+        "Guancheng Wan",
+        "Kun Wang",
+        "Dawei Cheng",
+        "Yiyan Qi"
+      ],
+      "version": "v1",
+      "publication_status": "preprint",
+      "official_url": "https://arxiv.org/abs/2502.11133v1",
+      "venue_url": null,
+      "accessed_at": "2026-07-15",
+      "submission_year": 2025,
+      "venue_year": null,
+      "venue": null,
+      "track": null
+    },
+    {
+      "source_id": "S12",
+      "paper_id": "2503.01935",
+      "title": "MultiAgentBench: Evaluating the Collaboration and Competition of LLM agents",
+      "authors": [
+        "Kunlun Zhu",
+        "Hongyi Du",
+        "Zhaochen Hong",
+        "Xiaocheng Yang",
+        "Shuyi Guo",
+        "Zhe Wang",
+        "Zhenhailong Wang",
+        "Cheng Qian",
+        "Xiangru Tang",
+        "Heng Ji",
+        "Jiaxuan You"
+      ],
+      "version": "v1",
+      "publication_status": "published",
+      "official_url": "https://arxiv.org/abs/2503.01935v1",
+      "venue_url": "https://aclanthology.org/2025.acl-long.421/",
+      "accessed_at": "2026-07-15",
+      "submission_year": 2025,
+      "venue_year": 2025,
+      "venue": "ACL",
+      "track": "Long Paper"
+    },
+    {
+      "source_id": "S13",
+      "paper_id": "2503.13657",
+      "title": "Why Do Multi-Agent LLM Systems Fail?",
+      "authors": [
+        "Mert Cemri",
+        "Melissa Z. Pan",
+        "Shuyi Yang",
+        "Lakshya A. Agrawal",
+        "Bhavya Chopra",
+        "Rishabh Tiwari",
+        "Kurt Keutzer",
+        "Aditya Parameswaran",
+        "Dan Klein",
+        "Kannan Ramchandran",
+        "Matei Zaharia",
+        "Joseph E. Gonzalez",
+        "Ion Stoica"
+      ],
+      "version": "v3",
+      "publication_status": "published",
+      "official_url": "https://arxiv.org/abs/2503.13657v3",
+      "venue_url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/b1041e52d3be19f0a9bc491657488e4a-Abstract-Datasets_and_Benchmarks_Track.html",
+      "accessed_at": "2026-07-15",
+      "submission_year": 2025,
+      "venue_year": 2025,
+      "venue": "NeurIPS",
+      "track": "Datasets and Benchmarks Track"
+    },
+    {
+      "source_id": "S14",
+      "paper_id": "2505.21471",
+      "title": "Scaling External Knowledge Input Beyond Context Windows of LLMs via Multi-Agent Collaboration",
+      "authors": [
+        "Zijun Liu",
+        "Zhennan Wan",
+        "Peng Li",
+        "Ming Yan",
+        "Fei Huang",
+        "Yang Liu"
+      ],
+      "version": "v2",
+      "publication_status": "published",
+      "official_url": "https://arxiv.org/abs/2505.21471v2",
+      "venue_url": "https://aclanthology.org/2026.acl-long.468/",
+      "accessed_at": "2026-07-15",
+      "submission_year": 2025,
+      "venue_year": 2026,
+      "venue": "ACL",
+      "track": "Long Paper"
+    },
+    {
+      "source_id": "S15",
+      "paper_id": "2511.20639",
+      "title": "Latent Collaboration in Multi-Agent Systems",
+      "authors": [
+        "Jiaru Zou",
+        "Ruizhong Qiu",
+        "Gaotang Li",
+        "Xiyuan Yang",
+        "Katherine Tieu",
+        "Pan Lu",
+        "Ke Shen",
+        "Hanghang Tong",
+        "Yejin Choi",
+        "Jingrui He",
+        "James Zou",
+        "Mengdi Wang",
+        "Ling Yang"
+      ],
+      "version": "v3",
+      "publication_status": "accepted",
+      "official_url": "https://arxiv.org/abs/2511.20639v3",
+      "venue_url": "https://openreview.net/forum?id=e7pAjJZJWb",
+      "accessed_at": "2026-07-15",
+      "submission_year": 2025,
+      "venue_year": 2026,
+      "venue": "ICML",
+      "track": "Spotlight"
+    },
+    {
+      "source_id": "S16",
+      "paper_id": "2512.08296",
+      "title": "Towards a Science of Scaling Agent Systems",
+      "authors": [
+        "Yubin Kim",
+        "Ken Gu",
+        "Chanwoo Park",
+        "Chunjong Park",
+        "Samuel Schmidgall",
+        "A. Ali Heydari",
+        "Yao Yan",
+        "Zhihan Zhang",
+        "Yuchen Zhuang",
+        "Yun Liu",
+        "Mark Malhotra",
+        "Paul Pu Liang",
+        "Hae Won Park",
+        "Yuzhe Yang",
+        "Xuhai Xu",
+        "Yilun Du",
+        "Shwetak Patel",
+        "Tim Althoff",
+        "Daniel McDuff",
+        "Xin Liu"
+      ],
+      "version": "v3",
+      "publication_status": "preprint",
+      "official_url": "https://arxiv.org/abs/2512.08296v3",
+      "venue_url": null,
+      "accessed_at": "2026-07-15",
+      "submission_year": 2025,
+      "venue_year": null,
+      "venue": null,
+      "track": null
+    },
+    {
+      "source_id": "S17",
+      "paper_id": "2602.03794",
+      "title": "Understanding Agent Scaling in LLM-Based Multi-Agent Systems via Diversity",
+      "authors": [
+        "Yingxuan Yang",
+        "Chengrui Qu",
+        "Muning Wen",
+        "Laixi Shi",
+        "Ying Wen",
+        "Weinan Zhang",
+        "Adam Wierman",
+        "Shangding Gu"
+      ],
+      "version": "v1",
+      "publication_status": "workshop",
+      "official_url": "https://arxiv.org/abs/2602.03794v1",
+      "venue_url": "https://openreview.net/forum?id=9BN2W5BCfE",
+      "accessed_at": "2026-07-15",
+      "submission_year": 2026,
+      "venue_year": 2026,
+      "venue": "ICLR",
+      "track": "AIMS Workshop"
+    },
+    {
+      "source_id": "S18",
+      "paper_id": "2602.01566",
+      "title": "FS-Researcher: Test-Time Scaling for Long-Horizon Research Tasks with File-System-Based Agents",
+      "authors": [
+        "Chiwei Zhu",
+        "Benfeng Xu",
+        "Mingxuan Du",
+        "Shaohan Wang",
+        "Xiaorui Wang",
+        "Zhendong Mao",
+        "Yongdong Zhang"
+      ],
+      "version": "v2",
+      "publication_status": "published",
+      "official_url": "https://arxiv.org/abs/2602.01566v2",
+      "venue_url": "https://aclanthology.org/2026.acl-long.288/",
+      "accessed_at": "2026-07-15",
+      "submission_year": 2026,
+      "venue_year": 2026,
+      "venue": "ACL",
+      "track": "Long Paper"
+    },
+    {
+      "source_id": "S19",
+      "paper_id": "2308.10848",
+      "title": "AgentVerse: Facilitating Multi-Agent Collaboration and Exploring Emergent Behaviors",
+      "authors": [
+        "Weize Chen",
+        "Yusheng Su",
+        "Jingwei Zuo",
+        "Cheng Yang",
+        "Chenfei Yuan",
+        "Chi-Min Chan",
+        "Heyang Yu",
+        "Yaxi Lu",
+        "Yi-Hsin Hung",
+        "Chen Qian",
+        "Yujia Qin",
+        "Xin Cong",
+        "Ruobing Xie",
+        "Zhiyuan Liu",
+        "Maosong Sun",
+        "Jie Zhou"
+      ],
+      "version": "v3",
+      "publication_status": "published",
+      "official_url": "https://arxiv.org/abs/2308.10848v3",
+      "venue_url": "https://openreview.net/forum?id=EHg5GDnyq1",
+      "accessed_at": "2026-07-15",
+      "submission_year": 2023,
+      "venue_year": 2024,
+      "venue": "ICLR",
+      "track": "Conference"
+    },
+    {
+      "source_id": "S20",
+      "paper_id": "2606.18829",
+      "title": "GateMem: Benchmarking Memory Governance in Multi-Principal Shared-Memory Agents",
+      "authors": [
+        "Zhe Ren",
+        "Yibo Yang",
+        "Yimeng Chen",
+        "Zijun Zhao",
+        "Benshuo Fu",
+        "Zhihao Shu",
+        "Bingjie Zhang",
+        "Yangyang Xu",
+        "Dandan Guo",
+        "Shuicheng Yan"
+      ],
+      "version": "v1",
+      "publication_status": "preprint",
+      "official_url": "https://arxiv.org/abs/2606.18829v1",
+      "venue_url": null,
+      "accessed_at": "2026-07-15",
+      "submission_year": 2026,
+      "venue_year": null,
+      "venue": null,
+      "track": null
+    },
+    {
+      "source_id": "S21",
+      "paper_id": "2602.01011",
+      "title": "Multi-Agent Teams Hold Experts Back",
+      "authors": [
+        "Aneesh Pappu",
+        "Batu El",
+        "Hancheng Cao",
+        "Carmelo di Nolfo",
+        "Yanchao Sun",
+        "Meng Cao",
+        "James Zou"
+      ],
+      "version": "v4",
+      "submission_year": 2026,
+      "venue_year": 2026,
+      "publication_status": "accepted",
+      "venue": "ICML",
+      "track": "Regular",
+      "official_url": "https://arxiv.org/abs/2602.01011v4",
+      "venue_url": "https://openreview.net/forum?id=Xn8kmKvO9g",
+      "accessed_at": "2026-07-15"
+    },
+    {
+      "source_id": "S22",
+      "paper_id": "2604.02460",
+      "title": "Single-Agent LLMs Outperform Multi-Agent Systems on Multi-Hop Reasoning Under Equal Thinking Token Budgets",
+      "authors": [
+        "Dat Tran",
+        "Douwe Kiela"
+      ],
+      "version": "v2",
+      "submission_year": 2026,
+      "venue_year": null,
+      "publication_status": "preprint",
+      "venue": null,
+      "track": null,
+      "official_url": "https://arxiv.org/abs/2604.02460v2",
+      "venue_url": null,
+      "accessed_at": "2026-07-15"
+    },
+    {
+      "source_id": "S23",
+      "paper_id": "2601.12307",
+      "title": "Rethinking the Value of Multi-Agent Workflow: A Strong Single Agent Baseline",
+      "authors": [
+        "Jiawei Xu",
+        "Arief Koesdwiady",
+        "Sisong Bei",
+        "Yan Han",
+        "Baixiang Huang",
+        "Dakuo Wang",
+        "Yutong Chen",
+        "Zheshen Wang",
+        "Peihao Wang",
+        "Pan Li",
+        "Ying Ding"
+      ],
+      "version": "v1",
+      "submission_year": 2026,
+      "venue_year": null,
+      "publication_status": "preprint",
+      "venue": null,
+      "track": null,
+      "official_url": "https://arxiv.org/abs/2601.12307v1",
+      "venue_url": null,
+      "accessed_at": "2026-07-15"
+    }
+  ],
+  "papers": [
+    {
+      "paper_id": "2303.17760",
+      "source_id": "S01",
+      "group": "foundation",
+      "research_question": "角色提示能否让两个 LLM 在低人工干预下持续协作？",
+      "mechanism": "任务细化 + AI 用户/AI 助手双角色 + inception prompting + 终止规则。",
+      "experiment": "GPT-3.5；AI Society 与 Code 各 100 个任务；453 个人类偏好。",
+      "result": "AI Society 人类偏好 CAMEL 76.3%，one-shot 10.4%，平局 13.3%；GPT-4 judge 在两组给出 73%/76% 胜率。",
+      "limitations": "主要是主观偏好；仅双 agent、最多 40 条消息；judge 有长度偏好。",
+      "selection": {
+        "decision": "included",
+        "reasons": [
+          "角色协作早期代表",
+          "正式 venue",
+          "有直接对照"
+        ]
+      }
+    },
+    {
+      "paper_id": "2305.14325",
+      "source_id": "S02",
+      "group": "foundation",
+      "research_question": "同模型多副本互看并修订答案能否提高推理与事实性？",
+      "mechanism": "通常 3 个独立回答者、2 轮互相检查与修订。",
+      "experiment": "算术、GSM、棋类、人物传记、MMLU；与单 agent、反思、投票对照。",
+      "result": "单 agent 到 debate：算术 67.0→81.8、GSM 77.0→85.0、MMLU 63.9→71.1。",
+      "limitations": "会形成高置信错误共识；长对话更关注最近消息；计算成本更高。",
+      "selection": {
+        "decision": "included",
+        "reasons": [
+          "辩论范式代表",
+          "多任务直接对照",
+          "正式 venue"
+        ]
+      }
+    },
+    {
+      "paper_id": "2307.07924",
+      "source_id": "S03",
+      "group": "foundation",
+      "research_question": "角色化语言通信能否覆盖软件设计、编码与测试流水线？",
+      "mechanism": "Waterfall chat chain、阶段性双角色、主动澄清与短记忆交接。",
+      "experiment": "1,200 个 SRDD 需求；GPT-3.5；最多 10 轮；对照 GPT-Engineer 与 MetaGPT。",
+      "result": "可执行率 .8800，对照 .3583/.4145；去角色后可执行率降至 .58；代价为 22,949 tokens、148.2 秒。",
+      "limitations": "产物偏简单原型；未充分测功能正确性、安全、UX；成本显著增加。",
+      "selection": {
+        "decision": "included",
+        "reasons": [
+          "完整角色流水线",
+          "大样本任务集",
+          "有消融与成本"
+        ]
+      }
+    },
+    {
+      "paper_id": "2308.00352",
+      "source_id": "S04",
+      "group": "foundation",
+      "research_question": "SOP、专业角色与结构化中间产物能否减少软件团队级联错误？",
+      "mechanism": "PM/架构/工程/QA 角色按 SOP 串行工作，以 PRD、接口、代码等工件交接。",
+      "experiment": "HumanEval、MBPP 与 70 个软件需求；软件人评抽取 7 个，角色消融 2 个。",
+      "result": "HumanEval/MBPP pass@1 85.9%/87.7%；执行反馈带来 +4.2/+5.4 点。",
+      "limitations": "端到端软件人评与角色消融样本极小，且需求由系统生成。",
+      "selection": {
+        "decision": "included",
+        "reasons": [
+          "SOP 与工件协作代表",
+          "正式 venue",
+          "含消融"
+        ]
+      }
+    },
+    {
+      "paper_id": "2308.08155",
+      "source_id": "S05",
+      "group": "foundation",
+      "research_question": "如何把 LLM、人类、工具和代码执行组合成可复用多 agent 应用？",
+      "mechanism": "Conversable Agent 统一消息与回复，支持函数/代码、人类输入和静态或动态 GroupChat。",
+      "experiment": "MATH、RAG、ALFWorld、安全 OptiGuide、动态群聊、国际象棋六类应用。",
+      "result": "MATH level-5 成功率 52.5%；ALFWorld 加 grounding agent 后 54%→69%；安全编码 F1 提高 8/35 点。",
+      "limitations": "各应用同时改变模型、提示、工具和拓扑，无法把全部收益归因于多 agent。",
+      "selection": {
+        "decision": "included",
+        "reasons": [
+          "编排基础设施代表",
+          "多类应用",
+          "正式 venue"
+        ]
+      }
+    },
+    {
+      "paper_id": "2309.13007",
+      "source_id": "S06",
+      "group": "foundation",
+      "research_question": "异构模型与置信度加权能否改善同模型辩论的相关错误？",
+      "mechanism": "不同 LLM 圆桌讨论、多轮说服、置信度加权投票。",
+      "experiment": "多类常识与推理 benchmark；同单模型、投票和讨论基线比较。",
+      "result": "跨任务结果支持模型多样性与多轮讨论的互补收益，但并非每题都能消除错误共识。",
+      "limitations": "商业模型版本与成本会漂移；置信度不天然校准；仍依赖语言 judge。",
+      "selection": {
+        "decision": "included",
+        "reasons": [
+          "异构辩论代表",
+          "处理错误相关性",
+          "正式 venue"
+        ]
+      }
+    },
+    {
+      "paper_id": "2310.02170",
+      "source_id": "S07",
+      "group": "foundation",
+      "research_question": "能否按任务自动选人、裁剪低价值参与者并早停？",
+      "mechanism": "Team Optimization 学习 agent 重要性；任务时动态网络、逐轮排序和 2/3 一致早停。",
+      "experiment": "HumanEval、WebShop、MMLU、MATH；主要 GPT-3.5；与单 agent、辩论等比较。",
+      "result": "HumanEval 73.2→82.9；MMLU 66.4→70.5 且平均 4.39 calls；优化后调用 23.04→16.85。",
+      "limitations": "报告调用数未充分计一次性团队优化成本；只有重复任务才易摊销。",
+      "selection": {
+        "decision": "included",
+        "reasons": [
+          "动态组队代表",
+          "同时报告质量与调用",
+          "正式 venue"
+        ]
+      }
+    },
+    {
+      "paper_id": "2402.05120",
+      "source_id": "S08",
+      "group": "foundation",
+      "research_question": "不通信只增加独立采样与投票，能否得到所谓多 agent 增益？",
+      "mechanism": "同一输入独立采样 n 次，以多数票或相似度聚合；不是持续协作。",
+      "experiment": "GSM8K、MATH、Chess、MMLU、HumanEval；最多 40 个实例。",
+      "result": "GPT-3.5 n=1→40：GSM8K .73→.85、MATH .29→.39、MMLU .59→.70。",
+      "limitations": "token 近似线性增长；极难任务增益趋零；不证明角色与通信有效。",
+      "selection": {
+        "decision": "included",
+        "reasons": [
+          "复杂团队必备简单基线",
+          "多任务规模曲线",
+          "正式期刊"
+        ]
+      }
+    },
+    {
+      "paper_id": "2406.07155",
+      "source_id": "S09",
+      "group": null,
+      "research_question": "通信拓扑和 agent 数量如何共同影响大规模协作？",
+      "mechanism": "将 agent 组织为有向无环图，并系统改变拓扑和节点规模。",
+      "experiment": "推理与代码任务；多种 topology；展示千级节点运行。",
+      "result": "证明拓扑与规模是独立设计变量，但增益并非可脱离任务、预算和相关错误解释。",
+      "limitations": "大规模运行不等于等成本优势；后续研究发现同质规模会饱和或负增益。",
+      "selection": {
+        "decision": "extended",
+        "reasons": [
+          "大规模拓扑仍保留为扩展证据",
+          "由 matched-budget 与专家稀释直接边界替换核心席位"
+        ]
+      }
+    },
+    {
+      "paper_id": "2502.04180",
+      "source_id": "S10",
+      "group": "frontier",
+      "research_question": "能否针对每个查询自动搜索 agent 工作流并兼顾成本？",
+      "mechanism": "把 agent、操作和连接组成概率 supernet，学习查询条件化架构。",
+      "experiment": "多类推理与代码 benchmark；与手工 MAS 与搜索基线比较。",
+      "result": "论文报告相对基线 +0.54 至 +11.82 的性能增益，并降低约 6%–45% 推理成本。",
+      "limitations": "搜索/训练成本需摊销；收益依赖候选组件、代理指标和任务分布稳定性。",
+      "selection": {
+        "decision": "included",
+        "reasons": [
+          "自动架构搜索前沿",
+          "质量成本联合目标",
+          "ICML 2025"
+        ]
+      }
+    },
+    {
+      "paper_id": "2502.11133",
+      "source_id": "S11",
+      "group": null,
+      "research_question": "能否同时路由协作模式、角色和底层模型？",
+      "mechanism": "级联控制器按查询依次选择 MAS 模式、角色配置与模型。",
+      "experiment": "数学与代码任务；跨多模型与协作模式比较。",
+      "result": "论文报告 MBPP 提升 1.8–8.2 点，HumanEval 开销最高减少 52.07%。",
+      "limitations": "仍是预印本；路由决策依赖训练分布，未充分覆盖线上漂移与失败回退。",
+      "selection": {
+        "decision": "extended",
+        "reasons": [
+          "路由方向有价值",
+          "预印本且与 MaAS/DyLAN 机制重叠"
+        ]
+      }
+    },
+    {
+      "paper_id": "2503.01935",
+      "source_id": "S12",
+      "group": "frontier",
+      "research_question": "如何同时评估任务完成、规划、通信和竞争协作？",
+      "mechanism": "MARBLE 支持 star/tree/chain/graph 与多种规划策略，以动态 milestones 评估。",
+      "experiment": "研究、Minecraft、数据库、编码、谈判、狼人杀六场景；任务场景各 100 cases。",
+      "result": "1→3 agents 后继续增加使 KPI 下降；group discussion 在该实验各指标最差；协调高不保证任务成功。",
+      "limitations": "多项指标依赖 LLM judge；拓扑结论主要来自研究场景，外推有限。",
+      "selection": {
+        "decision": "included",
+        "reasons": [
+          "过程型评测代表",
+          "含拓扑/规模消融",
+          "ACL 2025"
+        ]
+      }
+    },
+    {
+      "paper_id": "2503.13657",
+      "source_id": "S13",
+      "group": "frontier",
+      "research_question": "主流多 agent 系统为何失败，能否形成可操作 taxonomy？",
+      "mechanism": "6 位专家用 grounded theory 建立 14 种 failure modes，再用校准 judge 扩展标注。",
+      "experiment": "1,642 条 traces、7 个框架；人类 κ=.88，judge accuracy .94、F1 .80。",
+      "result": "失败率 41%–86.7%；重复、错误终止、规格违背、reasoning-action mismatch 和错误验证突出；同模型结构干预最高 +15.6%。",
+      "limitations": "完整数据多数由 LLM judge 标注；taxonomy 不声称穷尽，相关症状不等于因果。",
+      "selection": {
+        "decision": "included",
+        "reasons": [
+          "真实轨迹失败诊断",
+          "人工校准",
+          "NeurIPS 数据与基准 track"
+        ]
+      }
+    },
+    {
+      "paper_id": "2505.21471",
+      "source_id": "S14",
+      "group": null,
+      "research_question": "多 agent 能否分布式处理远超单模型上下文的外部知识？",
+      "mechanism": "将外部知识切分给多个 agent，通过同步、协调和聚合回答。",
+      "experiment": "长上下文/外部知识任务，对不同分片与协调设置比较。",
+      "result": "支持通过分布式上下文扩展可处理证据量，但质量依赖分片可分解性与聚合完整性。",
+      "limitations": "切分会丢跨分片关系；同步与聚合开销高；不等同于安全、持久的共享记忆。",
+      "selection": {
+        "decision": "extended",
+        "reasons": [
+          "长上下文分片机制保留",
+          "由更直接的 matched-budget 反证替换核心席位"
+        ]
+      }
+    },
+    {
+      "paper_id": "2511.20639",
+      "source_id": "S15",
+      "group": "frontier",
+      "research_question": "agent 是否必须用自然语言通信，还是可共享 latent working memory？",
+      "mechanism": "在连续 hidden representation 中传递信息，减少文本化与重复编码。",
+      "experiment": "9 个 benchmarks；多种协作拓扑与模型；与文本通信比较。",
+      "result": "论文报告最高 +14.6 准确率、输出 token 减少 70.8%–83.7%、速度约 4–4.3 倍。",
+      "limitations": "latent 状态难审计、难跨模型互操作；可解释性、权限与注入风险仍未解决。",
+      "selection": {
+        "decision": "included",
+        "reasons": [
+          "latent communication 前沿",
+          "多 benchmark",
+          "ICML Spotlight"
+        ]
+      }
+    },
+    {
+      "paper_id": "2512.08296",
+      "source_id": "S16",
+      "group": "frontier",
+      "research_question": "在控制工具、提示和计算后，何时多 agent 扩展有效或有害？",
+      "mechanism": "统一比较单 agent、独立、中心化、去中心化与混合架构。",
+      "experiment": "260 个配置、6 个 agentic benchmarks、3 个 LLM family。",
+      "result": "相对单 agent 从可分解财务推理 +80.8% 到序列规划 -70.0%；模型为留出配置选对架构 87%。",
+      "limitations": "预印本；跨 benchmark 模型解释度有限；数字不能直接迁移到不同工具与预算。",
+      "selection": {
+        "decision": "included",
+        "reasons": [
+          "等预算受控规模研究",
+          "同时呈现正负效应",
+          "最新架构-任务匹配证据"
+        ]
+      }
+    },
+    {
+      "paper_id": "2602.03794",
+      "source_id": "S17",
+      "group": "frontier",
+      "research_question": "为什么同质 agent 扩展饱和，而多样性可能继续带来收益？",
+      "mechanism": "以有效信息通道 K* 描述输出相关性与互补证据。",
+      "experiment": "不同模型、提示、工具的同质/异质配置与规模曲线。",
+      "result": "论文报告 2 个多样化 agent 可匹配或超过 16 个同质 agent。",
+      "limitations": "workshop 论文；K* 与实际产品任务的在线可估计性仍需验证。",
+      "selection": {
+        "decision": "included",
+        "reasons": [
+          "解释规模饱和",
+          "多样性可测框架",
+          "直接挑战堆数量"
+        ]
+      }
+    },
+    {
+      "paper_id": "2602.01566",
+      "source_id": "S18",
+      "group": "frontier",
+      "research_question": "文件系统能否作为长周期研究的外部记忆与跨 agent 协调介质？",
+      "mechanism": "Context Builder 构建层级知识库；Report Writer 分段读取并写作。",
+      "experiment": "DeepResearch Bench 与 DeepConsult；不同 backbone 和 Context Builder 计算预算。",
+      "result": "在两个开放研究 benchmark 报告 SOTA，且报告质量与 Context Builder 计算量正相关。",
+      "limitations": "两 agent、研究写作单域；文件系统的权限、污染、删除与冲突治理未被充分评价。",
+      "selection": {
+        "decision": "included",
+        "reasons": [
+          "持久工件/共享记忆代表",
+          "正式 ACL",
+          "与本项目研究 episode 同构"
+        ]
+      }
+    },
+    {
+      "paper_id": "2308.10848",
+      "source_id": "S19",
+      "group": null,
+      "selection": {
+        "decision": "extended",
+        "reasons": [
+          "与 AutoGen/DyLAN 重叠",
+          "保留错误同伴说服正确 agent 的正式反证"
+        ]
+      }
+    },
+    {
+      "paper_id": "2606.18829",
+      "source_id": "S20",
+      "group": null,
+      "selection": {
+        "decision": "extended",
+        "reasons": [
+          "共享记忆治理直接相关",
+          "截止日时仍是单篇新预印本"
+        ]
+      }
+    },
+    {
+      "paper_id": "2602.01011",
+      "source_id": "S21",
+      "group": "frontier",
+      "research_question": "团队已知谁是专家时，讨论能否保留最佳个体的专业判断？",
+      "mechanism": "对照无专家、隐含专家、显式揭示专家及最佳个体；改变团队规模与专长分布。",
+      "experiment": "四类协作/排序任务，多模型与团队构成；比较团队与已识别最佳个体。",
+      "result": "即使明确揭示专家，团队仍未能匹配最佳个体，差距为 6.3%–41.1%；规模增加会加剧判断稀释。",
+      "limitations": "受控任务不等同于生产组织；共识有时改善鲁棒性，但会牺牲最佳专家信号。",
+      "selection": {
+        "decision": "included",
+        "reasons": [
+          "ICML 2026",
+          "直接揭示专家稀释",
+          "重审共识与规模结论所需反证"
+        ]
+      }
+    },
+    {
+      "paper_id": "2604.02460",
+      "source_id": "S22",
+      "group": "frontier",
+      "research_question": "在相同 thinking-token 预算下，MAS 是否仍优于单智能体？",
+      "mechanism": "跨三个模型家族配平总思考 token，对比 single-agent scaling 与多种 MAS。",
+      "experiment": "两个 multi-hop reasoning 数据集；多预算点、模型家族和信息退化条件。",
+      "result": "大多数配平条件下单智能体匹配或超过 MAS；当单体上下文被人为退化时 MAS 才显示边界性优势。",
+      "limitations": "集中于 multi-hop reasoning；不能替代持续行动、异构权限或外部状态任务评测。",
+      "selection": {
+        "decision": "included",
+        "reasons": [
+          "直接 matched-budget 证据",
+          "约束 C05 强度",
+          "覆盖模型家族与预算曲线"
+        ]
+      }
+    },
+    {
+      "paper_id": "2601.12307",
+      "source_id": "S23",
+      "group": "frontier",
+      "research_question": "固定同一模型的多智能体 workflow 能否折叠成单智能体执行？",
+      "mechanism": "OneFlow 由单智能体顺序执行原 workflow 节点，并复用 KV cache。",
+      "experiment": "多 workflow、模型和任务；比较效果、token/延迟及异构模型边界。",
+      "result": "同质 workflow 可匹配或略优于 MAS 并节省 KV-cache/通信开销；真正异构模型组合不保证可折叠。",
+      "limitations": "结论针对同质 workflow；不同权限、并行环境交互和独立信息源仍可能需要团队。",
+      "selection": {
+        "decision": "included",
+        "reasons": [
+          "直接 strong single-agent baseline",
+          "揭示同质 workflow 可折叠",
+          "补足复杂 MAS 对照契约"
+        ]
+      }
+    },
+    {
+      "paper_id": "2309.17288",
+      "title": "AutoAgents: A Framework for Automatic Agent Generation",
+      "version": "v3",
+      "submission_year": 2023,
+      "publication_status": "published",
+      "source_url": "https://arxiv.org/abs/2309.17288v3",
+      "selection": {
+        "decision": "extended",
+        "reasons": [
+          "自动组队前驱；证据弱于 DyLAN/MaAS"
+        ]
+      }
+    },
+    {
+      "paper_id": "2402.14034",
+      "title": "AgentScope: A Flexible yet Robust Multi-Agent Platform",
+      "version": "v2",
+      "submission_year": 2024,
+      "publication_status": "preprint",
+      "source_url": "https://arxiv.org/abs/2402.14034v2",
+      "selection": {
+        "decision": "extended",
+        "reasons": [
+          "平台工程贡献为主，机制因果较弱"
+        ]
+      }
+    },
+    {
+      "paper_id": "2402.16823",
+      "title": "GPTSwarm: Language Agents as Optimizable Graphs",
+      "version": "v3",
+      "submission_year": 2024,
+      "publication_status": "published",
+      "source_url": "https://arxiv.org/abs/2402.16823v3",
+      "selection": {
+        "decision": "extended",
+        "reasons": [
+          "重要前驱，MaAS 覆盖更直接的架构搜索"
+        ]
+      }
+    },
+    {
+      "paper_id": "2406.04692",
+      "title": "Mixture-of-Agents Enhances Large Language Model Capabilities",
+      "version": "v1",
+      "submission_year": 2024,
+      "publication_status": "preprint",
+      "source_url": "https://arxiv.org/abs/2406.04692v1",
+      "selection": {
+        "decision": "extended",
+        "reasons": [
+          "token 聚合，不是持续行动团队"
+        ]
+      }
+    },
+    {
+      "paper_id": "2406.05720",
+      "title": "VillagerAgent: A Graph-Based Multi-Agent Framework for Coordinating Complex Task Dependencies in Minecraft",
+      "version": "v1",
+      "submission_year": 2024,
+      "publication_status": "preprint",
+      "source_url": "https://arxiv.org/abs/2406.05720v1",
+      "selection": {
+        "decision": "extended",
+        "reasons": [
+          "Minecraft 单域色彩强"
+        ]
+      }
+    },
+    {
+      "paper_id": "2410.02506",
+      "title": "Cut the Crap: An Economical Communication Pipeline for LLM-based Multi-Agent Systems",
+      "version": "v1",
+      "submission_year": 2024,
+      "publication_status": "preprint",
+      "source_url": "https://arxiv.org/abs/2410.02506v1",
+      "selection": {
+        "decision": "extended",
+        "reasons": [
+          "通信剪枝有价值，但核心优先跨系统边界"
+        ]
+      }
+    },
+    {
+      "paper_id": "2411.04468",
+      "title": "Magentic-One: A Generalist Multi-Agent System for Solving Complex Tasks",
+      "version": "v1",
+      "submission_year": 2024,
+      "publication_status": "preprint",
+      "source_url": "https://arxiv.org/abs/2411.04468v1",
+      "selection": {
+        "decision": "extended",
+        "reasons": [
+          "工程基线强，机制隔离与正式 venue 较弱"
+        ]
+      }
+    },
+    {
+      "paper_id": "2412.05449",
+      "title": "Towards Effective GenAI Multi-Agent Collaboration: Design and Evaluation for Enterprise Applications",
+      "version": "v1",
+      "submission_year": 2024,
+      "publication_status": "preprint",
+      "source_url": "https://arxiv.org/abs/2412.05449v1",
+      "selection": {
+        "decision": "extended",
+        "reasons": [
+          "专有系统、手工场景和对照有限"
+        ]
+      }
+    },
+    {
+      "paper_id": "2505.18279",
+      "title": "Collaborative Memory: Multi-User Memory Sharing in LLM Agents with Dynamic Access Control",
+      "version": "v1",
+      "submission_year": 2025,
+      "publication_status": "preprint",
+      "source_url": "https://arxiv.org/abs/2505.18279v1",
+      "selection": {
+        "decision": "extended",
+        "reasons": [
+          "provenance/ACL 有启发，尚无任务实证"
+        ]
+      }
+    },
+    {
+      "paper_id": "2604.19278",
+      "title": "Explicit Trait Inference for Multi-Agent Coordination",
+      "version": "v2",
+      "submission_year": 2026,
+      "publication_status": "accepted",
+      "source_url": "https://arxiv.org/abs/2604.19278v2",
+      "selection": {
+        "decision": "extended",
+        "reasons": [
+          "ACL 2026 新机制，与协调失败路径部分重叠"
+        ]
+      }
+    },
+    {
+      "paper_id": "2502.19559",
+      "title": "Stay Focused: Problem Drift in Multi-Agent Debate",
+      "version": "v3",
+      "submission_year": 2025,
+      "publication_status": "accepted",
+      "source_url": "https://arxiv.org/abs/2502.19559v3",
+      "selection": {
+        "decision": "extended",
+        "reasons": [
+          "正式 debate 反证，保留为扩展证据候选"
+        ]
+      }
+    },
+    {
+      "paper_id": "2604.13349",
+      "title": "When Less Latent Leads to Better Relay: Information-Preserving Compression for Latent Multi-Agent LLM Collaboration",
+      "version": "v2",
+      "submission_year": 2026,
+      "publication_status": "preprint",
+      "source_url": "https://arxiv.org/abs/2604.13349v2",
+      "selection": {
+        "decision": "extended",
+        "reasons": [
+          "LatentMAS 后续，非常新"
+        ]
+      }
+    },
+    {
+      "paper_id": "2402.01680",
+      "title": "Large Language Model based Multi-Agents: A Survey of Progress and Challenges",
+      "version": "v2",
+      "submission_year": 2024,
+      "publication_status": "preprint",
+      "source_url": "https://arxiv.org/abs/2402.01680v2",
+      "selection": {
+        "decision": "extended",
+        "reasons": [
+          "综述用于召回，不作一手机制证据"
+        ]
+      }
+    },
+    {
+      "paper_id": "2501.06322",
+      "title": "Multi-Agent Collaboration Mechanisms: A Survey of LLMs",
+      "version": "v1",
+      "submission_year": 2025,
+      "publication_status": "preprint",
+      "source_url": "https://arxiv.org/abs/2501.06322v1",
+      "selection": {
+        "decision": "extended",
+        "reasons": [
+          "分类学参考，非原始实验"
+        ]
+      }
+    },
+    {
+      "paper_id": "2502.14321",
+      "title": "Beyond Self-Talk: A Communication-Centric Survey of LLM-Based Multi-Agent Systems",
+      "version": "v3",
+      "submission_year": 2025,
+      "publication_status": "accepted",
+      "source_url": "https://arxiv.org/abs/2502.14321v3",
+      "selection": {
+        "decision": "extended",
+        "reasons": [
+          "通信路径索引，非一手因果证据"
+        ]
+      }
+    },
+    {
+      "paper_id": "2505.07313",
+      "title": "Towards Multi-Agent Reasoning Systems for Collaborative Expertise Delegation: An Exploratory Design Study",
+      "version": "v2",
+      "submission_year": 2025,
+      "publication_status": "preprint",
+      "source_url": "https://arxiv.org/abs/2505.07313v2",
+      "selection": {
+        "decision": "extended",
+        "reasons": [
+          "探索性 preprint，验证范围较弱"
+        ]
+      }
+    },
+    {
+      "paper_id": "2510.13821",
+      "title": "LLM Agent Communication Protocol (LACP) Requires Urgent Standardization: A Telecom-Inspired Protocol is Necessary",
+      "version": "v1",
+      "submission_year": 2025,
+      "publication_status": "workshop",
+      "source_url": "https://arxiv.org/abs/2510.13821v1",
+      "selection": {
+        "decision": "extended",
+        "reasons": [
+          "协议 position paper 为主，实证不足"
+        ]
+      }
+    },
+    {
+      "paper_id": "2506.03053",
+      "title": "MAEBE: Multi-Agent Emergent Behavior Framework",
+      "version": "v2",
+      "submission_year": 2025,
+      "publication_status": "preprint",
+      "source_url": "https://arxiv.org/abs/2506.03053v2",
+      "selection": {
+        "decision": "extended",
+        "reasons": [
+          "同伴压力方向重要，验证与 venue 较弱"
+        ]
+      }
+    },
+    {
+      "paper_id": "2604.07821",
+      "title": "More Capable, Less Cooperative? When LLMs Fail At Zero-Cost Collaboration",
+      "version": "v2",
+      "submission_year": 2026,
+      "publication_status": "accepted",
+      "source_url": "https://arxiv.org/abs/2604.07821v2",
+      "selection": {
+        "decision": "extended",
+        "reasons": [
+          "ICML 2026；零成本合作失败，下一轮优先深读"
+        ]
+      }
+    },
+    {
+      "paper_id": "2603.01045",
+      "title": "Silo-Bench: A Scalable Environment for Evaluating Distributed Coordination in Multi-Agent LLM Systems",
+      "version": "v2",
+      "submission_year": 2026,
+      "publication_status": "accepted",
+      "source_url": "https://arxiv.org/abs/2603.01045v2",
+      "selection": {
+        "decision": "extended",
+        "reasons": [
+          "ACL 2026；分布式信息整合税，下一轮优先深读"
+        ]
+      }
+    },
+    {
+      "paper_id": "2502.20073",
+      "title": "Collab-Overcooked: Benchmarking and Evaluating Large Language Models as Collaborative Agents",
+      "version": "v3",
+      "submission_year": 2025,
+      "publication_status": "published",
+      "source_url": "https://arxiv.org/abs/2502.20073v3",
+      "selection": {
+        "decision": "extended",
+        "reasons": [
+          "EMNLP 2025；交互长链评测，扩展保留"
+        ]
+      }
+    },
+    {
+      "paper_id": "2408.00989",
+      "title": "On the Resilience of LLM-Based Multi-Agent Collaboration with Faulty Agents",
+      "version": "v4",
+      "submission_year": 2024,
+      "publication_status": "preprint",
+      "source_url": "https://arxiv.org/abs/2408.00989v4",
+      "selection": {
+        "decision": "extended",
+        "reasons": [
+          "故障传播与结构韧性，扩展反证"
+        ]
+      }
+    },
+    {
+      "paper_id": "2410.07283",
+      "title": "Prompt Infection: LLM-to-LLM Prompt Injection within Multi-Agent Systems",
+      "version": "v1",
+      "submission_year": 2024,
+      "publication_status": "preprint",
+      "source_url": "https://arxiv.org/abs/2410.07283v1",
+      "selection": {
+        "decision": "extended",
+        "reasons": [
+          "多 agent 攻击面，安全专题候选"
+        ]
+      }
+    },
+    {
+      "paper_id": "2407.04622",
+      "title": "On scalable oversight with weak LLMs judging strong LLMs",
+      "version": "v2",
+      "submission_year": 2024,
+      "publication_status": "preprint",
+      "source_url": "https://arxiv.org/abs/2407.04622v2",
+      "selection": {
+        "decision": "extended",
+        "reasons": [
+          "debate 的任务依赖边界，扩展反证"
+        ]
+      }
+    },
+    {
+      "paper_id": "2505.23352",
+      "title": "Understanding the Information Propagation Effects of Communication Topologies in LLM-based Multi-Agent Systems",
+      "version": "v1",
+      "submission_year": 2025,
+      "publication_status": "preprint",
+      "source_url": "https://arxiv.org/abs/2505.23352v1",
+      "selection": {
+        "decision": "extended",
+        "reasons": [
+          "拓扑抑错与信息扩散双刃效应，扩展反证"
+        ]
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "E01",
+      "source_id": "S01",
+      "locator": "§5.1 Table 1; Appendix K.1",
+      "kind": "paper_result",
+      "faithful_summary": "双角色 CAMEL 在 453 个人类偏好中获 76.3% 偏好，one-shot 10.4%，但指标是偏好而非事实正确率。",
+      "verified_by": [
+        "Reader",
+        "PM-Paper"
+      ],
+      "verified_at": "2026-07-15"
+    },
+    {
+      "evidence_id": "E02",
+      "source_id": "S02",
+      "locator": "§3.1 Table 1; §3.2 Table 2; §5",
+      "kind": "paper_result",
+      "faithful_summary": "3-agent、2-round debate 在六类任务优于匹配单 agent；作者同时报告错误共识、高置信错误和长上下文近因偏好。",
+      "verified_by": [
+        "Reader",
+        "Critic"
+      ],
+      "verified_at": "2026-07-15"
+    },
+    {
+      "evidence_id": "E03",
+      "source_id": "S03",
+      "locator": "§4 Tables 1–4; §6",
+      "kind": "paper_result",
+      "faithful_summary": "ChatDev 可执行率 .8800，去角色后 .58；相较单体基线 token 和延迟显著上升，产物多为简单原型。",
+      "verified_by": [
+        "Reader"
+      ],
+      "verified_at": "2026-07-15"
+    },
+    {
+      "evidence_id": "E04",
+      "source_id": "S04",
+      "locator": "§4.1–4.4 Tables 1–3; Appendix D",
+      "kind": "paper_result",
+      "faithful_summary": "MetaGPT 的 SOP、结构化工件和执行反馈有正向结果；端到端软件人评仅 7 个任务、角色消融 2 个。",
+      "verified_by": [
+        "Reader",
+        "Critic"
+      ],
+      "verified_at": "2026-07-15"
+    },
+    {
+      "evidence_id": "E05",
+      "source_id": "S05",
+      "locator": "§2.1–2.2; §3 A1–A6; Figure 3–4; §4",
+      "kind": "paper_result",
+      "faithful_summary": "AutoGen 六类应用展示可编程会话编排；各应用同时改变多个因素，不能作为多 agent 普遍优越的因果证据。",
+      "verified_by": [
+        "Reader"
+      ],
+      "verified_at": "2026-07-15"
+    },
+    {
+      "evidence_id": "E06",
+      "source_id": "S06",
+      "locator": "§3–§5 and official abstract",
+      "kind": "paper_result",
+      "faithful_summary": "异构 LLM、多轮讨论与置信度加权在多项推理任务改善聚合，但置信度与共识仍不等于外部验证。",
+      "verified_by": [
+        "Scout",
+        "PM-Paper"
+      ],
+      "verified_at": "2026-07-15"
+    },
+    {
+      "evidence_id": "E07",
+      "source_id": "S07",
+      "locator": "§3.1, §3.3–3.4; §4 Tables 2–6",
+      "kind": "paper_result",
+      "faithful_summary": "动态选人和早停可提高任务阶段质量并减少调用；一次性 Team Optimization 成本未完整计入。",
+      "verified_by": [
+        "Reader",
+        "Critic"
+      ],
+      "verified_at": "2026-07-15"
+    },
+    {
+      "evidence_id": "E08",
+      "source_id": "S08",
+      "locator": "§4 Figure 3 Table 2; §5.5; §6–7",
+      "kind": "paper_result",
+      "faithful_summary": "无通信独立采样和投票已在多个任务随 n 提升，但 token 近线性增长且困难任务趋于饱和。",
+      "verified_by": [
+        "Reader",
+        "Critic"
+      ],
+      "verified_at": "2026-07-15"
+    },
+    {
+      "evidence_id": "E09",
+      "source_id": "S09",
+      "locator": "Abstract; §3–§5",
+      "kind": "paper_result",
+      "faithful_summary": "MacNet 证明拓扑和节点规模可系统操纵并可运行到千级，但不提供跨任务等预算的普遍规模定律。",
+      "verified_by": [
+        "Scout",
+        "Critic"
+      ],
+      "verified_at": "2026-07-15"
+    },
+    {
+      "evidence_id": "E10",
+      "source_id": "S10",
+      "locator": "Abstract; Tables 1–3",
+      "kind": "paper_result",
+      "faithful_summary": "MaAS 报告查询条件化架构搜索带来 0.54–11.82 性能增益并降低约 6%–45% 推理成本；搜索成本需另计。",
+      "verified_by": [
+        "Scout",
+        "PM-Paper"
+      ],
+      "verified_at": "2026-07-15"
+    },
+    {
+      "evidence_id": "E11",
+      "source_id": "S11",
+      "locator": "Abstract; §4",
+      "kind": "paper_result",
+      "faithful_summary": "MasRouter 联合选择协作模式、角色和模型，报告代码任务增益与最高 52.07% 开销下降；结果仍为预印本。",
+      "verified_by": [
+        "Scout",
+        "PM-Paper"
+      ],
+      "verified_at": "2026-07-15"
+    },
+    {
+      "evidence_id": "E12",
+      "source_id": "S12",
+      "locator": "§4 Table 1 Figures 5–6; §5 Figures 7–8",
+      "kind": "paper_result",
+      "faithful_summary": "MultiAgentBench 中高协调分不保证高任务分，group discussion 表现差，agent 从 3 继续增加时 KPI 下降。",
+      "verified_by": [
+        "Reader",
+        "Critic"
+      ],
+      "verified_at": "2026-07-15"
+    },
+    {
+      "evidence_id": "E13",
+      "source_id": "S13",
+      "locator": "§3 Tables 1–2; §4 Figure 1; §5; Appendix H/J",
+      "kind": "paper_result",
+      "faithful_summary": "1,642 条轨迹揭示 14 类故障；重复、错误终止、规格违背、行动错配和错误验证是独立于最终答案的故障源。",
+      "verified_by": [
+        "Reader",
+        "Critic"
+      ],
+      "verified_at": "2026-07-15"
+    },
+    {
+      "evidence_id": "E14",
+      "source_id": "S13",
+      "locator": "Appendix H Table 5; Appendix J",
+      "kind": "paper_result",
+      "faithful_summary": "相同底模下结构干预最高提高 15.6%，ChatDev 明确终止权的干预提高 9.4%，表明系统设计本身影响失败率。",
+      "verified_by": [
+        "Reader"
+      ],
+      "verified_at": "2026-07-15"
+    },
+    {
+      "evidence_id": "E15",
+      "source_id": "S14",
+      "locator": "Abstract; §3–§5",
+      "kind": "paper_result",
+      "faithful_summary": "ExtAgents 通过分布式上下文处理超窗口证据；收益依赖可分片性、同步与完整聚合。",
+      "verified_by": [
+        "Scout",
+        "PM-Paper"
+      ],
+      "verified_at": "2026-07-15"
+    },
+    {
+      "evidence_id": "E16",
+      "source_id": "S15",
+      "locator": "§4.1 Table 1; Appendix D Tables 3–5",
+      "kind": "paper_result",
+      "faithful_summary": "LatentMAS 在 9 个 benchmark 报告最高 +14.6 准确率、70.8%–83.7% 输出 token 降低及约 4 倍速度，但 latent 状态降低审计性。",
+      "verified_by": [
+        "Scout",
+        "PM-Paper"
+      ],
+      "verified_at": "2026-07-15"
+    },
+    {
+      "evidence_id": "E17",
+      "source_id": "S16",
+      "locator": "§4.2–§4.4; Figure 1; Table 2",
+      "kind": "paper_result",
+      "faithful_summary": "260 配置受控实验中，多 agent 相对单 agent 从 +80.8% 到 -70.0%，架构-任务对齐决定方向。",
+      "verified_by": [
+        "Scout",
+        "PM-Paper",
+        "Critic"
+      ],
+      "verified_at": "2026-07-15"
+    },
+    {
+      "evidence_id": "E18",
+      "source_id": "S17",
+      "locator": "§4.1–§4.3; Figures 2–4; Tables 1–2",
+      "kind": "paper_result",
+      "faithful_summary": "同质 agent 输出强相关而快速饱和；论文报告 2 个多样化 agent 可匹配或超过 16 个同质 agent。",
+      "verified_by": [
+        "Scout",
+        "PM-Paper"
+      ],
+      "verified_at": "2026-07-15"
+    },
+    {
+      "evidence_id": "E19",
+      "source_id": "S18",
+      "locator": "§2.1–§2.3; §3.2 Tables 2–4; §4.1 Figure 4",
+      "kind": "paper_result",
+      "faithful_summary": "文件系统作为跨 agent、跨会话持久工件与协调介质；两个开放研究 benchmark 上报告 SOTA。",
+      "verified_by": [
+        "Scout",
+        "PM-Paper"
+      ],
+      "verified_at": "2026-07-15"
+    },
+    {
+      "evidence_id": "E20",
+      "source_id": "S19",
+      "locator": "§3 Tables 1–2; §4 Figure 6; Appendix F",
+      "kind": "contrary_result",
+      "faithful_summary": "GPT-3.5 Group 在 CommonGen/MGSM 低于 Solo，约 10% MGSM 错误来自正确 agent 被错误反馈说服。",
+      "verified_by": [
+        "Reader",
+        "Critic"
+      ],
+      "verified_at": "2026-07-15"
+    },
+    {
+      "evidence_id": "E21",
+      "source_id": "S20",
+      "locator": "§3–§5; Tables 1–3; Appendix B",
+      "kind": "emerging_result",
+      "faithful_summary": "GateMem 联合评估长期效用、情境授权边界与主动遗忘；不同基线尚不能同时实现高效用、稳健访问控制和可靠删除，因此截至 cutoff 仅作新兴设计信号。",
+      "verified_by": [
+        "Scout",
+        "PM-Paper"
+      ],
+      "verified_at": "2026-07-15"
+    },
+    {
+      "evidence_id": "E22",
+      "source_id": "S21",
+      "locator": "§4.1 Table 1; §4.2 Table 2; §4.3; Appendix H",
+      "kind": "contrary_result",
+      "faithful_summary": "团队即使被明确告知谁是专家，仍未匹配最佳个体；四类条件差距为 6.3%–41.1%，更多成员会通过共识压力稀释专家判断。",
+      "verified_by": [
+        "Reader",
+        "Critic",
+        "PM-Paper"
+      ],
+      "verified_at": "2026-07-15"
+    },
+    {
+      "evidence_id": "E23",
+      "source_id": "S22",
+      "locator": "§4.4 Table 1; §5.1; §5.3 Figure 3; Appendix F Tables 3–10",
+      "kind": "contrary_result",
+      "faithful_summary": "在三个模型家族、两个 multi-hop 数据集和相同 thinking-token 预算下，single-agent scaling 多数匹配或超过 MAS；MAS 优势主要出现在单体上下文被退化的边界条件。",
+      "verified_by": [
+        "Reader",
+        "Critic",
+        "PM-Paper"
+      ],
+      "verified_at": "2026-07-15"
+    },
+    {
+      "evidence_id": "E24",
+      "source_id": "S23",
+      "locator": "§4.2 Tables 1–2; §4.2.3 Table 3; §4.2.4 Table 4",
+      "kind": "contrary_result",
+      "faithful_summary": "OneFlow 让单智能体执行同质 MAS workflow，可匹配或略优于原系统并减少 KV-cache/通信开销；异构模型或真实并行交互不保证可折叠。",
+      "verified_by": [
+        "Reader",
+        "Critic",
+        "PM-Paper"
+      ],
+      "verified_at": "2026-07-15"
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "C01",
+      "type": "synthesis",
+      "text": "多 agent 不是天然优于单 agent；任务可分解性、独立信息、架构匹配、预算与验证方式共同决定收益方向。",
+      "strength": "strong",
+      "scope": "受控任务与现有 benchmark；不等同于所有生产工作流",
+      "supporting_evidence_ids": [
+        "E12",
+        "E13",
+        "E17",
+        "E23",
+        "E24"
+      ],
+      "contradicting_evidence_ids": [
+        "E01",
+        "E03",
+        "E10"
+      ],
+      "limitations": "正向案例常同时改变 prompt、工具或预算。",
+      "status": "validated",
+      "show_in_summary": true,
+      "counter_search": {
+        "scope": "arXiv/ACL/ICML/ICLR/NeurIPS 官方来源；2023–2026 奠基集与 2025-01-15 至 2026-07-15 前沿窗口；按 claim 主题检索正反结果、简单基线和外推边界。",
+        "outcome": "contrary_found",
+        "findings": [
+          {
+            "evidence_id": "E01"
+          },
+          {
+            "evidence_id": "E03"
+          },
+          {
+            "evidence_id": "E10"
+          }
+        ],
+        "no_contrary_note": null,
+        "revision_reason": "检索 single-agent、best-of-n、matched-budget 与正向 MAS；保留‘取决于’而非‘普遍失败’。"
+      }
+    },
+    {
+      "claim_id": "C02",
+      "type": "synthesis",
+      "text": "角色与 SOP 的可靠价值来自明确接口、结构化工件、终止权和可执行反馈，而不是角色名称本身。",
+      "strength": "conditional",
+      "scope": "证据最集中于阶段化的软件工程和双角色任务",
+      "supporting_evidence_ids": [
+        "E03",
+        "E04",
+        "E14"
+      ],
+      "contradicting_evidence_ids": [
+        "E24"
+      ],
+      "limitations": "开放任务、真实组织和长期演进证据不足。",
+      "status": "validated",
+      "show_in_summary": true,
+      "counter_search": {
+        "scope": "arXiv/ACL/ICML/ICLR/NeurIPS 官方来源；2023–2026 奠基集与 2025-01-15 至 2026-07-15 前沿窗口；按 claim 主题检索正反结果、简单基线和外推边界。",
+        "outcome": "contrary_found",
+        "findings": [
+          {
+            "evidence_id": "E24"
+          }
+        ],
+        "no_contrary_note": null,
+        "revision_reason": "检索 role/SOP ablation 与 single-agent workflow replay；同质 workflow 可折叠，因此限定为接口与工件价值。"
+      }
+    },
+    {
+      "claim_id": "C03",
+      "type": "synthesis",
+      "text": "同质 agent 的数量或 workflow 容易饱和、折叠甚至稀释已知专家；真实互补信息和可验证专长比席位数更关键。",
+      "strength": "conditional",
+      "scope": "推理与聚合任务；多样性需要真实互补而非 persona 文案差异",
+      "supporting_evidence_ids": [
+        "E08",
+        "E18",
+        "E22",
+        "E24"
+      ],
+      "contradicting_evidence_ids": [
+        "E09",
+        "E17"
+      ],
+      "limitations": "专家授权、异构性质量和独立信息量仍缺线上可观测的统一指标。",
+      "status": "validated",
+      "show_in_summary": true,
+      "counter_search": {
+        "scope": "arXiv/ACL/ICML/ICLR/NeurIPS 官方来源；2023–2026 奠基集与 2025-01-15 至 2026-07-15 前沿窗口；按 claim 主题检索正反结果、简单基线和外推边界。",
+        "outcome": "contrary_found",
+        "findings": [
+          {
+            "evidence_id": "E09"
+          },
+          {
+            "evidence_id": "E17"
+          }
+        ],
+        "no_contrary_note": null,
+        "revision_reason": "检索 agent count、diversity、expert reveal 与 topology scaling；保留可运行/部分正收益，否定单调规模律。"
+      }
+    },
+    {
+      "claim_id": "C04",
+      "type": "synthesis",
+      "text": "辩论只在候选差异可被证据区分时有益；共识、置信度和更长讨论不是正确性证明，还可能稀释已识别专家。",
+      "strength": "conditional",
+      "scope": "数学、事实问答和可交叉检查推理",
+      "supporting_evidence_ids": [
+        "E02",
+        "E06"
+      ],
+      "contradicting_evidence_ids": [
+        "E20",
+        "E22",
+        "E23"
+      ],
+      "limitations": "现代模型、开放行动任务与恶意参与者上的复验有限。",
+      "status": "validated",
+      "show_in_summary": true,
+      "counter_search": {
+        "scope": "arXiv/ACL/ICML/ICLR/NeurIPS 官方来源；2023–2026 奠基集与 2025-01-15 至 2026-07-15 前沿窗口；按 claim 主题检索正反结果、简单基线和外推边界。",
+        "outcome": "contrary_found",
+        "findings": [
+          {
+            "evidence_id": "E20"
+          },
+          {
+            "evidence_id": "E22"
+          },
+          {
+            "evidence_id": "E23"
+          }
+        ],
+        "no_contrary_note": null,
+        "revision_reason": "检索 debate、consensus、persuasion、expert dilution 与 matched-budget；加入正确 agent 被说服和专家稀释。"
+      }
+    },
+    {
+      "claim_id": "C05",
+      "type": "synthesis",
+      "text": "复杂 MAS 的增益必须在相同总 thinking-token、工具和采样预算下，对照 best single 与 best-of-n；否则不能归因于协作。",
+      "strength": "conditional",
+      "scope": "答案可聚合或能定义总预算的推理任务；持续行动任务需另加环境交互预算",
+      "supporting_evidence_ids": [
+        "E08",
+        "E23",
+        "E24"
+      ],
+      "contradicting_evidence_ids": [
+        "E17"
+      ],
+      "limitations": "现有直接 matched-budget 证据集中于 multi-hop reasoning 与同质 workflow，尚非跨任务定律。",
+      "status": "validated",
+      "show_in_summary": true,
+      "counter_search": {
+        "scope": "arXiv/ACL/ICML/ICLR/NeurIPS 官方来源；2023–2026 奠基集与 2025-01-15 至 2026-07-15 前沿窗口；按 claim 主题检索正反结果、简单基线和外推边界。",
+        "outcome": "contrary_found",
+        "findings": [
+          {
+            "evidence_id": "E17"
+          }
+        ],
+        "no_contrary_note": null,
+        "revision_reason": "检索 equal token/call budgets、single scaling、best-of-n 与复杂 MAS；补入直接配平证据后仍因任务范围将 strong 降为 conditional。"
+      }
+    },
+    {
+      "claim_id": "C06",
+      "type": "synthesis",
+      "text": "动态选人、拓扑、路由和早停可以改善质量成本比，但优化开销只有在重复任务中才容易摊销。",
+      "strength": "conditional",
+      "scope": "候选专长可区分、任务分布相对稳定",
+      "supporting_evidence_ids": [
+        "E07",
+        "E10",
+        "E11"
+      ],
+      "contradicting_evidence_ids": [
+        "E24"
+      ],
+      "limitations": "分布漂移会使 router 与搜索策略失效。",
+      "status": "validated",
+      "show_in_summary": true,
+      "counter_search": {
+        "scope": "arXiv/ACL/ICML/ICLR/NeurIPS 官方来源；2023–2026 奠基集与 2025-01-15 至 2026-07-15 前沿窗口；按 claim 主题检索正反结果、简单基线和外推边界。",
+        "outcome": "qualified",
+        "findings": [
+          {
+            "evidence_id": "E24"
+          }
+        ],
+        "no_contrary_note": null,
+        "revision_reason": "检索 routing/search/early-stop 的离线成本与同质 workflow 折叠；要求重复任务可摊销并保留 simple baseline。"
+      }
+    },
+    {
+      "claim_id": "C07",
+      "type": "synthesis",
+      "text": "结构化状态、最小必要消息和外部可执行验证，通常比全量自由聊天更可控。",
+      "strength": "conditional",
+      "scope": "工具调用、软件工程与长周期研究工作流",
+      "supporting_evidence_ids": [
+        "E04",
+        "E05",
+        "E12",
+        "E19"
+      ],
+      "contradicting_evidence_ids": [
+        "E16"
+      ],
+      "limitations": "跨领域统一消融仍少；过度结构化也可能抑制探索。",
+      "status": "validated",
+      "show_in_summary": true,
+      "counter_search": {
+        "scope": "arXiv/ACL/ICML/ICLR/NeurIPS 官方来源；2023–2026 奠基集与 2025-01-15 至 2026-07-15 前沿窗口；按 claim 主题检索正反结果、简单基线和外推边界。",
+        "outcome": "qualified",
+        "findings": [
+          {
+            "evidence_id": "E16"
+          }
+        ],
+        "no_contrary_note": null,
+        "revision_reason": "检索 structured artifact、free chat、latent communication 与 auditability；latent state 可能更高效，因此结论限定为可控性而非绝对性能。"
+      }
+    },
+    {
+      "claim_id": "C08",
+      "type": "synthesis",
+      "text": "共享记忆不仅是召回问题，也是来源、权限、冲突、保留期、删除与污染治理问题。",
+      "strength": "contested",
+      "scope": "长周期、跨 session、多人可写工作空间",
+      "supporting_evidence_ids": [
+        "E19",
+        "E21"
+      ],
+      "contradicting_evidence_ids": [],
+      "limitations": "权限化记忆的公开实证很新，尚无成熟跨系统基准。",
+      "status": "qualified",
+      "show_in_summary": true,
+      "counter_search": {
+        "scope": "arXiv/ACL/ICML/ICLR/NeurIPS 官方来源；2023–2026 奠基集与 2025-01-15 至 2026-07-15 前沿窗口；按 claim 主题检索正反结果、简单基线和外推边界。",
+        "outcome": "no_direct_contrary_found",
+        "findings": [],
+        "no_contrary_note": "在上述范围与截止日内未发现直接反证；这不等于不存在反证或已系统穷尽。",
+        "revision_reason": "检索 shared memory、ACL、provenance、deletion 与 memory utility；未发现否定治理必要性的直接反证，因证据新仍维持 contested。"
+      }
+    },
+    {
+      "claim_id": "C09",
+      "type": "synthesis",
+      "text": "Agent Team 评测必须同时看任务闭环、里程碑/trace、成本、延迟与失败归因；“协调分”或最终文本单项都不够。",
+      "strength": "strong",
+      "scope": "可观测的 agent workflow",
+      "supporting_evidence_ids": [
+        "E12",
+        "E13"
+      ],
+      "contradicting_evidence_ids": [],
+      "limitations": "开放任务仍需人工与 LLM judge，评测本身也可能偏差。",
+      "status": "validated",
+      "show_in_summary": true,
+      "counter_search": {
+        "scope": "arXiv/ACL/ICML/ICLR/NeurIPS 官方来源；2023–2026 奠基集与 2025-01-15 至 2026-07-15 前沿窗口；按 claim 主题检索正反结果、简单基线和外推边界。",
+        "outcome": "no_direct_contrary_found",
+        "findings": [],
+        "no_contrary_note": "在上述范围与截止日内未发现直接反证；这不等于不存在反证或已系统穷尽。",
+        "revision_reason": "检索 outcome-only、coordination score、trace/cost/failure evaluation；未发现支持单指标充分性的直接反证。"
+      }
+    },
+    {
+      "claim_id": "C10",
+      "type": "synthesis",
+      "text": "多 agent 故障不仅来自底模幻觉；信息流、规格遵从、终止、验证和 reasoning-action 对齐都是独立故障面。",
+      "strength": "strong",
+      "scope": "7 个主流框架的编码、数学与通用 agent 轨迹",
+      "supporting_evidence_ids": [
+        "E13",
+        "E14"
+      ],
+      "contradicting_evidence_ids": [],
+      "limitations": "taxonomy 非穷尽，自动标签主要表示症状而非根因。",
+      "status": "validated",
+      "show_in_summary": true,
+      "counter_search": {
+        "scope": "arXiv/ACL/ICML/ICLR/NeurIPS 官方来源；2023–2026 奠基集与 2025-01-15 至 2026-07-15 前沿窗口；按 claim 主题检索正反结果、简单基线和外推边界。",
+        "outcome": "no_direct_contrary_found",
+        "findings": [],
+        "no_contrary_note": "在上述范围与截止日内未发现直接反证；这不等于不存在反证或已系统穷尽。",
+        "revision_reason": "检索 hallucination-only 与 system-level failure taxonomy；未发现将多 agent 故障完整归为底模幻觉的直接反证。"
+      }
+    },
+    {
+      "claim_id": "C11",
+      "type": "synthesis",
+      "text": "latent communication、自动架构搜索与权限化共享记忆很有潜力，但审计、互操作、安全和线上复验仍未形成共识。",
+      "strength": "contested",
+      "scope": "2025–2026 新兴机制",
+      "supporting_evidence_ids": [
+        "E10",
+        "E16",
+        "E21"
+      ],
+      "contradicting_evidence_ids": [
+        "E23",
+        "E24"
+      ],
+      "limitations": "多为单篇论文或预印本，产品化风险高。",
+      "status": "qualified",
+      "show_in_summary": true,
+      "counter_search": {
+        "scope": "arXiv/ACL/ICML/ICLR/NeurIPS 官方来源；2023–2026 奠基集与 2025-01-15 至 2026-07-15 前沿窗口；按 claim 主题检索正反结果、简单基线和外推边界。",
+        "outcome": "contrary_found",
+        "findings": [
+          {
+            "evidence_id": "E23"
+          },
+          {
+            "evidence_id": "E24"
+          }
+        ],
+        "no_contrary_note": null,
+        "revision_reason": "检索 latent/search/memory 新机制的 simple baseline、audit 和 matched-budget；潜力存在，但简化方案可匹配部分复杂机制。"
+      }
+    },
+    {
+      "claim_id": "R01",
+      "type": "recommendation",
+      "title": "先证明一个 Agent 不够",
+      "text": "默认跑 single-agent 和等预算 best-of-n；只有任务可分解、需要不同权限/工具或独立证据时才升级团队。",
+      "strength": "strong",
+      "scope": "Multica 任务入口与实验平台",
+      "supporting_evidence_ids": [
+        "E08",
+        "E17",
+        "E22",
+        "E23",
+        "E24"
+      ],
+      "contradicting_evidence_ids": [],
+      "limitations": "单 agent baseline 也必须使用同等工具和总预算。",
+      "status": "validated",
+      "show_in_summary": false,
+      "evidence_basis": "专家团队可低于最佳个体；配平 thinking tokens 后单体常匹配/超过 MAS；同质 workflow 还可折叠。",
+      "assumptions": "任务能定义可比较的结果指标与预算。",
+      "side_effects": "增加基线运行成本，但能阻止无效组织复杂度。"
+    },
+    {
+      "claim_id": "R02",
+      "type": "recommendation",
+      "title": "把角色写成契约，不写成人设",
+      "text": "每个角色声明输入、输出工件、工具、权限、专长证据、升级与 stop condition；已知专家可直接保留最终判断或触发独立复核。",
+      "strength": "conditional",
+      "scope": "可阶段化的 Multica issue 与工作流",
+      "supporting_evidence_ids": [
+        "E03",
+        "E04",
+        "E14",
+        "E22"
+      ],
+      "contradicting_evidence_ids": [],
+      "limitations": "探索性任务可能需要允许临时跨界。",
+      "status": "validated",
+      "show_in_summary": false,
+      "evidence_basis": "角色消融、SOP、终止权与专家稀释共同表明：契约必须包含专长权重，而不只角色名称。",
+      "assumptions": "工件和状态转移能被机器或人检查。",
+      "side_effects": "前期建模成本上升；契约过细会降低适应性。"
+    },
+    {
+      "claim_id": "R03",
+      "type": "recommendation",
+      "title": "在查询时选最小团队",
+      "text": "router 先选最小角色/模型/拓扑与预算；同质 workflow 先尝试单智能体执行，只有验证失败、权限分离或证据冲突时扩容。",
+      "strength": "conditional",
+      "scope": "有重复任务与遥测数据的路由层",
+      "supporting_evidence_ids": [
+        "E07",
+        "E10",
+        "E11",
+        "E24"
+      ],
+      "contradicting_evidence_ids": [],
+      "limitations": "router 本身需要监控漂移与回退。",
+      "status": "validated",
+      "show_in_summary": false,
+      "evidence_basis": "动态选人、架构搜索和联合路由报告质量成本收益。",
+      "assumptions": "能收集团队配置、成本和结果的历史数据。",
+      "side_effects": "引入控制面复杂度，冷启动与长尾任务可能选错团队。"
+    },
+    {
+      "claim_id": "R04",
+      "type": "recommendation",
+      "title": "让工件流动，减少聊天室广播",
+      "text": "用带 schema、owner、版本和验收状态的工件传递；agent 订阅最小必要上下文，状态转移需校验。",
+      "strength": "conditional",
+      "scope": "长任务、并行任务与高上下文成本工作流",
+      "supporting_evidence_ids": [
+        "E04",
+        "E12",
+        "E19"
+      ],
+      "contradicting_evidence_ids": [],
+      "limitations": "过度压缩可能丢失弱信号。",
+      "status": "validated",
+      "show_in_summary": false,
+      "evidence_basis": "结构化中间产物、里程碑和持久文件系统均提供正向证据。",
+      "assumptions": "工件格式可演化且保留原始来源指针。",
+      "side_effects": "需要 schema 迁移、冲突解决与额外存储治理。"
+    },
+    {
+      "claim_id": "R05",
+      "type": "recommendation",
+      "title": "Critic 必须独立且能看原始证据",
+      "text": "执行者不能自报完成；Critic 应有独立 source access、反例检索、可执行测试和拒绝权。",
+      "strength": "strong",
+      "scope": "高风险或可客观验收的工作",
+      "supporting_evidence_ids": [
+        "E02",
+        "E13",
+        "E14",
+        "E22"
+      ],
+      "contradicting_evidence_ids": [],
+      "limitations": "多个同源 judge 仍可能共享偏差。",
+      "status": "validated",
+      "show_in_summary": false,
+      "evidence_basis": "错误共识与错误验证是稳定故障面，外部可执行反馈更可靠。",
+      "assumptions": "Critic 与执行者有不同信息路径或工具。",
+      "side_effects": "延迟和成本增加；需防止无限审查循环。"
+    },
+    {
+      "claim_id": "R06",
+      "type": "recommendation",
+      "title": "把共享记忆做成分层、可撤销的资产",
+      "text": "区分 episode/team/workspace 记忆；记录 provenance、ACL、TTL、删除和 promotion；未经复核内容不进入长期知识层。",
+      "strength": "contested",
+      "scope": "跨 agent、跨 session 的 Multica workspace",
+      "supporting_evidence_ids": [
+        "E19",
+        "E21"
+      ],
+      "contradicting_evidence_ids": [],
+      "limitations": "ACL 与 promotion 策略仍缺跨系统验证。",
+      "status": "qualified",
+      "show_in_summary": false,
+      "evidence_basis": "持久文件工件有效，但权限化共享记忆仍是新兴方向。",
+      "assumptions": "平台能追踪写入者、来源版本与消费记录。",
+      "side_effects": "治理成本、遗忘/删除冲突和检索延迟增加。"
+    },
+    {
+      "claim_id": "R07",
+      "type": "recommendation",
+      "title": "仪表盘同时记录结果、轨迹与成本",
+      "text": "最少记录成功/闭环、里程碑、token、延迟、调用、重试、人工接管和 MAST 类 failure labels。",
+      "strength": "strong",
+      "scope": "生产与试验环境",
+      "supporting_evidence_ids": [
+        "E12",
+        "E13"
+      ],
+      "contradicting_evidence_ids": [],
+      "limitations": "failure label 需要人工抽检，不能当因果结论。",
+      "status": "validated",
+      "show_in_summary": false,
+      "evidence_basis": "协调高不等于任务成功；失败分布随系统而异。",
+      "assumptions": "trace 可采集且隐私/安全允许。",
+      "side_effects": "存储与标注成本上升，指标可能诱发局部优化。"
+    },
+    {
+      "claim_id": "R08",
+      "type": "recommendation",
+      "title": "用敌对场景定位最早决定性错误",
+      "text": "评测覆盖错误同伴、信息缺失/冲突、长上下文、重复步骤、错误终止、恶意动作；定位首个不可逆错误而非只给总分。",
+      "strength": "strong",
+      "scope": "发布前与持续回归 QA",
+      "supporting_evidence_ids": [
+        "E13",
+        "E20",
+        "E22",
+        "E23"
+      ],
+      "contradicting_evidence_ids": [],
+      "limitations": "攻击与故障集合会随工具和模型演化。",
+      "status": "validated",
+      "show_in_summary": false,
+      "evidence_basis": "错误同伴可说服正确 agent，14 类 failure modes 可分离观察。",
+      "assumptions": "任务 trace 与状态转移可重放。",
+      "side_effects": "用例维护成本高，可能暴露内部防护细节。"
+    }
+  ],
+  "validation": {
+    "critic_checks": [
+      {
+        "claim_id": "C01",
+        "outcome": "contrary_found",
+        "scope": "arXiv/ACL/ICML/ICLR/NeurIPS 官方来源；2023–2026 奠基集与 2025-01-15 至 2026-07-15 前沿窗口；按 claim 主题检索正反结果、简单基线和外推边界。",
+        "finding_evidence_ids": [
+          "E01",
+          "E03",
+          "E10"
+        ],
+        "no_contrary_note": null,
+        "revision_reason": "检索 single-agent、best-of-n、matched-budget 与正向 MAS；保留‘取决于’而非‘普遍失败’。"
+      },
+      {
+        "claim_id": "C02",
+        "outcome": "contrary_found",
+        "scope": "arXiv/ACL/ICML/ICLR/NeurIPS 官方来源；2023–2026 奠基集与 2025-01-15 至 2026-07-15 前沿窗口；按 claim 主题检索正反结果、简单基线和外推边界。",
+        "finding_evidence_ids": [
+          "E24"
+        ],
+        "no_contrary_note": null,
+        "revision_reason": "检索 role/SOP ablation 与 single-agent workflow replay；同质 workflow 可折叠，因此限定为接口与工件价值。"
+      },
+      {
+        "claim_id": "C03",
+        "outcome": "contrary_found",
+        "scope": "arXiv/ACL/ICML/ICLR/NeurIPS 官方来源；2023–2026 奠基集与 2025-01-15 至 2026-07-15 前沿窗口；按 claim 主题检索正反结果、简单基线和外推边界。",
+        "finding_evidence_ids": [
+          "E09",
+          "E17"
+        ],
+        "no_contrary_note": null,
+        "revision_reason": "检索 agent count、diversity、expert reveal 与 topology scaling；保留可运行/部分正收益，否定单调规模律。"
+      },
+      {
+        "claim_id": "C04",
+        "outcome": "contrary_found",
+        "scope": "arXiv/ACL/ICML/ICLR/NeurIPS 官方来源；2023–2026 奠基集与 2025-01-15 至 2026-07-15 前沿窗口；按 claim 主题检索正反结果、简单基线和外推边界。",
+        "finding_evidence_ids": [
+          "E20",
+          "E22",
+          "E23"
+        ],
+        "no_contrary_note": null,
+        "revision_reason": "检索 debate、consensus、persuasion、expert dilution 与 matched-budget；加入正确 agent 被说服和专家稀释。"
+      },
+      {
+        "claim_id": "C05",
+        "outcome": "contrary_found",
+        "scope": "arXiv/ACL/ICML/ICLR/NeurIPS 官方来源；2023–2026 奠基集与 2025-01-15 至 2026-07-15 前沿窗口；按 claim 主题检索正反结果、简单基线和外推边界。",
+        "finding_evidence_ids": [
+          "E17"
+        ],
+        "no_contrary_note": null,
+        "revision_reason": "检索 equal token/call budgets、single scaling、best-of-n 与复杂 MAS；补入直接配平证据后仍因任务范围将 strong 降为 conditional。"
+      },
+      {
+        "claim_id": "C06",
+        "outcome": "qualified",
+        "scope": "arXiv/ACL/ICML/ICLR/NeurIPS 官方来源；2023–2026 奠基集与 2025-01-15 至 2026-07-15 前沿窗口；按 claim 主题检索正反结果、简单基线和外推边界。",
+        "finding_evidence_ids": [
+          "E24"
+        ],
+        "no_contrary_note": null,
+        "revision_reason": "检索 routing/search/early-stop 的离线成本与同质 workflow 折叠；要求重复任务可摊销并保留 simple baseline。"
+      },
+      {
+        "claim_id": "C07",
+        "outcome": "qualified",
+        "scope": "arXiv/ACL/ICML/ICLR/NeurIPS 官方来源；2023–2026 奠基集与 2025-01-15 至 2026-07-15 前沿窗口；按 claim 主题检索正反结果、简单基线和外推边界。",
+        "finding_evidence_ids": [
+          "E16"
+        ],
+        "no_contrary_note": null,
+        "revision_reason": "检索 structured artifact、free chat、latent communication 与 auditability；latent state 可能更高效，因此结论限定为可控性而非绝对性能。"
+      },
+      {
+        "claim_id": "C08",
+        "outcome": "no_direct_contrary_found",
+        "scope": "arXiv/ACL/ICML/ICLR/NeurIPS 官方来源；2023–2026 奠基集与 2025-01-15 至 2026-07-15 前沿窗口；按 claim 主题检索正反结果、简单基线和外推边界。",
+        "finding_evidence_ids": [],
+        "no_contrary_note": "在上述范围与截止日内未发现直接反证；这不等于不存在反证或已系统穷尽。",
+        "revision_reason": "检索 shared memory、ACL、provenance、deletion 与 memory utility；未发现否定治理必要性的直接反证，因证据新仍维持 contested。"
+      },
+      {
+        "claim_id": "C09",
+        "outcome": "no_direct_contrary_found",
+        "scope": "arXiv/ACL/ICML/ICLR/NeurIPS 官方来源；2023–2026 奠基集与 2025-01-15 至 2026-07-15 前沿窗口；按 claim 主题检索正反结果、简单基线和外推边界。",
+        "finding_evidence_ids": [],
+        "no_contrary_note": "在上述范围与截止日内未发现直接反证；这不等于不存在反证或已系统穷尽。",
+        "revision_reason": "检索 outcome-only、coordination score、trace/cost/failure evaluation；未发现支持单指标充分性的直接反证。"
+      },
+      {
+        "claim_id": "C10",
+        "outcome": "no_direct_contrary_found",
+        "scope": "arXiv/ACL/ICML/ICLR/NeurIPS 官方来源；2023–2026 奠基集与 2025-01-15 至 2026-07-15 前沿窗口；按 claim 主题检索正反结果、简单基线和外推边界。",
+        "finding_evidence_ids": [],
+        "no_contrary_note": "在上述范围与截止日内未发现直接反证；这不等于不存在反证或已系统穷尽。",
+        "revision_reason": "检索 hallucination-only 与 system-level failure taxonomy；未发现将多 agent 故障完整归为底模幻觉的直接反证。"
+      },
+      {
+        "claim_id": "C11",
+        "outcome": "contrary_found",
+        "scope": "arXiv/ACL/ICML/ICLR/NeurIPS 官方来源；2023–2026 奠基集与 2025-01-15 至 2026-07-15 前沿窗口；按 claim 主题检索正反结果、简单基线和外推边界。",
+        "finding_evidence_ids": [
+          "E23",
+          "E24"
+        ],
+        "no_contrary_note": null,
+        "revision_reason": "检索 latent/search/memory 新机制的 simple baseline、audit 和 matched-budget；潜力存在，但简化方案可匹配部分复杂机制。"
+      }
+    ],
+    "manifest_consumer_trial": {
+      "status": "pending_independent_agent",
+      "questions_file": "research/agent-teams-2026/manifest-consumer-questions.v2.md",
+      "record_file": "research/agent-teams-2026/manifest-consumer-validation.v2.md",
+      "manifest_version": "2.0.0",
+      "snapshot_digest": "sha256:a41b16aff38b6a5e61a8f174863bdb973c8f3678aa39cef784c6091aa1af422a",
+      "immutable_url": "PENDING_COMMIT_PIN"
+    },
+    "metadata_audit": {
+      "status": "passed",
+      "record_file": "research/agent-teams-2026/metadata-audit.v2.json",
+      "source_count": 23,
+      "required_fields": [
+        "title",
+        "authors",
+        "version",
+        "submission_year",
+        "venue_year",
+        "publication_status",
+        "venue",
+        "track",
+        "official_url",
+        "venue_url"
+      ]
+    }
+  },
+  "outputs": {
+    "report_url": "./",
+    "manifest_url": "./data/evidence-manifest.v2.json",
+    "generated_at": "2026-07-15T13:30:00Z",
+    "model_disclosure": "AI 辅助生成：GPT-5 Codex（Multica PM-Paper runtime）；Scout、Reader、Critic 分工；PM-Paper 综合与验收",
+    "copyright_policy": "仅保存元数据、必要短证据定位、结构化提取和综合判断；不存储论文全文",
+    "release_state": "review_candidate_not_deployed",
+    "metadata_audit": "research/agent-teams-2026/metadata-audit.v2.json",
+    "consumer_validation": "research/agent-teams-2026/manifest-consumer-validation.v2.md"
+  },
+  "promotion_candidates": [
+    {
+      "claim_id": "C01",
+      "eligibility": "candidate",
+      "reason": "跨多篇、含正反结果且直接影响团队架构；待 Librarian 去重和跨任务复用后再晋升。"
+    },
+    {
+      "claim_id": "C05",
+      "eligibility": "candidate",
+      "reason": "可操作的评测基线原则；待第二个研究 episode 复用验证。"
+    },
+    {
+      "claim_id": "C09",
+      "eligibility": "candidate",
+      "reason": "评测框架证据较强；待与现有 workspace 质量知识去重。"
+    },
+    {
+      "claim_id": "C08",
+      "eligibility": "not_eligible",
+      "reason": "共享记忆治理仍以产品推断和新兴预印本为主。"
+    },
+    {
+      "claim_id": "C11",
+      "eligibility": "not_eligible",
+      "reason": "前沿机制尚未积累跨研究复验。"
+    }
+  ],
+  "report": {
+    "claim_links": [
+      "C01",
+      "C02",
+      "C03",
+      "C04",
+      "C05",
+      "C06",
+      "C07",
+      "C08",
+      "C09",
+      "C10",
+      "C11",
+      "R01",
+      "R02",
+      "R03",
+      "R04",
+      "R05",
+      "R06",
+      "R07",
+      "R08"
+    ],
+    "counterintuitive": [
+      "即使明确告诉团队谁是专家，共识也可能稀释专家判断；受控实验的最大差距达到 41.1%。",
+      "相同 thinking-token 预算下，强单智能体在多跳推理中常匹配或超过 MAS。",
+      "同一模型组成的 workflow 可能由一个 Agent 顺序执行并复用 KV cache，而不损失效果。",
+      "更多讨论可能更差：错误同伴会说服正确 agent，共识不是 correctness proxy。",
+      "真正需要团队的理由应是独立信息、异构权限/工具或并行环境交互，而不是角色数量。"
+    ],
+    "timeline": [
+      {
+        "period": "2023",
+        "title": "角色与会话",
+        "text": "CAMEL、Debate、ChatDev、MetaGPT、AutoGen 证明角色化会话和流程可被编排。"
+      },
+      {
+        "period": "2024",
+        "title": "结构与动态网络",
+        "text": "ReConcile、DyLAN、More Agents 与 MacNet 开始分离多样性、选人、简单采样和拓扑效应。"
+      },
+      {
+        "period": "2025",
+        "title": "路由、评测与失败",
+        "text": "MaAS、MasRouter、MultiAgentBench、MAST 把成本、过程评测和故障定位带入主线。"
+      },
+      {
+        "period": "2026",
+        "title": "可治理的协作介质",
+        "text": "LatentMAS、Scaling、Diversity、FS-Researcher、Experts Back、matched-budget 与 OneFlow 同时推进效率机制和强反证边界。"
+      }
+    ],
+    "taxonomy": [
+      {
+        "title": "角色",
+        "text": "专业化、边界、权限与终止权。",
+        "question": "角色是否拥有可验收的契约，而不只是 persona？"
+      },
+      {
+        "title": "通信",
+        "text": "自由文本、结构化消息、拓扑与 latent state。",
+        "question": "传递的是最小必要证据，还是全部聊天历史？"
+      },
+      {
+        "title": "协调",
+        "text": "领导者、共识、里程碑与冲突解决。",
+        "question": "谁能推进、拒绝、升级和终止？"
+      },
+      {
+        "title": "记忆",
+        "text": "episode/team/workspace 状态与治理。",
+        "question": "谁写入、谁读取、何时删除、如何追溯？"
+      },
+      {
+        "title": "计划",
+        "text": "分解、并行、依赖、重规划与闭环。",
+        "question": "中间状态能否检查并从局部失败恢复？"
+      },
+      {
+        "title": "批判",
+        "text": "独立证据、辩论、验证与拒绝权。",
+        "question": "Critic 与执行者是否共享同一偏差和上下文？"
+      },
+      {
+        "title": "动态组队",
+        "text": "按查询选择角色、模型、工具、拓扑和预算。",
+        "question": "router 是否有成本、漂移与失败回退遥测？"
+      },
+      {
+        "title": "规模与评测",
+        "text": "数量、多样性、成本、任务闭环和 failure trace。",
+        "question": "复杂团队是否超过等预算 single / best-of-n？"
+      }
+    ],
+    "consensus_matrix": [
+      {
+        "topic": "角色 / SOP",
+        "consensus": "清晰接口、结构化工件与终止控制有条件改善阶段化任务。",
+        "unknown": "开放式知识工作、真实团队和长期演化中的外部效度。",
+        "claim_ids": [
+          "C02",
+          "C07"
+        ]
+      },
+      {
+        "topic": "辩论 / 共识",
+        "consensus": "候选差异与交叉检查可增益；共识不是 correctness。",
+        "unknown": "如何抵御从众、恶意 peer 与同源 judge 偏差。",
+        "claim_ids": [
+          "C04"
+        ]
+      },
+      {
+        "topic": "动态路由",
+        "consensus": "选人和早停可改善任务阶段质量成本比。",
+        "unknown": "搜索成本摊销、线上漂移、长尾冷启动。",
+        "claim_ids": [
+          "C06"
+        ]
+      },
+      {
+        "topic": "共享记忆",
+        "consensus": "持久工件可突破 context 与 session 边界。",
+        "unknown": "权限、污染、冲突、删除和 promotion 的统一基准。",
+        "claim_ids": [
+          "C08",
+          "C11"
+        ]
+      },
+      {
+        "topic": "规模",
+        "consensus": "agent 数量不是单调收益；任务结构和信息多样性更关键。",
+        "unknown": "如何在线估计有效信息通道并控制全链路成本。",
+        "claim_ids": [
+          "C01",
+          "C03",
+          "C05"
+        ]
+      },
+      {
+        "topic": "评测 / 失败",
+        "consensus": "必须联看结果、轨迹、成本和故障类型。",
+        "unknown": "开放任务 judge 偏差、因果归因与跨系统可比性。",
+        "claim_ids": [
+          "C09",
+          "C10"
+        ]
+      }
+    ],
+    "method": [
+      "边界先于检索：前沿窗口固定为 2025-01-15 至 2026-07-15；v2 在原八条路径之外重开专家稀释、matched-budget 与同质 workflow 可折叠三条反证召回。",
+      "先宽后窄：machine-readable 候选池 48 篇；18 篇核心由 8 篇奠基/典型与 10 篇前沿组成。MacNet、MasRouter、ExtAgents 退出核心但保留扩展记录；三篇直接边界证据进入核心。",
+      "逐 claim Critic：C01–C11 均记录 counter_search 范围、outcome、发现/未发现和修正理由；未发现反证不被表述为已证明。",
+      "一手元数据审计：S01–S23 的 title、authors、version、submission/venue year、publication status、venue/track 与 URL 逐项对照 arXiv 和官方 venue；测试要求 audit 与 manifest 完全一致。",
+      "机器证据优先：网页从 manifest v2 渲染；claim → evidence → source 使用闭合 ID。digest 排除自身与 stable_url，后者固定到首个不可变 commit SHA。"
+    ],
+    "episode_loop": [
+      "现有知识差距：已有库只覆盖 AutoGen，缺团队机制的跨论文证据图。",
+      "新检索：8 条主题 query + 37 篇候选 ledger。",
+      "执行：Scout 检索、Reader 深读、Critic 反证、PM 综合。",
+      "质量闸门：来源/版本、主张闭包、构建、移动端与控制台验证。",
+      "资产化：报告、manifest、候选 ledger、query 与独立消费测试。",
+      "再评估：只将跨任务复用且通过 Librarian 去重的主张晋升长期知识。"
+    ],
+    "limitations": [
+      "知识截止为 2026-07-15；之后的 arXiv 修订、录用状态和代码发布未纳入。",
+      "oo-arxiv 依赖的 oo CLI 不可用；arxiv-cli 对已知 ID 与关键词返回空结果，已用 arXiv 与会议官方页逐篇补核，但不能声称系统综述级穷尽。",
+      "现有 benchmark 偏数学、代码、QA 和软件工程；真实组织的激励冲突、权限、安全和长期学习证据不足。",
+      "多篇早期研究使用 2023 年 GPT-3.5/GPT-4；其绝对数字不能直接外推到 2026 模型。",
+      "开源代码不等于完全可复现；商业模型漂移、系统 prompt、随机性、并发和 token 预算都会改变结果。",
+      "本文的 Multica 建议是论文证据与产品约束的推断，不是论文作者直接结论；每条均标注前提和副作用。",
+      "v2 是 open PR 的 review candidate，未 merge、未 tag、未 deploy；公开 Pages 仍是 v1，不能把本文件的相对 report_url 当成已发布 URL。"
+    ]
+  },
+  "selection_protocol": {
+    "candidate_count": 48,
+    "core_count": 18,
+    "decision_enum": [
+      "included",
+      "extended",
+      "excluded"
+    ],
+    "note": "extended/excluded 均为未进入 18 篇核心；每条保留版本、状态、URL 与理由。"
+  }
+}

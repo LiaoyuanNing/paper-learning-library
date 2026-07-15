@@ -21,6 +21,10 @@ function renderReport(manifest) {
   const sources = byId(manifest.sources.map((source) => ({ ...source, id: source.source_id })));
   const evidence = byId(manifest.evidence.map((item) => ({ ...item, id: item.evidence_id })));
   const claims = byId(manifest.claims.map((claim) => ({ ...claim, id: claim.claim_id })));
+  const publicationLabel = (source) => {
+    if (source.publication_status === "preprint") return "preprint";
+    return [source.venue, source.venue_year, source.track].filter(Boolean).join(" · ");
+  };
 
   document.querySelector("#knowledge-cutoff").textContent = manifest.request.knowledge_cutoff;
   document.querySelector("#paper-count").textContent = `${manifest.papers.filter((paper) => paper.selection.decision === "included").length} 篇`;
@@ -107,7 +111,7 @@ function renderReport(manifest) {
     const topline = element("div", { className: "paper-topline" });
     topline.append(
       element("span", { text: `${paper.paper_id} · ${paper.group === "foundation" ? "奠基 / 典型" : "前沿"}` }),
-      element("span", { className: `status-badge${source.publication_status === "preprint" ? " preprint" : ""}`, text: source.publication_status }),
+      element("span", { className: `status-badge${source.publication_status === "preprint" ? " preprint" : ""}`, text: publicationLabel(source) }),
     );
     const title = element("h3");
     title.append(element("a", { text: source.title, attrs: { href: source.official_url, target: "_blank", rel: "noreferrer" } }));
@@ -120,7 +124,7 @@ function renderReport(manifest) {
     card.append(
       topline,
       title,
-      element("p", { className: "paper-authors", text: `${source.authors.join("、")} · ${source.year}` }),
+      element("p", { className: "paper-authors", text: `${source.authors.join("、")} · 首发 ${source.submission_year}${source.venue_year ? ` · venue ${source.venue_year}` : ""}` }),
       fields,
       element("p", { className: "paper-limit", text: `边界｜${paper.limitations}` }),
     );
@@ -151,8 +155,8 @@ function renderReport(manifest) {
     const link = element("a", { text: source.title, attrs: { href: source.official_url, target: "_blank", rel: "noreferrer" } });
     row.append(
       link,
-      document.createTextNode(` — ${source.authors.join(", ")} (${source.year})`),
-      element("span", { className: "reference-meta", text: `${source.paper_id} · ${source.version} · ${source.publication_status} · 访问 ${source.accessed_at}` }),
+      document.createTextNode(` — ${source.authors.join(", ")} (arXiv 首发 ${source.submission_year})`),
+      element("span", { className: "reference-meta", text: `${source.paper_id} · ${source.version} · ${source.publication_status} · ${publicationLabel(source)} · 访问 ${source.accessed_at}` }),
     );
     references.append(row);
   }
@@ -166,7 +170,7 @@ function renderReport(manifest) {
 }
 
 async function start() {
-  const response = await fetch("./data/evidence-manifest.v1.json");
+  const response = await fetch("./data/evidence-manifest.v2.json");
   if (!response.ok) throw new Error(`manifest HTTP ${response.status}`);
   renderReport(await response.json());
 }
