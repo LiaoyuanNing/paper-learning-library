@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "evidence_pack_id": "age-174-agent-teams-2026",
   "manifest_version": "2.0.0",
-  "snapshot_digest": "sha256:71e586bf10fdd6cdf7b59c1a71cb8c358c31275e187dad17050c8eb04ea5cb8d",
+  "snapshot_digest": "sha256:1cab26e51999310225fb08e05621ddfdbcad7ca3e478bc37181af0d614484a8c",
   "digest_method": "SHA-256 of recursively key-sorted evidence payload after omitting top-level snapshot_digest, stable_url, evidence_snapshot_url, evidence_snapshot, validation.manifest_consumer_trial, and validation.consumer_attestation",
   "supersedes": [
     {
@@ -2610,15 +2610,15 @@
       ]
     },
     "consumer_attestation": {
-      "status": "passed_candidate_trial",
-      "consumer_identity": "/root/manifest_consumer_v2_candidate4",
+      "status": "pending_independent_trial",
+      "consumer_identity": "PENDING_CONSUMER_IDENTITY",
       "prior_involvement": "none",
       "manifest_version": "2.0.0",
-      "snapshot_digest": "sha256:71e586bf10fdd6cdf7b59c1a71cb8c358c31275e187dad17050c8eb04ea5cb8d",
-      "input_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/62c2d1b4c2e0736456a8d02fbe16b55fb60ea429/site/reports/agent-teams-2026/data/evidence-snapshot.v2.json",
-      "attestation_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/3cff64fe810a0d044682d5b859f504ef5c3da7f4/research/agent-teams-2026/consumer-attestation.v2.json",
-      "attestation_digest": "sha256:60824e7dca0a3ed75d10b26dff0add30b7bbfb6620179c651fe1ff3572cd312f",
-      "transcript_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/3cff64fe810a0d044682d5b859f504ef5c3da7f4/research/agent-teams-2026/manifest-consumer-validation.v2.md",
+      "snapshot_digest": "sha256:1cab26e51999310225fb08e05621ddfdbcad7ca3e478bc37181af0d614484a8c",
+      "input_url": "PENDING_EVIDENCE_SNAPSHOT_URL",
+      "attestation_url": "PENDING_ATTESTATION_URL",
+      "attestation_digest": "PENDING_ATTESTATION_DIGEST",
+      "transcript_url": "PENDING_TRANSCRIPT_URL",
       "scope": "immutable evidence snapshot only; no report, research notes, Git history, issue, conversation history, paper originals or internet"
     }
   },
@@ -2629,24 +2629,51 @@
     "copyright_policy": "仅保存元数据、必要短证据定位、结构化提取和综合判断；不存储论文全文",
     "generated_on": "2026-07-15",
     "time_precision": "day",
-    "release_state": "review_candidate_not_deployed",
+    "release_state": "release_v2",
     "metadata_audit_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/c7edc113ac506e78bb422e23d943be50b388d62c/research/agent-teams-2026/metadata-audit.v2.json"
   },
   "promotion_candidates": [
     {
       "claim_id": "C01",
-      "eligibility": "candidate",
-      "reason": "跨多篇、含正反结果且直接影响团队架构；待 Librarian 去重和跨任务复用后再晋升。"
+      "eligibility": "promoted",
+      "durable_knowledge_id": "AGE-185",
+      "issue_uuid": "c807b74e-b65f-4424-b2b9-38ada71b0aad",
+      "issue_pointer": "mention://issue/c807b74e-b65f-4424-b2b9-38ada71b0aad",
+      "promotion_reviewed_on": "2026-07-15",
+      "next_review_on": "2026-10-15",
+      "revalidation_triggers": [
+        "manifest is superseded or retracted",
+        "same-budget cross-task counterevidence appears",
+        "claim is applied to a production continuous-action workflow"
+      ]
     },
     {
       "claim_id": "C05",
-      "eligibility": "candidate",
-      "reason": "可操作的评测基线原则；待第二个研究 episode 复用验证。"
+      "eligibility": "promoted",
+      "durable_knowledge_id": "AGE-186",
+      "issue_uuid": "5e7a4332-0f1d-4e0c-831d-e6ed7431395f",
+      "issue_pointer": "mention://issue/5e7a4332-0f1d-4e0c-831d-e6ed7431395f",
+      "promotion_reviewed_on": "2026-07-15",
+      "next_review_on": "2026-10-15",
+      "revalidation_triggers": [
+        "benchmark changes the budget definition or comparison baseline",
+        "cross-task matched-budget counterevidence appears",
+        "evaluation target is a persistent-action system"
+      ]
     },
     {
       "claim_id": "C09",
-      "eligibility": "candidate",
-      "reason": "评测框架证据较强；待与现有 workspace 质量知识去重。"
+      "eligibility": "promoted",
+      "durable_knowledge_id": "AGE-187",
+      "issue_uuid": "f0a25456-ddd4-46c1-9ae7-94e6ed43fbd4",
+      "issue_pointer": "mention://issue/f0a25456-ddd4-46c1-9ae7-94e6ed43fbd4",
+      "promotion_reviewed_on": "2026-07-15",
+      "next_review_on": "2026-10-15",
+      "revalidation_triggers": [
+        "a more reliable workflow evaluation method appears",
+        "trace or cost availability materially changes",
+        "the claim is revised by a later manifest"
+      ]
     },
     {
       "claim_id": "C08",
@@ -2827,8 +2854,7 @@
       "现有 benchmark 偏数学、代码、QA 和软件工程；真实组织的激励冲突、权限、安全和长期学习证据不足。",
       "多篇早期研究使用 2023 年 GPT-3.5/GPT-4；其绝对数字不能直接外推到 2026 模型。",
       "开源代码不等于完全可复现；商业模型漂移、系统 prompt、随机性、并发和 token 预算都会改变结果。",
-      "本文的 Multica 建议是论文证据与产品约束的推断，不是论文作者直接结论；每条均标注前提和副作用。",
-      "v2 是 open PR 的 review candidate，未 merge、未 tag、未 deploy；公开 Pages 仍是 v1，outputs 的绝对公开 URL 是发布目标而非当前已部署证明。"
+      "本文的 Multica 建议是论文证据与产品约束的推断，不是论文作者直接结论；每条均标注前提和副作用。"
     ]
   },
   "selection_protocol": {
@@ -2843,15 +2869,25 @@
     "note": "extended/excluded 均为未进入 18 篇核心；每条保留版本、状态、URL 与理由。"
   },
   "promotion": {
-    "state": "candidate",
-    "durable_knowledge_id": null,
-    "bidirectional_pointer_status": "pending_librarian_promotion_after_master_content_approval"
+    "state": "partially_promoted",
+    "promoted_claim_ids": [
+      "C01",
+      "C05",
+      "C09"
+    ],
+    "not_eligible_claim_ids": [
+      "C08",
+      "C11"
+    ],
+    "promotion_reviewed_on": "2026-07-15",
+    "next_review_on": "2026-10-15",
+    "bidirectional_pointer_status": "complete"
   },
-  "evidence_snapshot_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/62c2d1b4c2e0736456a8d02fbe16b55fb60ea429/site/reports/agent-teams-2026/data/evidence-snapshot.v2.json",
+  "evidence_snapshot_url": "PENDING_EVIDENCE_SNAPSHOT_URL",
   "evidence_snapshot": {
-    "status": "immutable_candidate",
+    "status": "pending_commit_pin",
     "manifest_version": "2.0.0",
-    "snapshot_digest": "sha256:71e586bf10fdd6cdf7b59c1a71cb8c358c31275e187dad17050c8eb04ea5cb8d",
-    "immutable_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/62c2d1b4c2e0736456a8d02fbe16b55fb60ea429/site/reports/agent-teams-2026/data/evidence-snapshot.v2.json"
+    "snapshot_digest": "sha256:1cab26e51999310225fb08e05621ddfdbcad7ca3e478bc37181af0d614484a8c",
+    "immutable_url": "PENDING_EVIDENCE_SNAPSHOT_URL"
   }
 }

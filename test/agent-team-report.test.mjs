@@ -11,7 +11,7 @@ const auditPath = new URL("research/agent-teams-2026/metadata-audit.v2.json", ro
 const attestationPath = new URL("research/agent-teams-2026/consumer-attestation.v2.json", root);
 const transcriptPath = new URL("research/agent-teams-2026/manifest-consumer-validation.v2.md", root);
 
-const [manifest, localSnapshot, audit, attestation, transcript, v1Manifest, html, script, css] = await Promise.all([
+const [manifest, localSnapshot, audit, attestation, transcript, v1Manifest, html, script, css, rootReadme, researchReadme, changelog] = await Promise.all([
   readFile(manifestPath, "utf8").then(JSON.parse),
   readFile(snapshotPath, "utf8").then(JSON.parse),
   readFile(auditPath, "utf8").then(JSON.parse),
@@ -21,6 +21,9 @@ const [manifest, localSnapshot, audit, attestation, transcript, v1Manifest, html
   readFile(new URL("site/reports/agent-teams-2026/index.html", root), "utf8"),
   readFile(new URL("site/reports/agent-teams-2026/report.js", root), "utf8"),
   readFile(new URL("site/reports/agent-teams-2026/report.css", root), "utf8"),
+  readFile(new URL("README.md", root), "utf8"),
+  readFile(new URL("research/agent-teams-2026/README.md", root), "utf8"),
+  readFile(new URL("research/agent-teams-2026/CHANGELOG.md", root), "utf8"),
 ]);
 
 function unique(items, label) {
@@ -139,7 +142,11 @@ test("source, evidence, claim and candidate graphs are closed and audited", () =
   const included = manifest.papers.filter((paper) => paper.selection.decision === "included");
   assert.equal(manifest.papers.length, 49);
   assert.equal(manifest.selection_protocol.candidate_count, 49);
+  assert.equal(manifest.sources.length, 27);
+  assert.equal(manifest.selection_protocol.source_count, 27);
+  assert.equal(manifest.evidence.length, 28);
   assert.equal(included.length, 18);
+  assert.equal(manifest.selection_protocol.core_count, 18);
   assert.equal(included.filter((paper) => paper.group === "foundation").length, 8);
   assert.equal(included.filter((paper) => paper.group === "frontier").length, 10);
   for (const paperId of ["2602.01011", "2604.02460", "2601.12307", "2604.07821", "2603.01045"]) {
@@ -159,6 +166,39 @@ test("source, evidence, claim and candidate graphs are closed and audited", () =
   assert.doesNotMatch(synthesis.find((claim) => claim.claim_id === "C04").text, /只在/);
   assert.ok(synthesis.find((claim) => claim.claim_id === "C11").contradicting_evidence_ids.includes("E28"));
   assert.match(manifest.evidence.find((item) => item.evidence_id === "E14").faithful_summary, /组合式/);
+});
+
+test("durable knowledge promotion mappings are exact, reviewable and resolvable", () => {
+  const expected = {
+    C01: ["AGE-185", "c807b74e-b65f-4424-b2b9-38ada71b0aad"],
+    C05: ["AGE-186", "5e7a4332-0f1d-4e0c-831d-e6ed7431395f"],
+    C09: ["AGE-187", "f0a25456-ddd4-46c1-9ae7-94e6ed43fbd4"],
+  };
+  const promotions = new Map(manifest.promotion_candidates.map((item) => [item.claim_id, item]));
+  for (const [claimId, [knowledgeId, issueUuid]] of Object.entries(expected)) {
+    const item = promotions.get(claimId);
+    assert.equal(item.eligibility, "promoted");
+    assert.equal(item.durable_knowledge_id, knowledgeId);
+    assert.equal(item.issue_uuid, issueUuid);
+    assert.equal(item.issue_pointer, `mention://issue/${issueUuid}`);
+    const pointer = new URL(item.issue_pointer);
+    assert.equal(pointer.protocol, "mention:");
+    assert.equal(pointer.hostname, "issue");
+    assert.equal(pointer.pathname, `/${issueUuid}`);
+    assert.equal(item.promotion_reviewed_on, "2026-07-15");
+    assert.equal(item.next_review_on, "2026-10-15");
+    assert.ok(item.revalidation_triggers.length >= 3);
+  }
+  for (const claimId of ["C08", "C11"]) {
+    assert.equal(promotions.get(claimId).eligibility, "not_eligible");
+    assert.equal("durable_knowledge_id" in promotions.get(claimId), false);
+  }
+  assert.deepEqual(manifest.promotion.promoted_claim_ids, ["C01", "C05", "C09"]);
+  assert.deepEqual(manifest.promotion.not_eligible_claim_ids, ["C08", "C11"]);
+  assert.equal(manifest.promotion.promotion_reviewed_on, "2026-07-15");
+  assert.equal(manifest.promotion.next_review_on, "2026-10-15");
+  assert.equal(manifest.promotion.bidirectional_pointer_status, "complete");
+  assert.equal(manifest.claims.find((claim) => claim.claim_id === "C05").strength, "conditional");
 });
 
 test("all source metadata matches the immutable audit, including non-arXiv evidence", () => {
@@ -233,6 +273,12 @@ test("consumer attestation is immutable, independently digested and bound to the
   assert.match(transcript, /accuracy was 30\.1%.*accuracy was 80\.7%/s);
   assert.doesNotMatch(transcript, /completed 30\.1%|30\.1% completion/i);
   assert.match(transcript, /Premature Submission.*37\.2%.*Consensus Failure.*29\.9%.*Computation Error.*28\.6%/s);
+  assert.equal(attestation.durable_pointer_review.result, "PASS");
+  assert.deepEqual(attestation.durable_pointer_review.promoted_claim_ids, ["C01", "C05", "C09"]);
+  assert.deepEqual(attestation.durable_pointer_review.not_eligible_claim_ids, ["C08", "C11"]);
+  for (const exact of ["AGE-185", "AGE-186", "AGE-187", "mention://issue/c807b74e-b65f-4424-b2b9-38ada71b0aad", "mention://issue/5e7a4332-0f1d-4e0c-831d-e6ed7431395f", "mention://issue/f0a25456-ddd4-46c1-9ae7-94e6ed43fbd4"]) {
+    assert.ok(transcript.includes(exact), `transcript must verify durable pointer ${exact}`);
+  }
 });
 
 test("all machine output URLs resolve to the intended absolute artifact", () => {
@@ -250,9 +296,24 @@ test("all machine output URLs resolve to the intended absolute artifact", () => 
   immutableRaw(manifest.evidence_snapshot_url, "site/reports/agent-teams-2026/data/evidence-snapshot.v2.json");
   immutableRaw(manifest.validation.consumer_attestation.attestation_url, "research/agent-teams-2026/consumer-attestation.v2.json");
   immutableRaw(manifest.validation.consumer_attestation.transcript_url, "research/agent-teams-2026/manifest-consumer-validation.v2.md");
-  assert.equal(manifest.outputs.release_state, "review_candidate_not_deployed");
-  assert.equal(manifest.promotion.state, "candidate");
-  assert.equal(manifest.promotion.durable_knowledge_id, null);
+  assert.equal(manifest.outputs.release_state, "release_v2");
+  assert.equal(manifest.promotion.state, "partially_promoted");
+  assert.equal(manifest.evidence_snapshot.status, "immutable_release_v2");
+  assert.equal(manifest.validation.consumer_attestation.status, "passed_release_v2_trial");
+});
+
+test("release-facing artifacts contain no dynamic candidate-state residue", () => {
+  const stale = /review candidate|review_candidate_not_deployed|public Pages remains|公开 Pages 仍|not deployed|下一步再补 immutable|下一步再补 consumer/i;
+  for (const [label, value] of [
+    ["manifest", JSON.stringify(manifest)],
+    ["snapshot", JSON.stringify(localSnapshot)],
+    ["root README", rootReadme],
+    ["research README", researchReadme],
+    ["CHANGELOG", changelog],
+    ["report HTML", html],
+  ]) {
+    assert.doesNotMatch(value, stale, `${label} contains stale release-candidate copy`);
+  }
 });
 
 test("report surfaces render the v2 manifest without unsafe HTML", () => {

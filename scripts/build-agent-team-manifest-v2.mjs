@@ -533,7 +533,7 @@ manifest.outputs.report_url = "https://liaoyuanning.github.io/paper-learning-lib
 delete manifest.outputs.generated_at;
 manifest.outputs.generated_on = "2026-07-15";
 manifest.outputs.time_precision = "day";
-manifest.outputs.release_state = "review_candidate_not_deployed";
+manifest.outputs.release_state = "release_v2";
 manifest.outputs.metadata_audit_url = auditRef.startsWith("PENDING_") ? "PENDING_AUDIT_URL" : rawUrl(auditRef, "research/agent-teams-2026/metadata-audit.v2.json");
 delete manifest.outputs.metadata_audit;
 delete manifest.outputs.consumer_validation;
@@ -544,10 +544,67 @@ manifest.selection_protocol = {
   decision_enum: ["included", "extended", "excluded"],
   note: "extended/excluded 均为未进入 18 篇核心；每条保留版本、状态、URL 与理由。",
 };
+manifest.promotion_candidates = [
+  {
+    claim_id: "C01",
+    eligibility: "promoted",
+    durable_knowledge_id: "AGE-185",
+    issue_uuid: "c807b74e-b65f-4424-b2b9-38ada71b0aad",
+    issue_pointer: "mention://issue/c807b74e-b65f-4424-b2b9-38ada71b0aad",
+    promotion_reviewed_on: "2026-07-15",
+    next_review_on: "2026-10-15",
+    revalidation_triggers: [
+      "manifest is superseded or retracted",
+      "same-budget cross-task counterevidence appears",
+      "claim is applied to a production continuous-action workflow",
+    ],
+  },
+  {
+    claim_id: "C05",
+    eligibility: "promoted",
+    durable_knowledge_id: "AGE-186",
+    issue_uuid: "5e7a4332-0f1d-4e0c-831d-e6ed7431395f",
+    issue_pointer: "mention://issue/5e7a4332-0f1d-4e0c-831d-e6ed7431395f",
+    promotion_reviewed_on: "2026-07-15",
+    next_review_on: "2026-10-15",
+    revalidation_triggers: [
+      "benchmark changes the budget definition or comparison baseline",
+      "cross-task matched-budget counterevidence appears",
+      "evaluation target is a persistent-action system",
+    ],
+  },
+  {
+    claim_id: "C09",
+    eligibility: "promoted",
+    durable_knowledge_id: "AGE-187",
+    issue_uuid: "f0a25456-ddd4-46c1-9ae7-94e6ed43fbd4",
+    issue_pointer: "mention://issue/f0a25456-ddd4-46c1-9ae7-94e6ed43fbd4",
+    promotion_reviewed_on: "2026-07-15",
+    next_review_on: "2026-10-15",
+    revalidation_triggers: [
+      "a more reliable workflow evaluation method appears",
+      "trace or cost availability materially changes",
+      "the claim is revised by a later manifest",
+    ],
+  },
+  {
+    claim_id: "C08",
+    eligibility: "not_eligible",
+    reason: "共享记忆治理仍以产品推断和新兴预印本为主。",
+  },
+  {
+    claim_id: "C11",
+    eligibility: "not_eligible",
+    reason: "前沿机制尚未积累跨研究复验。",
+  },
+];
 manifest.promotion = {
-  state: "candidate",
-  durable_knowledge_id: null,
-  bidirectional_pointer_status: "pending_librarian_promotion_after_master_content_approval",
+  state: "partially_promoted",
+  promoted_claim_ids: ["C01", "C05", "C09"],
+  not_eligible_claim_ids: ["C08", "C11"],
+  promotion_reviewed_on: "2026-07-15",
+  next_review_on: "2026-10-15",
+  bidirectional_pointer_status: "complete",
 };
 
 manifest.report.counterintuitive = [
@@ -573,7 +630,6 @@ manifest.report.episode_loop = [
   "资产化：报告、manifest v2、evidence snapshot、候选决策、query、审计和独立 consumer attestation/transcript。",
 ];
 manifest.report.limitations = manifest.report.limitations.map((item) => item.replace("oo-arxiv 依赖的 oo CLI 不可用；arxiv-cli 批量查询后遇到 HTTP 429", "oo-arxiv 依赖的 oo CLI 不可用；arxiv-cli 对部分已知 ID 返回空结果，使用官方一手页面复核"));
-manifest.report.limitations.push("v2 是 open PR 的 review candidate，未 merge、未 tag、未 deploy；公开 Pages 仍是 v1，outputs 的绝对公开 URL 是发布目标而非当前已部署证明。");
 
 manifest.validation.critic_checks = manifest.claims.filter((item) => item.type === "synthesis").map((claim) => ({
   claim_id: claim.claim_id,
@@ -594,13 +650,13 @@ delete manifest.validation.manifest_consumer_trial;
 manifest.snapshot_digest = digestEvidencePayload(manifest);
 manifest.evidence_snapshot_url = evidenceSnapshotUrl;
 manifest.evidence_snapshot = {
-  status: evidenceSnapshotUrl.startsWith("PENDING_") ? "pending_commit_pin" : "immutable_candidate",
+  status: evidenceSnapshotUrl.startsWith("PENDING_") ? "pending_commit_pin" : "immutable_release_v2",
   manifest_version: "2.0.0",
   snapshot_digest: manifest.snapshot_digest,
   immutable_url: evidenceSnapshotUrl,
 };
 manifest.validation.consumer_attestation = {
-  status: attestationRef.startsWith("PENDING_") ? "pending_independent_trial" : "passed_candidate_trial",
+  status: attestationRef.startsWith("PENDING_") ? "pending_independent_trial" : "passed_release_v2_trial",
   consumer_identity: consumerIdentity,
   prior_involvement: "none",
   manifest_version: manifest.manifest_version,

@@ -1,6 +1,6 @@
 # Agent Team research episode 001
 
-AGE-174 的可复用研究资产。v2 review candidate 由 `site/reports/agent-teams-2026/data/evidence-manifest.v2.json` 单一数据源驱动；本目录保留检索、筛选、元数据核对、独立消费验收与变更记录，不保存论文全文。公开 Pages 在 Master 放行前仍是 v1。
+AGE-174 的可复用研究资产。v2 由 `site/reports/agent-teams-2026/data/evidence-manifest.v2.json` 单一数据源驱动，覆盖 49 篇候选、18 篇核心、27 个来源与 28 条 evidence；本目录保留检索、筛选、元数据核对、独立消费验收与变更记录，不保存论文全文。v1 保留为 superseded 历史版本。
 
 ## 研究闭环
 
@@ -11,7 +11,7 @@ AGE-174 的可复用研究资产。v2 review candidate 由 `site/reports/agent-t
 5. Critic 搜索相反结果、预算不等、oracle baseline、样本过小、版本漂移和外推越界。
 6. 未参与研究的另一 agent 只读 commit-pinned `evidence-snapshot.v2.json` 回答 `manifest-consumer-questions.v2.md`；独立 attestation 与完整 transcript 使用另一指纹，PM 再逐题人工复核。
 7. 只有通过来源闭包、构建、移动端、控制台和线上验证，才发布 immutable tag。
-8. 只有跨任务复用、经 Librarian 去重的结论才有资格晋升长期知识；本包中的 `candidate` 不是 `promoted`。
+8. 只有跨任务复用、经 Librarian 去重的结论才有资格晋升长期知识；v2 已将 C01/C05/C09 的 durable pointer 回写 manifest，C08/C11 保持 `not_eligible`。
 
 ## 更新策略
 

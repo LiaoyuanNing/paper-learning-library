@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.0.0 — 2026-07-15 (review candidate, not deployed)
+## 2.0.0 — 2026-07-15
 
 - 重开最新/典型召回：核心集由 9+9 调整为 8 篇奠基/典型 + 10 篇前沿；纳入 `2602.01011v4`、`2604.02460v2`、`2601.12307v1`，MacNet、MasRouter、ExtAgents 退出核心但保留扩展记录。
 - 第二次窄召回纳入 ICML 2026 `2604.07821v2` 与 ACL 2026 `2603.01045v2` 核心证据；Diversity、FS-Researcher 转为扩展；HiddenBench `2505.11556v4` 进入候选、source/evidence/claim 链。
@@ -11,7 +11,8 @@
 - 全量核对 S01–S27 一手元数据，含 arXiv、正式 venue 与 OpenReview；记录见 `metadata-audit.v2.json`。
 - C01–C11 每条增加完整 `counter_search`；E16–E21 改为固定节/表/图/附录 locator。
 - machine-readable `papers` 扩展为 49 条候选/决策记录；未入核心项也保留 version/status/URL/reasons。
-- 修正 v1 supersedes digest，撤销伪精确未来时间；拆分 commit-pinned evidence snapshot 与独立 consumer attestation，输出链接全部绝对化。Master 放行前不 merge/tag/deploy。
+- 修正 v1 supersedes digest，撤销伪精确未来时间；拆分 commit-pinned evidence snapshot 与独立 consumer attestation，输出链接全部绝对化。
+- Librarian 完成 C01→AGE-185、C05→AGE-186、C09→AGE-187 晋升并回写 durable pointer、复核日期与触发条件；C08/C11 保持 `not_eligible`，C05 保持 `conditional`。
 
 ## 1.0.0 — 2026-07-15
 
