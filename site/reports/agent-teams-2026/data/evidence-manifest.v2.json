@@ -11,7 +11,7 @@
       "immutable_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/age-174-v1/site/reports/agent-teams-2026/data/evidence-manifest.v1.json"
     }
   ],
-  "stable_url": "PENDING_COMMIT_PIN",
+  "stable_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/f6ee325dd1100c30de818429ce016e6e43536403/site/reports/agent-teams-2026/data/evidence-manifest.v2.json",
   "request": {
     "request_id": "AGE-174",
     "questions": [
@@ -2340,9 +2340,9 @@
       "record_file": "research/agent-teams-2026/manifest-consumer-validation.v2.md",
       "manifest_version": "2.0.0",
       "snapshot_digest": "sha256:118f88a9b4151ec49c76b77189da8cddc388aeb891d583c9cb897dccdec992ec",
-      "immutable_url": "PENDING_COMMIT_PIN",
+      "immutable_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/f6ee325dd1100c30de818429ce016e6e43536403/site/reports/agent-teams-2026/data/evidence-manifest.v2.json",
       "consumer_agent": {
-        "identity": "/root/manifest_consumer_v2",
+        "identity": "/root/manifest_consumer_v2_final",
         "runtime": "Codex native sub-agent",
         "prior_involvement": "none"
       },

@@ -420,7 +420,7 @@ manifest.validation.manifest_consumer_trial = {
   snapshot_digest: null,
   immutable_url: stableUrl,
   consumer_agent: {
-    identity: "/root/manifest_consumer_v2",
+    identity: "/root/manifest_consumer_v2_final",
     runtime: "Codex native sub-agent",
     prior_involvement: "none",
   },
