@@ -66,6 +66,10 @@ This is a syntax/internal-consistency audit only; live issue existence or permis
 
 Self-assessment: Q1 PASS · Q2 PASS · Q3 PASS · Q4 PASS · pointer audit PASS.
 
+### Consumer Q3 addendum (same sole-input boundary)
+
+S26 v4 title is “Systematic Failures in Collective Reasoning under Distributed Information in Multi-Agent LLMs.” Distributed MAS accuracy was 30.1%, versus 80.7% accuracy for the full-information single agent. Source `S26`; official URL `https://arxiv.org/abs/2505.11556v4`; evidence `E27`; locator `Abstract; §3; §4.2; Tables 1–2; §5`.
+
 ## PM manual review
 
 - Result: 4/4 PASS; durable pointer audit PASS.
