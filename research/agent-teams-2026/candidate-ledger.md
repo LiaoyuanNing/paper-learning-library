@@ -27,7 +27,7 @@
 | 18C | Rethinking the Value of Multi-Agent Workflow / 2601.12307 | workflow 折叠 | 核心 | 强单体 baseline；同质 workflow 可折叠 |
 | 18D | More Capable, Less Cooperative? / 2604.07821 | 零成本合作 | 核心 | ICML 2026；分离能力与合作，含协议/微激励干预 |
 | 18E | Silo-Bench / 2603.01045 | 分布式协调 | 核心 | ACL 2026；30 任务、54 配置、1,620 实验揭示 Communication–Reasoning Gap |
-| 18F | HiddenBench / 2505.11556 | 隐藏信息整合 | 扩展反证 | ICML 2026；65 任务直接揭示分布式信息整合失败，与核心 Silo-Bench 边界高度重叠 |
+| 18F | Systematic Failures in Collective Reasoning under Distributed Information in Multi-Agent LLMs（HiddenBench）/ 2505.11556v4 | 隐藏信息整合 | 扩展反证 | ICML 2026；65 任务、15 模型的 accuracy 结果直接揭示分布式信息整合失败，与核心 Silo-Bench 边界高度重叠 |
 | 19 | AgentVerse / 2308.10848 | 动态组合 | 扩展反证 | 与 AutoGen/DyLAN 重叠；保留错误同伴案例 |
 | 20 | AutoAgents / 2309.17288 | 自动组队 | 扩展 | 前驱意义强，证据弱于 MaAS/DyLAN |
 | 21 | AgentScope / 2402.14034 | 平台工程 | 扩展 | 基础设施贡献为主，机制因果较弱 |

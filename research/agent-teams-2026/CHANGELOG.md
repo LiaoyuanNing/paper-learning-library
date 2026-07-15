@@ -4,6 +4,7 @@
 
 - 重开最新/典型召回：核心集由 9+9 调整为 8 篇奠基/典型 + 10 篇前沿；纳入 `2602.01011v4`、`2604.02460v2`、`2601.12307v1`，MacNet、MasRouter、ExtAgents 退出核心但保留扩展记录。
 - 第二次窄召回纳入 ICML 2026 `2604.07821v2` 与 ACL 2026 `2603.01045v2` 核心证据；Diversity、FS-Researcher 转为扩展；HiddenBench `2505.11556v4` 进入候选、source/evidence/claim 链。
+- 第三轮窄修复按 `2505.11556v4` 当前版本更新标题与 accuracy 语义，并把 SILO-BENCH 的实验轴及 Table 4 三类失败锁定为可测试字段。
 - 加入 CompLearn 2026 对 LatentMAS 的直接反证；C11 与 LatentMAS 卡片收窄。MAST E14 改为 bundled role/prompt intervention，C02/R02/R05 不再把 +9.4pp 归因于终止权单项；C04 删除未经必要条件实验支持的“只在”。
 - C03/C04/C05 与建议重写，显式覆盖专家稀释、同质 workflow 可折叠、equal-thinking-token 三个边界；C05 从 strong 降为 conditional。
 - schema contract 修为 SemVer `1.0.0`；manifest major 升为 `2.0.0`，拆分 submission/venue year、publication status、venue、track，并增加 v1 `supersedes` 指针。

@@ -7,8 +7,8 @@
   "evidence_policy": "arXiv versioned abstract page for title/authors/version/submission year; official proceedings/OpenReview for venue year/status/track/URL; preprint when no official venue was found by cutoff",
   "tool_observations": {
     "oo": "unavailable",
-    "arxiv_cli": "installed but returned empty arrays for known IDs and keyword probes",
-    "fallback": "official arXiv and venue pages"
+    "arxiv_cli": "installed; exact-ID search verified S25/S26, while the PDF download probe returned no result",
+    "fallback": "official versioned arXiv and venue pages"
   },
   "publication_status_enum": [
     "published",
@@ -1219,11 +1219,13 @@
         "official_url",
         "venue_url"
       ],
-      "outcome": "verified",
-      "corrected_fields": [],
+      "outcome": "corrected",
+      "corrected_fields": [
+        "title"
+      ],
       "snapshot": {
         "source_kind": "arxiv",
-        "title": "HiddenBench: Assessing Collective Reasoning in Multi-Agent LLMs via Hidden Profile Tasks",
+        "title": "Systematic Failures in Collective Reasoning under Distributed Information in Multi-Agent LLMs",
         "authors": [
           "Yuxuan Li",
           "Aoi Naito",

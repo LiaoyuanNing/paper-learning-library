@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "evidence_pack_id": "age-174-agent-teams-2026",
   "manifest_version": "2.0.0",
-  "snapshot_digest": "sha256:cbe74d0293139ee118fccc4abc106f2bb713d492db4c049a9371203bb29941f3",
+  "snapshot_digest": "sha256:e605ba81760bfcd0c4a55595a0da8f775bf7e73dd21e19faeaa2d53c0770abc9",
   "digest_method": "SHA-256 of recursively key-sorted evidence payload after omitting top-level snapshot_digest, stable_url, evidence_snapshot_url, evidence_snapshot, validation.manifest_consumer_trial, and validation.consumer_attestation",
   "supersedes": [
     {
@@ -805,7 +805,7 @@
       "source_id": "S26",
       "source_kind": "arxiv",
       "paper_id": "2505.11556",
-      "title": "HiddenBench: Assessing Collective Reasoning in Multi-Agent LLMs via Hidden Profile Tasks",
+      "title": "Systematic Failures in Collective Reasoning under Distributed Information in Multi-Agent LLMs",
       "authors": [
         "Yuxuan Li",
         "Aoi Naito",
@@ -1264,8 +1264,8 @@
       "group": "frontier",
       "research_question": "agent 能否把分布式私有信息转化为可靠的联合推理？",
       "mechanism": "Silo-Bench 将信息分布到 agent silo，并区分通信是否到位与推理是否正确。",
-      "experiment": "30 个任务、54 个配置、1,620 次实验；覆盖拓扑、模型和信息分配。",
-      "result": "Communication–Reasoning Gap 显示消息到达不等于信息被正确整合；过早结论、错误共识和计算错误是主要失败面。",
+      "experiment": "30 个任务；6 种团队规模 × 3 种通信协议 × 3 个模型 = 54 个配置，共 1,620 次实验。",
+      "result": "Communication–Reasoning Gap 显示消息到达不等于信息被正确整合；三类主要失败为过早提交 37.2%、共识失败 29.9%（多个 agent 提交不同答案且未同步）和计算错误 28.6%。",
       "limitations": "基准任务仍是受控环境；生产系统的权限、延迟和异步失败更复杂。",
       "selection": {
         "decision": "included",
@@ -1280,10 +1280,10 @@
       "paper_id": "2505.11556",
       "source_id": "S26",
       "group": null,
-      "research_question": "多 agent 能否在信息分散且输入非结构化时完成多步指令？",
+      "research_question": "分布式信息条件下，多 agent 能否完成可靠的集体决策推理？",
       "mechanism": "HiddenBench 将完成任务所需信息分散到不同 agent，并与获得完整信息的单 agent 对照。",
-      "experiment": "65 个任务；比较分布式 MAS 与拥有完整输入的单 agent。",
-      "result": "分布式 MAS 完成率 30.1%，完整信息单 agent 为 80.7%；扩大模型并未消除信息整合失败。",
+      "experiment": "65 个 hidden-profile 任务、15 个模型；比较分布式 MAS 与拥有完整信息的单 agent。",
+      "result": "分布式 MAS 准确率 30.1%，完整信息单 agent 准确率 80.7%；扩大模型并未消除信息整合失败。",
       "limitations": "65 个受控 hidden-profile 任务不能代表全部长期协作；与 Silo-Bench 的任务结构不同。",
       "selection": {
         "decision": "extended",
@@ -1927,7 +1927,7 @@
       "source_id": "S25",
       "locator": "§3–§5; §5.2 Table 4; Figures 4–6",
       "kind": "contrary_result",
-      "faithful_summary": "Silo-Bench 用 30 个任务、54 个配置和 1,620 次实验识别 Communication–Reasoning Gap：agent 会交换信息，却常不能把分布式状态整合为正确答案；过早结论、错误共识和计算错误是主要失败面。",
+      "faithful_summary": "Silo-Bench 用 30 个任务，在 6 种团队规模 × 3 种通信协议 × 3 个模型形成的 54 个配置上完成 1,620 次实验，识别 Communication–Reasoning Gap；Table 4 的三类主要失败是过早提交 37.2%、共识失败 29.9%（多个 agent 提交不同答案且未同步）和计算错误 28.6%。",
       "verified_by": [
         "Reader",
         "Critic",
@@ -1940,7 +1940,7 @@
       "source_id": "S26",
       "locator": "Abstract; §3; §4.2; Tables 1–2; §5",
       "kind": "contrary_result",
-      "faithful_summary": "HiddenBench 的 65 个 hidden-profile 任务显示分布式 MAS 完成率 30.1%，而获得完整信息的单 agent 为 80.7%；信息不对称下的整合失败不会随模型规模可靠消失。",
+      "faithful_summary": "HiddenBench 在 65 个 hidden-profile 任务和 15 个模型上的准确率结果显示：分布式 MAS 为 30.1%，而获得完整信息的单 agent 为 80.7%；信息不对称下的整合失败不会随模型规模可靠消失。",
       "verified_by": [
         "Reader",
         "Critic",
@@ -2593,7 +2593,7 @@
     ],
     "metadata_audit": {
       "status": "passed",
-      "record_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/91bc571132425a8d9b1ffd0d98052fd8f55f9b50/research/agent-teams-2026/metadata-audit.v2.json",
+      "record_url": "PENDING_AUDIT_URL",
       "source_count": 27,
       "required_fields": [
         "source_kind",
@@ -2610,15 +2610,15 @@
       ]
     },
     "consumer_attestation": {
-      "status": "passed_candidate_trial",
-      "consumer_identity": "/root/manifest_consumer_v2_candidate2",
+      "status": "pending_independent_trial",
+      "consumer_identity": "PENDING_CONSUMER_IDENTITY",
       "prior_involvement": "none",
       "manifest_version": "2.0.0",
-      "snapshot_digest": "sha256:cbe74d0293139ee118fccc4abc106f2bb713d492db4c049a9371203bb29941f3",
-      "input_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/a6d4385ffc87efbe2572edfaae8eb9e49e39e20e/site/reports/agent-teams-2026/data/evidence-snapshot.v2.json",
-      "attestation_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/d078bf7317d4d826f63446119a3f7a8fae6ebc1f/research/agent-teams-2026/consumer-attestation.v2.json",
-      "attestation_digest": "sha256:b4afd78740fda621350c71ea18e97d10fd68e82b5da40fe59109fa46b533b825",
-      "transcript_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/d078bf7317d4d826f63446119a3f7a8fae6ebc1f/research/agent-teams-2026/manifest-consumer-validation.v2.md",
+      "snapshot_digest": "sha256:e605ba81760bfcd0c4a55595a0da8f775bf7e73dd21e19faeaa2d53c0770abc9",
+      "input_url": "PENDING_EVIDENCE_SNAPSHOT_URL",
+      "attestation_url": "PENDING_ATTESTATION_URL",
+      "attestation_digest": "PENDING_ATTESTATION_DIGEST",
+      "transcript_url": "PENDING_TRANSCRIPT_URL",
       "scope": "immutable evidence snapshot only; no report, research notes, Git history, issue, conversation history, paper originals or internet"
     }
   },
@@ -2630,7 +2630,7 @@
     "generated_on": "2026-07-15",
     "time_precision": "day",
     "release_state": "review_candidate_not_deployed",
-    "metadata_audit_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/91bc571132425a8d9b1ffd0d98052fd8f55f9b50/research/agent-teams-2026/metadata-audit.v2.json"
+    "metadata_audit_url": "PENDING_AUDIT_URL"
   },
   "promotion_candidates": [
     {
@@ -2847,11 +2847,11 @@
     "durable_knowledge_id": null,
     "bidirectional_pointer_status": "pending_librarian_promotion_after_master_content_approval"
   },
-  "evidence_snapshot_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/a6d4385ffc87efbe2572edfaae8eb9e49e39e20e/site/reports/agent-teams-2026/data/evidence-snapshot.v2.json",
+  "evidence_snapshot_url": "PENDING_EVIDENCE_SNAPSHOT_URL",
   "evidence_snapshot": {
-    "status": "immutable_candidate",
+    "status": "pending_commit_pin",
     "manifest_version": "2.0.0",
-    "snapshot_digest": "sha256:cbe74d0293139ee118fccc4abc106f2bb713d492db4c049a9371203bb29941f3",
-    "immutable_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/a6d4385ffc87efbe2572edfaae8eb9e49e39e20e/site/reports/agent-teams-2026/data/evidence-snapshot.v2.json"
+    "snapshot_digest": "sha256:e605ba81760bfcd0c4a55595a0da8f775bf7e73dd21e19faeaa2d53c0770abc9",
+    "immutable_url": "PENDING_EVIDENCE_SNAPSHOT_URL"
   }
 }

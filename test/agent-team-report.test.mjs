@@ -190,7 +190,23 @@ test("all source metadata matches the immutable audit, including non-arXiv evide
   assert.equal(byId.get("S16").submission_year, 2025);
   assert.equal(byId.get("S16").venue_year, null);
   assert.deepEqual(byId.get("S25").authors.slice(0, 3), ["Yuzhe Zhang", "Feiran Liu", "Yi Shan"]);
-  assert.match(byId.get("S26").title, /^HiddenBench: Assessing Collective Reasoning/);
+  assert.equal(byId.get("S26").title, "Systematic Failures in Collective Reasoning under Distributed Information in Multi-Agent LLMs");
+
+  const papersBySource = new Map(manifest.papers.map((paper) => [paper.source_id, paper]));
+  assert.equal(papersBySource.get("S25").experiment, "30 个任务；6 种团队规模 × 3 种通信协议 × 3 个模型 = 54 个配置，共 1,620 次实验。");
+  assert.match(papersBySource.get("S25").result, /过早提交 37\.2%.*共识失败 29\.9%.*计算错误 28\.6%/);
+  assert.doesNotMatch(papersBySource.get("S25").result, /错误共识/);
+  assert.match(papersBySource.get("S26").research_question, /分布式信息.*集体决策推理/);
+  assert.match(papersBySource.get("S26").experiment, /65 个 hidden-profile 任务、15 个模型/);
+  assert.match(papersBySource.get("S26").result, /准确率 30\.1%.*准确率 80\.7%/);
+  assert.doesNotMatch(papersBySource.get("S26").result, /完成率/);
+
+  const evidenceById = new Map(manifest.evidence.map((item) => [item.evidence_id, item]));
+  assert.match(evidenceById.get("E26").faithful_summary, /6 种团队规模 × 3 种通信协议 × 3 个模型.*1,620 次实验/);
+  assert.match(evidenceById.get("E26").faithful_summary, /过早提交 37\.2%.*共识失败 29\.9%.*计算错误 28\.6%/);
+  assert.doesNotMatch(evidenceById.get("E26").faithful_summary, /错误共识/);
+  assert.match(evidenceById.get("E27").faithful_summary, /65 个 hidden-profile 任务和 15 个模型.*准确率.*30\.1%.*80\.7%/);
+  assert.doesNotMatch(evidenceById.get("E27").faithful_summary, /完成率/);
 });
 
 test("consumer attestation is immutable, independently digested and bound to the snapshot triple", () => {

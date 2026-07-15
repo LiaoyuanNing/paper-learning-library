@@ -197,7 +197,7 @@ manifest.sources.push(
     source_id: "S26",
     source_kind: "arxiv",
     paper_id: "2505.11556",
-    title: "HiddenBench: Assessing Collective Reasoning in Multi-Agent LLMs via Hidden Profile Tasks",
+    title: "Systematic Failures in Collective Reasoning under Distributed Information in Multi-Agent LLMs",
     authors: ["Yuxuan Li", "Aoi Naito", "Hirokazu Shirado"],
     version: "v4",
     submission_year: 2025,
@@ -302,8 +302,8 @@ const newCorePapers = [
     paper_id: "2603.01045", source_id: "S25", group: "frontier",
     research_question: "agent 能否把分布式私有信息转化为可靠的联合推理？",
     mechanism: "Silo-Bench 将信息分布到 agent silo，并区分通信是否到位与推理是否正确。",
-    experiment: "30 个任务、54 个配置、1,620 次实验；覆盖拓扑、模型和信息分配。",
-    result: "Communication–Reasoning Gap 显示消息到达不等于信息被正确整合；过早结论、错误共识和计算错误是主要失败面。",
+    experiment: "30 个任务；6 种团队规模 × 3 种通信协议 × 3 个模型 = 54 个配置，共 1,620 次实验。",
+    result: "Communication–Reasoning Gap 显示消息到达不等于信息被正确整合；三类主要失败为过早提交 37.2%、共识失败 29.9%（多个 agent 提交不同答案且未同步）和计算错误 28.6%。",
     limitations: "基准任务仍是受控环境；生产系统的权限、延迟和异步失败更复杂。",
     selection: { decision: "included", reasons: ["ACL 2026 Main/Long", "直接评测分布式协调", "大规模配置与失败分解"] },
   },
@@ -312,10 +312,10 @@ for (const paper of newCorePapers) sourcePapers.set(paper.source_id, paper);
 
 sourcePapers.set("S26", {
   paper_id: "2505.11556", source_id: "S26", group: null,
-  research_question: "多 agent 能否在信息分散且输入非结构化时完成多步指令？",
+  research_question: "分布式信息条件下，多 agent 能否完成可靠的集体决策推理？",
   mechanism: "HiddenBench 将完成任务所需信息分散到不同 agent，并与获得完整信息的单 agent 对照。",
-  experiment: "65 个任务；比较分布式 MAS 与拥有完整输入的单 agent。",
-  result: "分布式 MAS 完成率 30.1%，完整信息单 agent 为 80.7%；扩大模型并未消除信息整合失败。",
+  experiment: "65 个 hidden-profile 任务、15 个模型；比较分布式 MAS 与拥有完整信息的单 agent。",
+  result: "分布式 MAS 准确率 30.1%，完整信息单 agent 准确率 80.7%；扩大模型并未消除信息整合失败。",
   limitations: "65 个受控 hidden-profile 任务不能代表全部长期协作；与 Silo-Bench 的任务结构不同。",
   selection: { decision: "extended", reasons: ["ICML 2026，直接研究分布式信息整合失败", "与 Silo-Bench 形成前沿交叉验证", "与核心 Silo-Bench 边界高度重叠，保留 18 篇核心上限"] },
 });
@@ -395,12 +395,12 @@ manifest.evidence.push(
   },
   {
     evidence_id: "E26", source_id: "S25", locator: "§3–§5; §5.2 Table 4; Figures 4–6", kind: "contrary_result",
-    faithful_summary: "Silo-Bench 用 30 个任务、54 个配置和 1,620 次实验识别 Communication–Reasoning Gap：agent 会交换信息，却常不能把分布式状态整合为正确答案；过早结论、错误共识和计算错误是主要失败面。",
+    faithful_summary: "Silo-Bench 用 30 个任务，在 6 种团队规模 × 3 种通信协议 × 3 个模型形成的 54 个配置上完成 1,620 次实验，识别 Communication–Reasoning Gap；Table 4 的三类主要失败是过早提交 37.2%、共识失败 29.9%（多个 agent 提交不同答案且未同步）和计算错误 28.6%。",
     verified_by: ["Reader", "Critic", "PM-Paper"], verified_at: "2026-07-15",
   },
   {
     evidence_id: "E27", source_id: "S26", locator: "Abstract; §3; §4.2; Tables 1–2; §5", kind: "contrary_result",
-    faithful_summary: "HiddenBench 的 65 个 hidden-profile 任务显示分布式 MAS 完成率 30.1%，而获得完整信息的单 agent 为 80.7%；信息不对称下的整合失败不会随模型规模可靠消失。",
+    faithful_summary: "HiddenBench 在 65 个 hidden-profile 任务和 15 个模型上的准确率结果显示：分布式 MAS 为 30.1%，而获得完整信息的单 agent 为 80.7%；信息不对称下的整合失败不会随模型规模可靠消失。",
     verified_by: ["Reader", "Critic", "PM-Paper"], verified_at: "2026-07-15",
   },
   {
@@ -614,7 +614,7 @@ manifest.validation.consumer_attestation = {
 
 const correctedFields = {
   S04: ["authors"], S05: ["authors"], S08: ["authors"], S09: ["title", "authors"], S12: ["title"],
-  S13: ["authors"], S14: ["title"], S15: ["venue_url"], S16: ["submission_year", "venue_year"], S17: ["venue_url"], S19: ["authors"],
+  S13: ["authors"], S14: ["title"], S15: ["venue_url"], S16: ["submission_year", "venue_year"], S17: ["venue_url"], S19: ["authors"], S26: ["title"],
 };
 const audit = {
   schema_version: "1.0.0",
@@ -623,7 +623,7 @@ const audit = {
   time_precision: "day",
   auditor: "PM-Paper",
   evidence_policy: "arXiv versioned abstract page for title/authors/version/submission year; official proceedings/OpenReview for venue year/status/track/URL; preprint when no official venue was found by cutoff",
-  tool_observations: { oo: "unavailable", arxiv_cli: "installed but returned empty arrays for known IDs and keyword probes", fallback: "official arXiv and venue pages" },
+  tool_observations: { oo: "unavailable", arxiv_cli: "installed; exact-ID search verified S25/S26, while the PDF download probe returned no result", fallback: "official versioned arXiv and venue pages" },
   publication_status_enum: ["published", "accepted", "preprint", "workshop"],
   year_semantics: { submission_year: "year of arXiv v1 submission", venue_year: "official publication/acceptance venue year; null for preprint" },
   records: manifest.sources.map((source) => ({
