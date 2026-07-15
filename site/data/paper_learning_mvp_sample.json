@@ -1,9 +1,9 @@
 {
   "dataset_id": "paper_learning_mvp_seed_v1",
-  "schema_version": "0.1.0",
+  "schema_version": "0.2.0",
   "project": "论文学习库 Paper Learning Library",
   "generated_at": "2026-07-13T04:08:14Z",
-  "source_model_for_ai_fields": "GPT-5 Codex (Multica PM-Paper runtime)",
+  "source_model_for_ai_fields": "unknown (runtime default)",
   "selection_scope": [
     "AI agent",
     "LLM tooling",
@@ -84,14 +84,37 @@
       ],
       "ai_generated": {
         "generated_at": "2026-07-13T04:08:14Z",
-        "source_model": "GPT-5 Codex (Multica PM-Paper runtime)",
+        "source_model": "unknown (runtime default)",
         "abstract_zh": "ReAct 提出让大语言模型交替生成推理轨迹与任务动作的通用范式，把链式思考式推理和与外部环境交互的行动结合起来。推理部分帮助模型维护计划、处理异常并解释决策，行动部分让模型调用知识库或环境获得新信息。论文在问答、事实验证、ALFWorld 和 WebShop 等任务上展示了更好的效果、可解释性和可信度，说明“边想边做”的结构是构建语言智能体的基础模式。",
         "learning_highlights_zh": [
           "把 reasoning trace 与 action interleaving 明确成 agent 设计模式，是后续工具调用和浏览器 agent 的基础概念。",
           "动作不只是输出结果，而是让模型主动查询环境、修正推理和降低幻觉。",
           "论文同时覆盖知识任务与交互式决策任务，适合作为论文学习库的 agent 入门必读。",
           "对产品设计的启发是：学习条目可以把论文拆成“认知机制、外部工具、反馈闭环、评测场景”四类信息。"
-        ]
+        ],
+        "provider": "OpenAI",
+        "workflow_version": "paper-learning-mvp-seed-v1",
+        "input_evidence": [
+          {
+            "kind": "arxiv_abstract",
+            "url": "https://arxiv.org/abs/2210.03629v3",
+            "source_field": "abstract",
+            "retrieved_at": "2026-07-13T04:09:32Z"
+          }
+        ],
+        "review": {
+          "status": "approved",
+          "reviewer": "PM-Paper (AGE-23 acceptance record)",
+          "reviewed_at": "2026-07-15T09:14:41.802Z",
+          "reason": "Historical MVP sample accepted before policy v1; migration records the published scope and preserves the source-only boundary.",
+          "replaces": null,
+          "withdrawn_by": null
+        },
+        "legacy_grandfathered": {
+          "approved": true,
+          "reason": "The historical static sample cannot recover an exact model slug. Policy v1 permits only the literal unknown (runtime default) value for this pre-policy artifact.",
+          "recorded_at": "2026-07-15T09:14:41.802Z"
+        }
       }
     },
     {
@@ -147,14 +170,37 @@
       ],
       "ai_generated": {
         "generated_at": "2026-07-13T04:08:14Z",
-        "source_model": "GPT-5 Codex (Multica PM-Paper runtime)",
+        "source_model": "unknown (runtime default)",
         "abstract_zh": "Toolformer 研究语言模型如何通过少量 API 示例自我标注数据，并学习在合适时机调用外部工具。论文覆盖计算器、问答系统、搜索、翻译、日历等工具，让模型学习何时调用、传什么参数以及如何把返回结果纳入后续预测。结果显示，这种自监督工具学习能提升零样本任务能力，同时尽量保留语言模型本身的生成能力。",
         "learning_highlights_zh": [
           "核心价值在于把工具使用从人工规则改成模型可学习的行为。",
           "训练数据生成流程比具体 API 更重要：少量示例触发、候选调用采样、过滤有效调用。",
           "适合放在 LLM tooling 主题下，帮助读者理解 function calling 和 tool use 的前史。",
           "产品上可把它标记为“工具学习 pipeline”样例，而不是单纯 agent 论文。"
-        ]
+        ],
+        "provider": "OpenAI",
+        "workflow_version": "paper-learning-mvp-seed-v1",
+        "input_evidence": [
+          {
+            "kind": "arxiv_abstract",
+            "url": "https://arxiv.org/abs/2302.04761v1",
+            "source_field": "abstract",
+            "retrieved_at": "2026-07-13T04:09:32Z"
+          }
+        ],
+        "review": {
+          "status": "approved",
+          "reviewer": "PM-Paper (AGE-23 acceptance record)",
+          "reviewed_at": "2026-07-15T09:14:41.802Z",
+          "reason": "Historical MVP sample accepted before policy v1; migration records the published scope and preserves the source-only boundary.",
+          "replaces": null,
+          "withdrawn_by": null
+        },
+        "legacy_grandfathered": {
+          "approved": true,
+          "reason": "The historical static sample cannot recover an exact model slug. Policy v1 permits only the literal unknown (runtime default) value for this pre-policy artifact.",
+          "recorded_at": "2026-07-15T09:14:41.802Z"
+        }
       }
     },
     {
@@ -210,14 +256,37 @@
       ],
       "ai_generated": {
         "generated_at": "2026-07-13T04:08:14Z",
-        "source_model": "GPT-5 Codex (Multica PM-Paper runtime)",
+        "source_model": "unknown (runtime default)",
         "abstract_zh": "Reflexion 提出不用更新模型权重，而是让语言智能体通过语言化反馈进行强化的框架。智能体在任务失败或收到评分后生成反思文本，并把这些反思保存在 episodic memory 中，后续尝试时检索使用，从而改善决策。论文在顺序决策、代码生成和语言推理任务中展示了效果，强调反馈信号、反思方式和记忆机制对 agent 表现的重要性。",
         "learning_highlights_zh": [
           "把“失败后的语言反思”变成可复用记忆，是 agent 迭代能力的关键设计。",
           "不需要微调权重，适合产品中的轻量闭环和在线学习体验。",
           "对 coding agent、任务代理和自动评测系统都有直接启发。",
           "学习时应关注 feedback source、memory buffer、下一轮检索三者如何连接。"
-        ]
+        ],
+        "provider": "OpenAI",
+        "workflow_version": "paper-learning-mvp-seed-v1",
+        "input_evidence": [
+          {
+            "kind": "arxiv_abstract",
+            "url": "https://arxiv.org/abs/2303.11366v4",
+            "source_field": "abstract",
+            "retrieved_at": "2026-07-13T04:09:32Z"
+          }
+        ],
+        "review": {
+          "status": "approved",
+          "reviewer": "PM-Paper (AGE-23 acceptance record)",
+          "reviewed_at": "2026-07-15T09:14:41.802Z",
+          "reason": "Historical MVP sample accepted before policy v1; migration records the published scope and preserves the source-only boundary.",
+          "replaces": null,
+          "withdrawn_by": null
+        },
+        "legacy_grandfathered": {
+          "approved": true,
+          "reason": "The historical static sample cannot recover an exact model slug. Policy v1 permits only the literal unknown (runtime default) value for this pre-policy artifact.",
+          "recorded_at": "2026-07-15T09:14:41.802Z"
+        }
       }
     },
     {
@@ -273,14 +342,37 @@
       ],
       "ai_generated": {
         "generated_at": "2026-07-13T04:08:14Z",
-        "source_model": "GPT-5 Codex (Multica PM-Paper runtime)",
+        "source_model": "unknown (runtime default)",
         "abstract_zh": "Generative Agents 展示了如何用大语言模型构建可信的人类行为模拟体。论文设计了观察、记忆、反思、计划与行动架构，让多个 agent 在类似《模拟人生》的小镇环境中形成日常活动、社会互动和涌现行为。研究表明，记忆检索、长期反思与计划模块对行为可信度很关键，是多智能体社会模拟和交互式应用的重要参考。",
         "learning_highlights_zh": [
           "这是从单任务 agent 走向多 agent 社会模拟的代表性论文。",
           "架构把 experience log、reflection、planning 明确分层，适合转成学习库中的结构化图解。",
           "评价重点不是单一准确率，而是行为可信度、涌现互动和用户可感知质量。",
           "对产品原型、角色模拟、培训沙盘和协作仿真都有启发。"
-        ]
+        ],
+        "provider": "OpenAI",
+        "workflow_version": "paper-learning-mvp-seed-v1",
+        "input_evidence": [
+          {
+            "kind": "arxiv_abstract",
+            "url": "https://arxiv.org/abs/2304.03442v2",
+            "source_field": "abstract",
+            "retrieved_at": "2026-07-13T04:09:32Z"
+          }
+        ],
+        "review": {
+          "status": "approved",
+          "reviewer": "PM-Paper (AGE-23 acceptance record)",
+          "reviewed_at": "2026-07-15T09:14:41.802Z",
+          "reason": "Historical MVP sample accepted before policy v1; migration records the published scope and preserves the source-only boundary.",
+          "replaces": null,
+          "withdrawn_by": null
+        },
+        "legacy_grandfathered": {
+          "approved": true,
+          "reason": "The historical static sample cannot recover an exact model slug. Policy v1 permits only the literal unknown (runtime default) value for this pre-policy artifact.",
+          "recorded_at": "2026-07-15T09:14:41.802Z"
+        }
       }
     },
     {
@@ -337,14 +429,37 @@
       ],
       "ai_generated": {
         "generated_at": "2026-07-13T04:08:14Z",
-        "source_model": "GPT-5 Codex (Multica PM-Paper runtime)",
+        "source_model": "unknown (runtime default)",
         "abstract_zh": "Voyager 是一个基于 LLM 的 Minecraft 终身学习 embodied agent。它结合自动课程、持续增长的代码技能库，以及利用环境反馈、执行错误和自我验证的迭代提示机制，在无需微调模型参数的情况下持续探索并获得新技能。论文显示 Voyager 能更快获得物品、移动更远、解锁科技树，并把已学技能迁移到新世界中的新任务。",
         "learning_highlights_zh": [
           "技能库是核心资产：agent 不只完成一次任务，而是积累可组合行为。",
           "自动课程让探索目标随能力增长而变化，是 open-ended learning 的产品化线索。",
           "自我验证和执行错误反馈把 LLM 调用连接成可持续改进循环。",
           "适合与 ReAct、Reflexion 对照学习：行动、反思、技能沉淀三条线如何合流。"
-        ]
+        ],
+        "provider": "OpenAI",
+        "workflow_version": "paper-learning-mvp-seed-v1",
+        "input_evidence": [
+          {
+            "kind": "arxiv_abstract",
+            "url": "https://arxiv.org/abs/2305.16291v2",
+            "source_field": "abstract",
+            "retrieved_at": "2026-07-13T04:09:32Z"
+          }
+        ],
+        "review": {
+          "status": "approved",
+          "reviewer": "PM-Paper (AGE-23 acceptance record)",
+          "reviewed_at": "2026-07-15T09:14:41.802Z",
+          "reason": "Historical MVP sample accepted before policy v1; migration records the published scope and preserves the source-only boundary.",
+          "replaces": null,
+          "withdrawn_by": null
+        },
+        "legacy_grandfathered": {
+          "approved": true,
+          "reason": "The historical static sample cannot recover an exact model slug. Policy v1 permits only the literal unknown (runtime default) value for this pre-policy artifact.",
+          "recorded_at": "2026-07-15T09:14:41.802Z"
+        }
       }
     },
     {
@@ -406,14 +521,37 @@
       ],
       "ai_generated": {
         "generated_at": "2026-07-13T04:08:14Z",
-        "source_model": "GPT-5 Codex (Multica PM-Paper runtime)",
+        "source_model": "unknown (runtime default)",
         "abstract_zh": "WebArena 构建了一个更接近真实互联网任务的可复现实验环境，用于评估语言驱动的 autonomous web agents。环境包含电商、论坛、协作开发和内容管理等功能网站，并提供地图、知识库等辅助工具。论文发布长程、多样化任务，并用功能正确性验证完成情况。实验显示，即使 GPT-4 代理也远低于人类表现，暴露了真实网页任务中的规划、探索和可靠性挑战。",
         "learning_highlights_zh": [
           "WebArena 的价值在于把 web agent 评测从玩具环境推向可复现的真实工作流。",
           "功能正确性验证比只看文字回答更适合评估 agent 是否真的完成任务。",
           "14.41% vs 78.24% 的差距清楚说明当前 agent 产品仍需要工具、状态和容错设计。",
           "学习库可把它作为“agent eval/benchmark”主题的锚点。"
-        ]
+        ],
+        "provider": "OpenAI",
+        "workflow_version": "paper-learning-mvp-seed-v1",
+        "input_evidence": [
+          {
+            "kind": "arxiv_abstract",
+            "url": "https://arxiv.org/abs/2307.13854v4",
+            "source_field": "abstract",
+            "retrieved_at": "2026-07-13T04:09:32Z"
+          }
+        ],
+        "review": {
+          "status": "approved",
+          "reviewer": "PM-Paper (AGE-23 acceptance record)",
+          "reviewed_at": "2026-07-15T09:14:41.802Z",
+          "reason": "Historical MVP sample accepted before policy v1; migration records the published scope and preserves the source-only boundary.",
+          "replaces": null,
+          "withdrawn_by": null
+        },
+        "legacy_grandfathered": {
+          "approved": true,
+          "reason": "The historical static sample cannot recover an exact model slug. Policy v1 permits only the literal unknown (runtime default) value for this pre-policy artifact.",
+          "recorded_at": "2026-07-15T09:14:41.802Z"
+        }
       }
     },
     {
@@ -476,14 +614,37 @@
       ],
       "ai_generated": {
         "generated_at": "2026-07-13T04:08:14Z",
-        "source_model": "GPT-5 Codex (Multica PM-Paper runtime)",
+        "source_model": "unknown (runtime default)",
         "abstract_zh": "AutoGen 提出一个通过多智能体对话构建 LLM 应用的开源框架。开发者可以定制不同 agent，使它们在包含 LLM、人类输入和工具的多种模式下协作，并用自然语言或代码定义交互模式。论文展示了 AutoGen 作为通用基础设施支持数学、代码、问答、运筹、在线决策和娱乐等复杂应用的能力。",
         "learning_highlights_zh": [
           "AutoGen 把 agent 从单体循环扩展到可编排的多角色对话系统。",
           "“conversation programming”是理解多 agent 应用框架的关键概念。",
           "它连接研究论文与开发者工具，适合放在 MVP 的 LLM tooling/agent framework 交叉主题。",
           "产品学习重点应放在角色定义、工具接入、人类参与和会话终止条件。"
-        ]
+        ],
+        "provider": "OpenAI",
+        "workflow_version": "paper-learning-mvp-seed-v1",
+        "input_evidence": [
+          {
+            "kind": "arxiv_abstract",
+            "url": "https://arxiv.org/abs/2308.08155v2",
+            "source_field": "abstract",
+            "retrieved_at": "2026-07-13T04:09:32Z"
+          }
+        ],
+        "review": {
+          "status": "approved",
+          "reviewer": "PM-Paper (AGE-23 acceptance record)",
+          "reviewed_at": "2026-07-15T09:14:41.802Z",
+          "reason": "Historical MVP sample accepted before policy v1; migration records the published scope and preserves the source-only boundary.",
+          "replaces": null,
+          "withdrawn_by": null
+        },
+        "legacy_grandfathered": {
+          "approved": true,
+          "reason": "The historical static sample cannot recover an exact model slug. Policy v1 permits only the literal unknown (runtime default) value for this pre-policy artifact.",
+          "recorded_at": "2026-07-15T09:14:41.802Z"
+        }
       }
     },
     {
@@ -550,15 +711,39 @@
       ],
       "ai_generated": {
         "generated_at": "2026-07-13T04:08:14Z",
-        "source_model": "GPT-5 Codex (Multica PM-Paper runtime)",
+        "source_model": "unknown (runtime default)",
         "abstract_zh": "OpenVLA 发布了一个 7B 参数的开源 vision-language-action 模型，使用大规模视觉语言数据和 97 万条真实机器人示范进行预训练，目标是让机器人策略更容易泛化和微调。论文强调开放权重、训练代码、微调笔记本和高效部署的重要性，并展示其在多机器人、多任务操作上的效果，以及通过低秩适配和量化降低使用门槛。",
         "learning_highlights_zh": [
           "OpenVLA 适合作为 VLA 主题的 MVP 种子论文，因为它把模型、数据、代码和微调路径都开放出来。",
           "它把互联网视觉语言知识迁移到机器人动作控制，代表 agent 从数字任务走向物理世界。",
           "论文值得关注的不是单一榜单分数，而是开放性、适配成本和多机器人泛化。",
           "对阅读界面而言，VLA 条目应突出输入输出模态、训练数据规模、适配方式和部署约束。"
-        ]
+        ],
+        "provider": "OpenAI",
+        "workflow_version": "paper-learning-mvp-seed-v1",
+        "input_evidence": [
+          {
+            "kind": "arxiv_abstract",
+            "url": "https://arxiv.org/abs/2406.09246v3",
+            "source_field": "abstract",
+            "retrieved_at": "2026-07-13T04:09:32Z"
+          }
+        ],
+        "review": {
+          "status": "approved",
+          "reviewer": "PM-Paper (AGE-23 acceptance record)",
+          "reviewed_at": "2026-07-15T09:14:41.802Z",
+          "reason": "Historical MVP sample accepted before policy v1; migration records the published scope and preserves the source-only boundary.",
+          "replaces": null,
+          "withdrawn_by": null
+        },
+        "legacy_grandfathered": {
+          "approved": true,
+          "reason": "The historical static sample cannot recover an exact model slug. Policy v1 permits only the literal unknown (runtime default) value for this pre-policy artifact.",
+          "recorded_at": "2026-07-15T09:14:41.802Z"
+        }
       }
     }
-  ]
+  ],
+  "provenance_policy_version": "1.0.0"
 }

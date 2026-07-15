@@ -2,10 +2,10 @@ import { REVIEW_STATUSES, READING_STATES, StudyStore } from "./study-store.js";
 import { EMPTY_FILTERS, listCustomTags, recordMatchesFilters } from "./study-filters.js";
 import { escapeHtml, safeMultilineHtml } from "./safe-html.js";
 
-const PUBLIC_AI_MODEL = "unknown (runtime default)";
 const DATASET_SOURCE = "AGE-23 · paper_learning_mvp_seed_v1";
 const READING_STATE_LABELS = { queued: "待阅读", reading: "阅读中", read: "已读", archived: "已归档" };
 const REVIEW_STATUS_LABELS = { unreviewed: "未审核", accepted: "已接受", needs_edit: "需编辑", rejected: "已拒绝" };
+const PUBLISHED_AI_REVIEW_LABELS = { pending: "待发布审核", approved: "已批准发布", rejected: "已拒绝", regenerate: "需重新生成" };
 
 const reader = document.querySelector("#reader");
 const resultSummary = document.querySelector("#result-summary");
@@ -51,6 +51,15 @@ function formatDateTime(value) {
 function externalLink(label, href) {
   if (!href) return "";
   return `<li><a href="${escapeHtml(href)}" target="_blank" rel="noreferrer">${escapeHtml(label)} <span aria-hidden="true">↗</span></a></li>`;
+}
+
+function inputEvidenceLinks(inputEvidence = []) {
+  if (!inputEvidence.length) return "<p>未提供输入证据。</p>";
+  return `<ul class="external-links" aria-label="AI 内容输入证据">${inputEvidence.map((item) => {
+    const label = item.kind || "来源证据";
+    if (item.url) return externalLink(label, item.url);
+    return `<li>${escapeHtml(label)}：${escapeHtml(item.reference || "未提供")}</li>`;
+  }).join("")}</ul>`;
 }
 
 function selectOptions(placeholder, values, selected, labels = {}) {
@@ -206,10 +215,15 @@ function renderDetail(record) {
         <ol class="highlights">${ai.learning_highlights_zh.map((highlight) => `<li>${escapeHtml(highlight)}</li>`).join("")}</ol>
         ${reviewControl(record.arxiv_id, "highlights", "学习亮点")}
         <div class="disclosure">
-          <p><strong>生成时间：</strong>${formatDate(ai.generated_at)}</p>
-          <p><strong>模型来源：</strong>${PUBLIC_AI_MODEL}</p>
+          <p><strong>生成时间：</strong>${formatDateTime(ai.generated_at)}</p>
+          <p><strong>模型 / Provider：</strong>${escapeHtml(ai.source_model)} · ${escapeHtml(ai.provider)}</p>
+          <p><strong>工作流版本：</strong>${escapeHtml(ai.workflow_version)}</p>
+          <p><strong>发布审核：</strong>${escapeHtml(PUBLISHED_AI_REVIEW_LABELS[ai.review?.status] || ai.review?.status || "未提供")}；${escapeHtml(ai.review?.reviewer || "未提供")}，${formatDateTime(ai.review?.reviewed_at)}</p>
+          <p><strong>审核理由：</strong>${escapeHtml(ai.review?.reason || "未提供")}</p>
+          <p><strong>输入来源：</strong></p>
+          ${inputEvidenceLinks(ai.input_evidence)}
           <p><strong>数据集来源：</strong>${DATASET_SOURCE}</p>
-          <p>说明：历史数据不能恢复精确模型 slug，故不做推测；以上中文摘要和亮点均为 AI 生成内容。</p>
+          <p>${ai.legacy_grandfathered ? "说明：这是已登记的历史模型身份豁免；模型 slug 无法恢复时只如实显示 unknown (runtime default)，不作推测。" : "以上中文摘要和亮点均为 AI 生成内容，须以来源和审核记录为准。"}</p>
         </div>
       </section>
     </div>

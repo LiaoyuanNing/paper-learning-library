@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0.0",
+  "policy_version": "1.0.0",
+  "governed_artifacts": [
+    {
+      "artifact_id": "age-174-v2",
+      "content_type": "agent_research_synthesis",
+      "immutable": true,
+      "provenance": {
+        "generated_at": "2026-07-15",
+        "source_model": "unknown (runtime default)",
+        "provider": "OpenAI",
+        "workflow_version": "age-174-v2-agent-first-research",
+        "input_evidence": [
+          {
+            "kind": "immutable_manifest",
+            "reference": "site/reports/agent-teams-2026/data/evidence-manifest.v2.json"
+          },
+          {
+            "kind": "immutable_evidence_snapshot",
+            "reference": "site/reports/agent-teams-2026/data/evidence-snapshot.v2.json"
+          }
+        ],
+        "review": {
+          "status": "approved",
+          "reviewer": "PM-Paper (AGE-174 release acceptance)",
+          "reviewed_at": "2026-07-15",
+          "reason": "Release v2 was independently digest-checked with claim-to-evidence-to-source closure and consumer attestation.",
+          "replaces": null,
+          "withdrawn_by": null
+        },
+        "legacy_grandfathered": {
+          "approved": true,
+          "reason": "The immutable v2 release discloses a runtime family but does not preserve an exact recoverable model slug. Policy v1 records the only permitted historical unknown-model exemption without altering the digest-covered artifact.",
+          "recorded_at": "2026-07-15"
+        }
+      },
+      "immutable_snapshot": {
+        "manifest_path": "site/reports/agent-teams-2026/data/evidence-manifest.v2.json",
+        "snapshot_path": "site/reports/agent-teams-2026/data/evidence-snapshot.v2.json",
+        "manifest_version": "2.0.0",
+        "snapshot_digest": "sha256:1cab26e51999310225fb08e05621ddfdbcad7ca3e478bc37181af0d614484a8c"
+      },
+      "claim_contract": {
+        "required_fields": [
+          "claim_id",
+          "supporting_evidence_ids",
+          "contradicting_evidence_ids",
+          "strength"
+        ],
+        "source_closure": "claim -> evidence -> source"
+      },
+      "promotion": {
+        "requires_librarian_review": true,
+        "rule": "Long-term knowledge promotion must be deduplicated and reviewed by Librarian; report approval never bypasses this rule."
+      }
+    }
+  ]
+}
