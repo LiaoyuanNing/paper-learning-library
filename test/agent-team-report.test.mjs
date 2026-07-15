@@ -27,7 +27,7 @@ function digest(value) {
   const snapshot = structuredClone(value);
   delete snapshot.snapshot_digest;
   delete snapshot.stable_url;
-  delete snapshot.validation?.manifest_consumer_trial?.snapshot_digest;
+  delete snapshot.validation?.manifest_consumer_trial;
   return `sha256:${createHash("sha256").update(JSON.stringify(canonicalize(snapshot))).digest("hex")}`;
 }
 

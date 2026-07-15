@@ -2,8 +2,8 @@
   "schema_version": "1.0.0",
   "evidence_pack_id": "age-174-agent-teams-2026",
   "manifest_version": "2.0.0",
-  "snapshot_digest": "sha256:a41b16aff38b6a5e61a8f174863bdb973c8f3678aa39cef784c6091aa1af422a",
-  "digest_method": "SHA-256 of recursively key-sorted JSON after omitting top-level snapshot_digest, stable_url, and validation.manifest_consumer_trial.snapshot_digest; stable_url is excluded so it can point to the first immutable snapshot commit without a self-referential hash",
+  "snapshot_digest": "sha256:6b97d52f21e8cea60cf21c043da9d27fabdd41b90d446c556fdd57972cde857f",
+  "digest_method": "SHA-256 of recursively key-sorted JSON after omitting top-level snapshot_digest, stable_url, and validation.manifest_consumer_trial; these self-referential validation fields are excluded so stable_url can point to the first immutable evidence snapshot commit",
   "supersedes": [
     {
       "manifest_version": "1.0.0",
@@ -2339,7 +2339,7 @@
       "questions_file": "research/agent-teams-2026/manifest-consumer-questions.v2.md",
       "record_file": "research/agent-teams-2026/manifest-consumer-validation.v2.md",
       "manifest_version": "2.0.0",
-      "snapshot_digest": "sha256:a41b16aff38b6a5e61a8f174863bdb973c8f3678aa39cef784c6091aa1af422a",
+      "snapshot_digest": "sha256:6b97d52f21e8cea60cf21c043da9d27fabdd41b90d446c556fdd57972cde857f",
       "immutable_url": "PENDING_COMMIT_PIN"
     },
     "metadata_audit": {

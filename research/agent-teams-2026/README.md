@@ -17,7 +17,7 @@ AGE-174 的可复用研究资产。v2 review candidate 由 `site/reports/agent-t
 
 - 语义版本：修正文案但不改变结论为 patch；新增兼容字段/论文为 minor；改变 claim/evidence 语义为 major。
 - 每个版本冻结 `knowledge_cutoff`、arXiv 版本、发表状态与 immutable raw URL。
-- v2 `snapshot_digest` 按 manifest 声明的 `digest_method` 计算；排除自引用字段与 `stable_url`，使后者能固定到首个 immutable commit SHA，格式化差异不改变摘要。
+- v2 `snapshot_digest` 按 manifest 声明的 `digest_method` 计算；排除自引用的 consumer validation、摘要本身与 `stable_url`，使后者能固定到首个 immutable evidence commit SHA，格式化差异不改变摘要。
 - `metadata-audit.v2.json` 逐 source 记录 title/authors/version/year/status/venue URL 核对快照；自动测试要求与 manifest 一致。
 - 新版不可覆盖旧 tag；通过 `supersedes` 和 `CHANGELOG.md` 建立链路。
 

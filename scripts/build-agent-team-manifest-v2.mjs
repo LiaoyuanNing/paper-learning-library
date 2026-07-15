@@ -20,7 +20,7 @@ const digest = (value) => {
   const snapshot = structuredClone(value);
   delete snapshot.snapshot_digest;
   delete snapshot.stable_url;
-  delete snapshot.validation?.manifest_consumer_trial?.snapshot_digest;
+  delete snapshot.validation?.manifest_consumer_trial;
   return `sha256:${createHash("sha256").update(JSON.stringify(canonicalize(snapshot))).digest("hex")}`;
 };
 
@@ -353,7 +353,7 @@ manifest.retrieval = [
   { query_id: "Q10", query: "single agent multi-agent equal thinking token budget", source: "official arXiv", run_at: "2026-07-15T11:50:00Z", coverage_note: "matched-budget 强单体基线" },
   { query_id: "Q11", query: "single agent baseline multi-agent workflow homogeneous collapse", source: "official arXiv", run_at: "2026-07-15T12:00:00Z", coverage_note: "同质 workflow 可折叠边界" },
 ];
-manifest.digest_method = "SHA-256 of recursively key-sorted JSON after omitting top-level snapshot_digest, stable_url, and validation.manifest_consumer_trial.snapshot_digest; stable_url is excluded so it can point to the first immutable snapshot commit without a self-referential hash";
+manifest.digest_method = "SHA-256 of recursively key-sorted JSON after omitting top-level snapshot_digest, stable_url, and validation.manifest_consumer_trial; these self-referential validation fields are excluded so stable_url can point to the first immutable evidence snapshot commit";
 manifest.stable_url = stableUrl;
 manifest.supersedes = [{
   manifest_version: "1.0.0",
