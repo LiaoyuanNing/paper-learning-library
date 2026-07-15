@@ -303,7 +303,7 @@ const newCorePapers = [
     research_question: "agent 能否把分布式私有信息转化为可靠的联合推理？",
     mechanism: "Silo-Bench 将信息分布到 agent silo，并区分通信是否到位与推理是否正确。",
     experiment: "30 个任务；6 种团队规模 × 3 种通信协议 × 3 个模型 = 54 个配置，共 1,620 次实验。",
-    result: "Communication–Reasoning Gap 显示消息到达不等于信息被正确整合；三类主要失败为过早提交 37.2%、共识失败 29.9%（多个 agent 提交不同答案且未同步）和计算错误 28.6%。",
+    result: "Communication–Reasoning Gap 显示消息到达不等于信息被正确整合；三类主要失败为 Premature Submission（过早提交）37.2%、Consensus Failure（共识失败：多个 agent 提交不同答案且未同步）29.9% 和 Computation Error（计算错误）28.6%。",
     limitations: "基准任务仍是受控环境；生产系统的权限、延迟和异步失败更复杂。",
     selection: { decision: "included", reasons: ["ACL 2026 Main/Long", "直接评测分布式协调", "大规模配置与失败分解"] },
   },
@@ -395,7 +395,7 @@ manifest.evidence.push(
   },
   {
     evidence_id: "E26", source_id: "S25", locator: "§3–§5; §5.2 Table 4; Figures 4–6", kind: "contrary_result",
-    faithful_summary: "Silo-Bench 用 30 个任务，在 6 种团队规模 × 3 种通信协议 × 3 个模型形成的 54 个配置上完成 1,620 次实验，识别 Communication–Reasoning Gap；Table 4 的三类主要失败是过早提交 37.2%、共识失败 29.9%（多个 agent 提交不同答案且未同步）和计算错误 28.6%。",
+    faithful_summary: "Silo-Bench 用 30 个任务，在 6 种团队规模 × 3 种通信协议 × 3 个模型形成的 54 个配置上完成 1,620 次实验，识别 Communication–Reasoning Gap；Table 4 的三类主要失败是 Premature Submission（过早提交）37.2%、Consensus Failure（共识失败：多个 agent 提交不同答案且未同步）29.9% 和 Computation Error（计算错误）28.6%。",
     verified_by: ["Reader", "Critic", "PM-Paper"], verified_at: "2026-07-15",
   },
   {

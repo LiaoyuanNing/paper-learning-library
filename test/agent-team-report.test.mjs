@@ -194,7 +194,7 @@ test("all source metadata matches the immutable audit, including non-arXiv evide
 
   const papersBySource = new Map(manifest.papers.map((paper) => [paper.source_id, paper]));
   assert.equal(papersBySource.get("S25").experiment, "30 个任务；6 种团队规模 × 3 种通信协议 × 3 个模型 = 54 个配置，共 1,620 次实验。");
-  assert.match(papersBySource.get("S25").result, /过早提交 37\.2%.*共识失败 29\.9%.*计算错误 28\.6%/);
+  assert.match(papersBySource.get("S25").result, /Premature Submission（过早提交）37\.2%.*Consensus Failure（共识失败：多个 agent 提交不同答案且未同步）29\.9%.*Computation Error（计算错误）28\.6%/);
   assert.doesNotMatch(papersBySource.get("S25").result, /错误共识/);
   assert.match(papersBySource.get("S26").research_question, /分布式信息.*集体决策推理/);
   assert.match(papersBySource.get("S26").experiment, /65 个 hidden-profile 任务、15 个模型/);
@@ -203,7 +203,7 @@ test("all source metadata matches the immutable audit, including non-arXiv evide
 
   const evidenceById = new Map(manifest.evidence.map((item) => [item.evidence_id, item]));
   assert.match(evidenceById.get("E26").faithful_summary, /6 种团队规模 × 3 种通信协议 × 3 个模型.*1,620 次实验/);
-  assert.match(evidenceById.get("E26").faithful_summary, /过早提交 37\.2%.*共识失败 29\.9%.*计算错误 28\.6%/);
+  assert.match(evidenceById.get("E26").faithful_summary, /Premature Submission（过早提交）37\.2%.*Consensus Failure（共识失败：多个 agent 提交不同答案且未同步）29\.9%.*Computation Error（计算错误）28\.6%/);
   assert.doesNotMatch(evidenceById.get("E26").faithful_summary, /错误共识/);
   assert.match(evidenceById.get("E27").faithful_summary, /65 个 hidden-profile 任务和 15 个模型.*准确率.*30\.1%.*80\.7%/);
   assert.doesNotMatch(evidenceById.get("E27").faithful_summary, /完成率/);
@@ -229,6 +229,10 @@ test("consumer attestation is immutable, independently digested and bound to the
   for (const exact of [attestation.consumer_identity, manifest.manifest_version, manifest.snapshot_digest, manifest.evidence_snapshot_url]) {
     assert.ok(transcript.includes(exact), `transcript must contain ${exact}`);
   }
+  assert.match(transcript, /Systematic Failures in Collective Reasoning under Distributed Information in Multi-Agent LLMs/);
+  assert.match(transcript, /30\.1% accuracy.*80\.7% accuracy/s);
+  assert.doesNotMatch(transcript, /completed 30\.1%|30\.1% completion/i);
+  assert.match(transcript, /Premature Submission.*37\.2%.*Consensus Failure.*29\.9%.*Computation Error.*28\.6%/s);
 });
 
 test("all machine output URLs resolve to the intended absolute artifact", () => {
