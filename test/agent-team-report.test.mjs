@@ -230,7 +230,7 @@ test("consumer attestation is immutable, independently digested and bound to the
     assert.ok(transcript.includes(exact), `transcript must contain ${exact}`);
   }
   assert.match(transcript, /Systematic Failures in Collective Reasoning under Distributed Information in Multi-Agent LLMs/);
-  assert.match(transcript, /30\.1% accuracy.*80\.7% accuracy/s);
+  assert.match(transcript, /accuracy was 30\.1%.*accuracy was 80\.7%/s);
   assert.doesNotMatch(transcript, /completed 30\.1%|30\.1% completion/i);
   assert.match(transcript, /Premature Submission.*37\.2%.*Consensus Failure.*29\.9%.*Computation Error.*28\.6%/s);
 });
