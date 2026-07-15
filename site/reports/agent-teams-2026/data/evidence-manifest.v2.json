@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "evidence_pack_id": "age-174-agent-teams-2026",
   "manifest_version": "2.0.0",
-  "snapshot_digest": "sha256:e605ba81760bfcd0c4a55595a0da8f775bf7e73dd21e19faeaa2d53c0770abc9",
+  "snapshot_digest": "sha256:60e407daded0ab44fc46d9d4fbd3d89635fb34c20f2ee358ec806723d6f0dfe0",
   "digest_method": "SHA-256 of recursively key-sorted evidence payload after omitting top-level snapshot_digest, stable_url, evidence_snapshot_url, evidence_snapshot, validation.manifest_consumer_trial, and validation.consumer_attestation",
   "supersedes": [
     {
@@ -2593,7 +2593,7 @@
     ],
     "metadata_audit": {
       "status": "passed",
-      "record_url": "PENDING_AUDIT_URL",
+      "record_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/c7edc113ac506e78bb422e23d943be50b388d62c/research/agent-teams-2026/metadata-audit.v2.json",
       "source_count": 27,
       "required_fields": [
         "source_kind",
@@ -2614,7 +2614,7 @@
       "consumer_identity": "PENDING_CONSUMER_IDENTITY",
       "prior_involvement": "none",
       "manifest_version": "2.0.0",
-      "snapshot_digest": "sha256:e605ba81760bfcd0c4a55595a0da8f775bf7e73dd21e19faeaa2d53c0770abc9",
+      "snapshot_digest": "sha256:60e407daded0ab44fc46d9d4fbd3d89635fb34c20f2ee358ec806723d6f0dfe0",
       "input_url": "PENDING_EVIDENCE_SNAPSHOT_URL",
       "attestation_url": "PENDING_ATTESTATION_URL",
       "attestation_digest": "PENDING_ATTESTATION_DIGEST",
@@ -2630,7 +2630,7 @@
     "generated_on": "2026-07-15",
     "time_precision": "day",
     "release_state": "review_candidate_not_deployed",
-    "metadata_audit_url": "PENDING_AUDIT_URL"
+    "metadata_audit_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/c7edc113ac506e78bb422e23d943be50b388d62c/research/agent-teams-2026/metadata-audit.v2.json"
   },
   "promotion_candidates": [
     {
@@ -2851,7 +2851,7 @@
   "evidence_snapshot": {
     "status": "pending_commit_pin",
     "manifest_version": "2.0.0",
-    "snapshot_digest": "sha256:e605ba81760bfcd0c4a55595a0da8f775bf7e73dd21e19faeaa2d53c0770abc9",
+    "snapshot_digest": "sha256:60e407daded0ab44fc46d9d4fbd3d89635fb34c20f2ee358ec806723d6f0dfe0",
     "immutable_url": "PENDING_EVIDENCE_SNAPSHOT_URL"
   }
 }
