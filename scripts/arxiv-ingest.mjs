@@ -12,6 +12,7 @@ import { access, mkdir, open, readFile, realpath, rename, unlink, writeFile } fr
 import { spawn } from "node:child_process";
 import { basename, dirname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
+import { validateEnrichmentArtifact } from "./governance-validator.mjs";
 
 const ROOT = process.cwd();
 const REPOSITORY_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -873,6 +874,17 @@ function initialEnrichment(id, version) {
     last_error: null,
     generated_at: null,
     source_model: null,
+    provider: null,
+    workflow_version: null,
+    input_evidence: [],
+    review: {
+      status: "pending",
+      reviewer: null,
+      reviewed_at: null,
+      reason: null,
+      replaces: null,
+      withdrawn_by: null,
+    },
     content: null,
   });
   return {
@@ -887,6 +899,17 @@ function initialEnrichment(id, version) {
 function clearActiveArtifact(job) {
   job.generated_at = null;
   job.source_model = null;
+  job.provider = null;
+  job.workflow_version = null;
+  job.input_evidence = [];
+  job.review = {
+    status: "pending",
+    reviewer: null,
+    reviewed_at: null,
+    reason: null,
+    replaces: null,
+    withdrawn_by: null,
+  };
   job.content = null;
 }
 
@@ -928,6 +951,17 @@ function applyAiMode(enrichment, mode, onlyJob = null) {
     job.last_error = null;
     job.generated_at = now();
     job.source_model = "test-fake-provider/v1";
+    job.provider = "test-fixture";
+    job.workflow_version = "arxiv-ingest-fixture-v1";
+    job.input_evidence = [{ kind: "test_fixture", reference: "--ai-mode fake" }];
+    job.review = {
+      status: "pending",
+      reviewer: null,
+      reviewed_at: null,
+      reason: null,
+      replaces: null,
+      withdrawn_by: null,
+    };
     job.content = jobName === "translation"
       ? "[TEST ONLY] Fake translated abstract. This is never copied to site/data."
       : ["[TEST ONLY] Fake highlight one.", "[TEST ONLY] Fake highlight two."];
@@ -1016,6 +1050,7 @@ async function ingestOne(dataDir, index, options, record, source) {
 
   const enrichment = await readJson(filePaths.enrichment, initialEnrichment(id, version));
   applyAiMode(enrichment, options.aiMode);
+  validateEnrichmentArtifact(enrichment, `${id}${version} enrichment`, { allowTestOnly: true });
   await writeJson(filePaths.enrichment, enrichment);
   await writeJson(filePaths.paper, paper);
 
@@ -1256,6 +1291,7 @@ async function retryAiJobs(dataDir, options) {
       const job = enrichment.jobs[options.job];
       if (job.state !== "failed" || !job.retryable) continue;
       applyAiMode(enrichment, options.aiMode, options.job);
+      validateEnrichmentArtifact(enrichment, `${id}${version} enrichment`, { allowTestOnly: true });
       await writeJson(enrichmentPath, enrichment);
       retried.push({ arxiv_id: id, arxiv_version: version, job: options.job, status: enrichment.jobs[options.job] });
     }

@@ -20,7 +20,7 @@ npm run preview
 
 打开终端显示的地址（默认 `http://127.0.0.1:4173`）。可直接打开单篇详情，例如 `http://127.0.0.1:4173/?paper=2210.03629`。
 
-`npm run check` 会验证 8 条阅读基线记录、唯一 arXiv ID、必填字段、四条学习亮点、不存全文姿态，以及 v2 研究证据包的 49 篇候选、18 篇核心、27 个来源、28 条 evidence、长期知识指针与独立消费契约。`site/` 是 GitHub Pages 的直接发布目录。
+`npm run check` 会验证 8 条阅读基线记录、唯一 arXiv ID、必填字段、四条学习亮点、不存全文姿态，以及 v2 研究证据包的 49 篇候选、18 篇核心、27 个来源、28 条 evidence、长期知识指针与独立消费契约。它也会拒绝缺 provenance / review 的公开 AI 内容、未许可全文、test/mock/fake 内容、AI/raw 混写，并校验 AGE-174 v2 的 sidecar 治理登记没有改动 digest-covered payload。`site/` 是 GitHub Pages 的直接发布目录。
 
 ## 本地学习工作流（AGE-24）
 
@@ -30,9 +30,9 @@ npm run preview
 
 ## 数据与 AI 披露
 
-数据来自经独立验收的 AGE-23 附件 `paper_learning_mvp_sample.json`。公开页将原始 arXiv 字段与 AI 生成中文内容分区显示，并保留生成日期、数据集来源与 `full_text_stored=false` 版权姿态。
+数据来自经独立验收的 AGE-23 附件 `paper_learning_mvp_sample.json`。公开页将原始 arXiv 字段与 AI 生成中文内容分区显示，并保留生成日期、模型 / provider、工作流版本、输入证据、发布审核与 `full_text_stored=false` 版权姿态。完整操作政策见 [`docs/ai-provenance-review-copyright-policy.md`](docs/ai-provenance-review-copyright-policy.md)，审核时可复制 [`docs/ai-review-checklist.md`](docs/ai-review-checklist.md)。
 
-历史记录无法恢复精确模型 slug，因此页面统一显示 `unknown (runtime default)`，不猜测具体模型。
+历史记录无法恢复精确模型 slug，因此页面统一显示 `unknown (runtime default)`，不猜测具体模型；每条都在 policy v1 的显式 grandfathered 记录下发布。新内容不得使用这项豁免。若需把其他预政策数据迁移到同一契约，运行 `npm run migrate:governance`，再运行 `npm run check`。
 
 ## 可重复的 arXiv 采集（AGE-21）
 

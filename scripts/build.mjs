@@ -13,6 +13,11 @@ const requiredFiles = [
   "site/reports/agent-teams-2026/report.css",
   "site/reports/agent-teams-2026/report.js",
   "site/reports/agent-teams-2026/data/evidence-manifest.v1.json",
+  "site/reports/agent-teams-2026/data/evidence-manifest.v2.json",
+  "site/reports/agent-teams-2026/data/evidence-snapshot.v2.json",
+  "governance/agent-research-governance.v1.json",
+  "docs/ai-provenance-review-copyright-policy.md",
+  "docs/ai-review-checklist.md",
 ];
 
 await Promise.all(requiredFiles.map((file) => access(file)));
