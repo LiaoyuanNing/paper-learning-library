@@ -58,7 +58,8 @@
     {
       "artifact_id": "age-396-v1",
       "content_type": "tool_reliability_research_synthesis",
-      "immutable": true,
+      "immutable": false,
+      "release_status": "mutable_candidate",
       "provenance": {
         "generated_at": "2026-08-03T12:00:00+08:00",
         "source_model": "gpt-5.6",
@@ -72,16 +73,16 @@
           "status": "approved",
           "reviewer": "PM-Paper (scope and content contract handoff)",
           "reviewed_at": "2026-08-03T12:00:00+08:00",
-          "reason": "AGE-396 locked the research contract; this release preserves its claims, boundaries and consumer contract.",
+          "reason": "AGE-396 locked the research contract; this mutable candidate preserves its claims and boundaries for independent release review.",
           "replaces": null,
           "withdrawn_by": null
         }
       },
-      "immutable_snapshot": {
+      "candidate_snapshot": {
         "manifest_path": "site/reports/tool-reliability-2026/data/evidence-manifest.v1.json",
         "snapshot_path": "site/reports/tool-reliability-2026/data/evidence-snapshot.v1.json",
         "manifest_version": "1.0.0",
-        "snapshot_digest": "sha256:14cc3adc689441c97596cdf039625747f06ac816cbb34dd8b3aaf4818adbbe62"
+        "snapshot_digest": "sha256:5f781d2467cdfb20febf09cc6d7683e2a632bebf7151dc63dde15194eb405c86"
       },
       "claim_contract": {
         "required_fields": ["claim_id", "supporting_evidence_ids", "contradicting_evidence_ids", "strength"],

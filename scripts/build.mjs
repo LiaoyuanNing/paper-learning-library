@@ -21,7 +21,6 @@ const requiredFiles = [
   "site/reports/tool-reliability-2026/data/evidence-manifest.v1.json",
   "site/reports/tool-reliability-2026/data/evidence-snapshot.v1.json",
   "research/tool-reliability-2026/metadata-audit.v1.json",
-  "research/tool-reliability-2026/consumer-attestation.v1.json",
   "governance/agent-research-governance.v1.json",
   "docs/ai-provenance-review-copyright-policy.md",
   "docs/ai-review-checklist.md",

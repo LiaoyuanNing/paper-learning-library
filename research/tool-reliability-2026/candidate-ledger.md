@@ -1,6 +1,6 @@
-# Candidate ledger
+# Core set and adjudicated exclusions
 
-机器可读完整 ledger 位于 manifest。本轮纳入 S01–S17；每条皆为直接服务工具闭环、终态、稳定性、引用或 freshness 的一手 arXiv 来源。
+机器可读记录位于 manifest。本轮保留 S01–S17 作为 core set，并补充四条已裁定 exclusion/background。它不是完整候选扫描：没有可用的候选分母、retention ratio、candidate cap 或“连续十篇不改变 claim”停止信号。每条 core 皆为服务工具闭环、终态、稳定性、引用或 freshness 的一手 arXiv 来源。
 
 | 论文 | 决定 | 理由 |
 |---|---|---|
