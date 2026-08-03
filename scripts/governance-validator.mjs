@@ -221,6 +221,36 @@ function evidencePayload(manifest) {
   return payload;
 }
 
+async function validateToolReliabilityArtifact(registry, root) {
+  const artifact = registry.governed_artifacts?.find((item) => item.artifact_id === "age-396-v1");
+  if (!artifact || artifact.immutable !== true) fail("age-396-v1 must be an immutable governed artifact");
+  validateProvenance(artifact.provenance, "age-396-v1.provenance", { requireApproved: true });
+  if (artifact.provenance.source_model === LEGACY_UNKNOWN_MODEL) fail("age-396-v1 cannot use the legacy unknown-model exemption");
+  const manifest = JSON.parse(await readFile(join(root, artifact.immutable_snapshot.manifest_path), "utf8"));
+  const snapshot = JSON.parse(await readFile(join(root, artifact.immutable_snapshot.snapshot_path), "utf8"));
+  if (manifest.artifact_id !== "age-396-v1" || manifest.immutable !== true) fail("age-396-v1 manifest identity/immutability is invalid");
+  if (manifest.snapshot_digest !== artifact.immutable_snapshot.snapshot_digest || snapshot.snapshot_digest !== manifest.snapshot_digest) fail("age-396-v1 digest differs from governed record");
+  if (sha256(evidencePayload(manifest)) !== manifest.snapshot_digest) fail("age-396-v1 manifest digest no longer verifies");
+  assert.deepEqual(snapshot.evidence_payload, evidencePayload(manifest), "AGE-396 snapshot payload must equal the digest-covered manifest payload");
+  const sourceIds = new Set(manifest.sources.map((item) => item.source_id));
+  const evidenceIds = new Set(manifest.evidence.map((item) => item.evidence_id));
+  if (manifest.claims.filter((item) => item.type === "direct_answer").length !== 10) fail("age-396 needs exactly 10 direct answers");
+  if (manifest.claims.filter((item) => item.type === "product_recommendation").length !== 8) fail("age-396 needs exactly 8 product recommendations");
+  if (manifest.critic_records?.length !== 5) fail("age-396 needs five critic records");
+  for (const evidence of manifest.evidence) {
+    if (!sourceIds.has(evidence.source_id) || !evidence.locator || !evidence.faithful_summary) fail(`age-396 evidence is not closed: ${evidence.evidence_id}`);
+  }
+  for (const claim of manifest.claims) for (const id of [...claim.supporting_evidence_ids, ...claim.contradicting_evidence_ids]) if (!evidenceIds.has(id)) fail(`age-396 claim points to missing evidence: ${claim.claim_id}`);
+  for (const source of manifest.sources) {
+    if (!/^https:\/\/arxiv\.org\/abs\/\d{4}\.\d{4,5}v\d+$/.test(source.official_url)) fail(`age-396 source URL is not a versioned arXiv record: ${source.source_id}`);
+    if (!source.source_checked_on || !source.venue_status) fail(`age-396 source lacks audit status: ${source.source_id}`);
+  }
+  const audit = JSON.parse(await readFile(join(root, manifest.validation.metadata_audit), "utf8"));
+  const attestation = JSON.parse(await readFile(join(root, manifest.validation.consumer_attestation), "utf8"));
+  if (audit.records.length !== manifest.sources.length) fail("age-396 metadata audit does not cover every source");
+  if (attestation.snapshot_digest !== manifest.snapshot_digest || !attestation.question_results.every((item) => item.result === "PASS")) fail("age-396 consumer attestation is not bound to the snapshot");
+}
+
 export async function validateAgentResearchGovernance(root) {
   const registryPath = join(root, "governance", "agent-research-governance.v1.json");
   const registry = JSON.parse(await readFile(registryPath, "utf8"));
@@ -261,6 +291,7 @@ export async function validateAgentResearchGovernance(root) {
     if (!sourceIds.has(item.source_id)) fail(`AGE-174 evidence ${item.evidence_id} points to missing source ${item.source_id}`);
   }
   validateNoTestOnlyContent(manifest, "AGE-174 manifest");
+  await validateToolReliabilityArtifact(registry, root);
   return registry;
 }
 

@@ -1,0 +1,944 @@
+{
+  "artifact_id": "age-396-v1",
+  "manifest_version": "1.0.0",
+  "snapshot_digest": "sha256:14cc3adc689441c97596cdf039625747f06ac816cbb34dd8b3aaf4818adbbe62",
+  "digest_method": "SHA-256 of recursively key-sorted JSON after omitting snapshot_digest, stable_url, evidence_snapshot_url, evidence_snapshot, validation.consumer_attestation",
+  "evidence_payload": {
+    "schema_version": "1.0.0",
+    "artifact_id": "age-396-v1",
+    "manifest_version": "1.0.0",
+    "immutable": true,
+    "digest_method": "SHA-256 of recursively key-sorted JSON after omitting snapshot_digest, stable_url, evidence_snapshot_url, evidence_snapshot, validation.consumer_attestation",
+    "request": {
+      "knowledge_cutoff": "2026-08-03T23:59:59+08:00",
+      "subject_window_start": "2023-01-01",
+      "query_clusters": [
+        "tool-use API retrieval evaluation",
+        "web agent real environment execution evaluation",
+        "long-horizon reliability pass@k",
+        "deep research factual grounding citation verification"
+      ],
+      "candidate_cap": 40,
+      "core_target": "12–18",
+      "stop_signal": "连续十篇不改变 claim 即停止",
+      "exclusions": [
+        "无 agent/tool loop 的一般 RAG",
+        "纯 prompt 技巧",
+        "无实验的产品宣称"
+      ]
+    },
+    "ai_provenance": {
+      "generated_at": "2026-08-03T12:00:00+08:00",
+      "source_model": "gpt-5.6",
+      "provider": "OpenAI",
+      "workflow_version": "age-396-episode002-evidence-synthesis-v1",
+      "input_evidence": [
+        {
+          "kind": "research_handoff",
+          "reference": "AGE-400 attachment episode002-research-handoff.md"
+        },
+        {
+          "kind": "official_arxiv_abstract_pages",
+          "reference": "research/tool-reliability-2026/metadata-audit.v1.json"
+        }
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "PM-Paper (scope and content contract handoff)",
+        "reviewed_at": "2026-08-03T12:00:00+08:00",
+        "reason": "AGE-396 locked the research contract; this release preserves its claims, boundaries and consumer contract.",
+        "replaces": null,
+        "withdrawn_by": null
+      }
+    },
+    "sources": [
+      {
+        "source_id": "S01",
+        "source_kind": "arxiv",
+        "arxiv_id": "2210.03629",
+        "version": "v3",
+        "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+        "role": "reasoning-action 闭环",
+        "limitation": "受控 QA 与交互环境",
+        "official_url": "https://arxiv.org/abs/2210.03629v3",
+        "source_checked_on": "2026-08-03",
+        "publication_status": "published",
+        "venue_status": "venue confirmed: ICLR 2023",
+        "full_text_stored": false
+      },
+      {
+        "source_id": "S02",
+        "source_kind": "arxiv",
+        "arxiv_id": "2302.04761",
+        "version": "v1",
+        "title": "Toolformer: Language Models Can Teach Themselves to Use Tools",
+        "role": "自监督 API 决策",
+        "limitation": "固定 API、离线条件",
+        "official_url": "https://arxiv.org/abs/2302.04761v1",
+        "source_checked_on": "2026-08-03",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed",
+        "full_text_stored": false
+      },
+      {
+        "source_id": "S03",
+        "source_kind": "arxiv",
+        "arxiv_id": "2307.16789",
+        "version": "v2",
+        "title": "ToolLLM: Facilitating Large Language Models to Master 16000+ Real-world APIs",
+        "role": "API retrieval + search tree",
+        "limitation": "LLM 参与数据、路径与评审",
+        "official_url": "https://arxiv.org/abs/2307.16789v2",
+        "source_checked_on": "2026-08-03",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed",
+        "full_text_stored": false
+      },
+      {
+        "source_id": "S04",
+        "source_kind": "arxiv",
+        "arxiv_id": "2306.06070",
+        "version": "v3",
+        "title": "Mind2Web: Towards a Generalist Agent for the Web",
+        "role": "DOM 候选筛选",
+        "limitation": "演示数据不等于端到端成功",
+        "official_url": "https://arxiv.org/abs/2306.06070v3",
+        "source_checked_on": "2026-08-03",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed",
+        "full_text_stored": false
+      },
+      {
+        "source_id": "S05",
+        "source_kind": "arxiv",
+        "arxiv_id": "2307.13854",
+        "version": "v4",
+        "title": "WebArena: A Realistic Web Environment for Building Autonomous Agents",
+        "role": "可执行网页终态验证",
+        "limitation": "沙箱与真实网络不同",
+        "official_url": "https://arxiv.org/abs/2307.13854v4",
+        "source_checked_on": "2026-08-03",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed",
+        "full_text_stored": false
+      },
+      {
+        "source_id": "S06",
+        "source_kind": "arxiv",
+        "arxiv_id": "2308.03688",
+        "version": "v3",
+        "title": "AgentBench: Evaluating LLMs as Agents",
+        "role": "多环境长程失败分类",
+        "limitation": "非单一机制因果试验",
+        "official_url": "https://arxiv.org/abs/2308.03688v3",
+        "source_checked_on": "2026-08-03",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed",
+        "full_text_stored": false
+      },
+      {
+        "source_id": "S07",
+        "source_kind": "arxiv",
+        "arxiv_id": "2311.12983",
+        "version": "v1",
+        "title": "GAIA: a benchmark for General AI Assistants",
+        "role": "通用工具 / 浏览基线",
+        "limitation": "题集有限且随模型更新漂移",
+        "official_url": "https://arxiv.org/abs/2311.12983v1",
+        "source_checked_on": "2026-08-03",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed",
+        "full_text_stored": false
+      },
+      {
+        "source_id": "S08",
+        "source_kind": "arxiv",
+        "arxiv_id": "2401.13919",
+        "version": "v4",
+        "title": "WebVoyager: Building an End-to-End Web Agent with Large Multimodal Models",
+        "role": "真实网页多模态闭环",
+        "limitation": "GPT-4V judge 与环境漂移限制可比性",
+        "official_url": "https://arxiv.org/abs/2401.13919v4",
+        "source_checked_on": "2026-08-03",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed",
+        "full_text_stored": false
+      },
+      {
+        "source_id": "S09",
+        "source_kind": "arxiv",
+        "arxiv_id": "2404.07972",
+        "version": "v2",
+        "title": "OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks in Real Computer Environments",
+        "role": "跨 app OS 执行终态",
+        "limitation": "主要覆盖开源 / 受控桌面",
+        "official_url": "https://arxiv.org/abs/2404.07972v2",
+        "source_checked_on": "2026-08-03",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed",
+        "full_text_stored": false
+      },
+      {
+        "source_id": "S10",
+        "source_kind": "arxiv",
+        "arxiv_id": "2406.12045",
+        "version": "v1",
+        "title": "τ-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains",
+        "role": "多轮用户 + API 可靠性",
+        "limitation": "用户由 LLM 模拟、业务域有限",
+        "official_url": "https://arxiv.org/abs/2406.12045v1",
+        "source_checked_on": "2026-08-03",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed",
+        "full_text_stored": false
+      },
+      {
+        "source_id": "S11",
+        "source_kind": "arxiv",
+        "arxiv_id": "2310.06770",
+        "version": "v3",
+        "title": "SWE-bench: Can Language Models Resolve Real-World GitHub Issues?",
+        "role": "真实软件任务终态",
+        "limitation": "代码域特异",
+        "official_url": "https://arxiv.org/abs/2310.06770v3",
+        "source_checked_on": "2026-08-03",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed",
+        "full_text_stored": false
+      },
+      {
+        "source_id": "S12",
+        "source_kind": "arxiv",
+        "arxiv_id": "2505.23419",
+        "version": "v2",
+        "title": "SWE-bench Goes Live!",
+        "role": "freshness / 污染反例",
+        "limitation": "软件任务域特异",
+        "official_url": "https://arxiv.org/abs/2505.23419v2",
+        "source_checked_on": "2026-08-03",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed",
+        "full_text_stored": false
+      },
+      {
+        "source_id": "S13",
+        "source_kind": "arxiv",
+        "arxiv_id": "2504.12516",
+        "version": "v1",
+        "title": "BrowseComp: A Simple Yet Challenging Benchmark for Browsing Agents",
+        "role": "持续 web 搜寻",
+        "limitation": "回避长报告、歧义与真实 query 分布",
+        "official_url": "https://arxiv.org/abs/2504.12516v1",
+        "source_checked_on": "2026-08-03",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed",
+        "full_text_stored": false
+      },
+      {
+        "source_id": "S14",
+        "source_kind": "arxiv",
+        "arxiv_id": "2602.08543",
+        "version": "v2",
+        "title": "GISA: A Benchmark for General Information-Seeking Assistant",
+        "role": "live 信息检索子集",
+        "limitation": "精确匹配不覆盖写作质量",
+        "official_url": "https://arxiv.org/abs/2602.08543v2",
+        "source_checked_on": "2026-08-03",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed",
+        "full_text_stored": false
+      },
+      {
+        "source_id": "S15",
+        "source_kind": "arxiv",
+        "arxiv_id": "2511.07685",
+        "version": "v1",
+        "title": "ResearchRubrics: A Benchmark of Prompts and Rubrics For Evaluating Deep Research Agents",
+        "role": "深研报告 rubric",
+        "limitation": "近期预印本，须降级",
+        "official_url": "https://arxiv.org/abs/2511.07685v1",
+        "source_checked_on": "2026-08-03",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed",
+        "full_text_stored": false
+      },
+      {
+        "source_id": "S16",
+        "source_kind": "arxiv",
+        "arxiv_id": "2512.01948",
+        "version": "v2",
+        "title": "How Far Are We from Genuinely Useful Deep Research Agents?",
+        "role": "深研失败 taxonomy / FINDER",
+        "limitation": "近期预印本，须列 contested",
+        "official_url": "https://arxiv.org/abs/2512.01948v2",
+        "source_checked_on": "2026-08-03",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed",
+        "full_text_stored": false
+      },
+      {
+        "source_id": "S17",
+        "source_kind": "arxiv",
+        "arxiv_id": "2605.27700",
+        "version": "v1",
+        "title": "CiteCheck: Retrieval-Grounded Detection of LLM Citation Hallucinations in Scientific Text",
+        "role": "引用元数据核验",
+        "limitation": "不证明主张蕴含",
+        "official_url": "https://arxiv.org/abs/2605.27700v1",
+        "source_checked_on": "2026-08-03",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed",
+        "full_text_stored": false
+      }
+    ],
+    "evidence": [
+      {
+        "evidence_id": "E01",
+        "source_id": "S01",
+        "locator": "arXiv abstract page; versioned record",
+        "faithful_summary": "reasoning-action 闭环",
+        "verified_by": [
+          "official arXiv abstract page"
+        ],
+        "checked_on": "2026-08-03"
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "S02",
+        "locator": "arXiv abstract page; versioned record",
+        "faithful_summary": "自监督 API 决策",
+        "verified_by": [
+          "official arXiv abstract page"
+        ],
+        "checked_on": "2026-08-03"
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "S03",
+        "locator": "arXiv abstract page; versioned record",
+        "faithful_summary": "API retrieval + search tree",
+        "verified_by": [
+          "official arXiv abstract page"
+        ],
+        "checked_on": "2026-08-03"
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "S04",
+        "locator": "arXiv abstract page; versioned record",
+        "faithful_summary": "DOM 候选筛选",
+        "verified_by": [
+          "official arXiv abstract page"
+        ],
+        "checked_on": "2026-08-03"
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "S05",
+        "locator": "arXiv abstract page; versioned record",
+        "faithful_summary": "可执行网页终态验证",
+        "verified_by": [
+          "official arXiv abstract page"
+        ],
+        "checked_on": "2026-08-03"
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "S06",
+        "locator": "arXiv abstract page; versioned record",
+        "faithful_summary": "多环境长程失败分类",
+        "verified_by": [
+          "official arXiv abstract page"
+        ],
+        "checked_on": "2026-08-03"
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "S07",
+        "locator": "arXiv abstract page; versioned record",
+        "faithful_summary": "通用工具 / 浏览基线",
+        "verified_by": [
+          "official arXiv abstract page"
+        ],
+        "checked_on": "2026-08-03"
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "S08",
+        "locator": "arXiv abstract page; versioned record",
+        "faithful_summary": "真实网页多模态闭环",
+        "verified_by": [
+          "official arXiv abstract page"
+        ],
+        "checked_on": "2026-08-03"
+      },
+      {
+        "evidence_id": "E09",
+        "source_id": "S09",
+        "locator": "arXiv abstract page; versioned record",
+        "faithful_summary": "跨 app OS 执行终态",
+        "verified_by": [
+          "official arXiv abstract page"
+        ],
+        "checked_on": "2026-08-03"
+      },
+      {
+        "evidence_id": "E10",
+        "source_id": "S10",
+        "locator": "arXiv abstract page; versioned record",
+        "faithful_summary": "多轮用户 + API 可靠性",
+        "verified_by": [
+          "official arXiv abstract page"
+        ],
+        "checked_on": "2026-08-03"
+      },
+      {
+        "evidence_id": "E11",
+        "source_id": "S11",
+        "locator": "arXiv abstract page; versioned record",
+        "faithful_summary": "真实软件任务终态",
+        "verified_by": [
+          "official arXiv abstract page"
+        ],
+        "checked_on": "2026-08-03"
+      },
+      {
+        "evidence_id": "E12",
+        "source_id": "S12",
+        "locator": "arXiv abstract page; versioned record",
+        "faithful_summary": "freshness / 污染反例",
+        "verified_by": [
+          "official arXiv abstract page"
+        ],
+        "checked_on": "2026-08-03"
+      },
+      {
+        "evidence_id": "E13",
+        "source_id": "S13",
+        "locator": "arXiv abstract page; versioned record",
+        "faithful_summary": "持续 web 搜寻",
+        "verified_by": [
+          "official arXiv abstract page"
+        ],
+        "checked_on": "2026-08-03"
+      },
+      {
+        "evidence_id": "E14",
+        "source_id": "S14",
+        "locator": "arXiv abstract page; versioned record",
+        "faithful_summary": "live 信息检索子集",
+        "verified_by": [
+          "official arXiv abstract page"
+        ],
+        "checked_on": "2026-08-03"
+      },
+      {
+        "evidence_id": "E15",
+        "source_id": "S15",
+        "locator": "arXiv abstract page; versioned record",
+        "faithful_summary": "深研报告 rubric",
+        "verified_by": [
+          "official arXiv abstract page"
+        ],
+        "checked_on": "2026-08-03"
+      },
+      {
+        "evidence_id": "E16",
+        "source_id": "S16",
+        "locator": "arXiv abstract page; versioned record",
+        "faithful_summary": "深研失败 taxonomy / FINDER",
+        "verified_by": [
+          "official arXiv abstract page"
+        ],
+        "checked_on": "2026-08-03"
+      },
+      {
+        "evidence_id": "E17",
+        "source_id": "S17",
+        "locator": "arXiv abstract page; versioned record",
+        "faithful_summary": "引用元数据核验",
+        "verified_by": [
+          "official arXiv abstract page"
+        ],
+        "checked_on": "2026-08-03"
+      }
+    ],
+    "claims": [
+      {
+        "claim_id": "C01",
+        "type": "direct_answer",
+        "strength": "strong",
+        "text": "工具不是单独功能；在有可观察反馈的任务里，plan → action/tool → observation → update 闭环比只生成答案更能抑制错误传播。",
+        "scope": "只对 ReAct 的受控 QA / 交互环境成立。",
+        "supporting_evidence_ids": [
+          "E01"
+        ],
+        "contradicting_evidence_ids": []
+      },
+      {
+        "claim_id": "C02",
+        "type": "direct_answer",
+        "strength": "conditional",
+        "text": "先筛选工具 / DOM 候选可降低上下文噪声与调用成本，并提升选择效果。",
+        "scope": "它不等于最终答案正确；候选召回失败会不可逆漏证。",
+        "supporting_evidence_ids": [
+          "E02",
+          "E03",
+          "E04"
+        ],
+        "contradicting_evidence_ids": []
+      },
+      {
+        "claim_id": "C03",
+        "type": "direct_answer",
+        "strength": "strong",
+        "text": "评测应验收任务终态或事实约束，不能只比 action string 或文风。",
+        "scope": "沙箱终态不能替代真实外部世界，也不是安全或合规证明。",
+        "supporting_evidence_ids": [
+          "E05",
+          "E09",
+          "E10",
+          "E11"
+        ],
+        "contradicting_evidence_ids": []
+      },
+      {
+        "claim_id": "C04",
+        "type": "direct_answer",
+        "strength": "strong",
+        "text": "长程 agent 当前成功率与人类有大缺口，失败会随步骤累积。",
+        "scope": "不同 benchmark 的百分比不可横向排名。",
+        "supporting_evidence_ids": [
+          "E05",
+          "E07",
+          "E09",
+          "E10",
+          "E11"
+        ],
+        "contradicting_evidence_ids": []
+      },
+      {
+        "claim_id": "C05",
+        "type": "direct_answer",
+        "strength": "conditional",
+        "text": "自动 judge 可扩展，但必须保留可复现终态 / 参考答案并抽样人工复核。",
+        "scope": "仅 GPT judge 会把评测偏差藏入分数。",
+        "supporting_evidence_ids": [
+          "E05",
+          "E08",
+          "E10"
+        ],
+        "contradicting_evidence_ids": []
+      },
+      {
+        "claim_id": "C06",
+        "type": "direct_answer",
+        "strength": "strong",
+        "text": "可靠性至少要重复运行并报告最差 / 多次通过率，而非一次成功。",
+        "scope": "本 episode 不主张小样本结果具有统计显著性。",
+        "supporting_evidence_ids": [
+          "E10"
+        ],
+        "contradicting_evidence_ids": []
+      },
+      {
+        "claim_id": "C07",
+        "type": "direct_answer",
+        "strength": "strong",
+        "text": "原始引用的存在与元数据正确须经检索加结构化比对；这与来源蕴含该 claim 是两个 gate。",
+        "scope": "CiteCheck 只证明前者；后者须由 evidence excerpt 和 Critic 覆盖。",
+        "supporting_evidence_ids": [
+          "E17"
+        ],
+        "contradicting_evidence_ids": []
+      },
+      {
+        "claim_id": "C08",
+        "type": "direct_answer",
+        "strength": "conditional",
+        "text": "深研报告不能由 QA 分数替代；rubric / checklist 能暴露 grounding、推理与综合遗漏。",
+        "scope": "两项深研来源都是近期预印本。",
+        "supporting_evidence_ids": [
+          "E15",
+          "E16"
+        ],
+        "contradicting_evidence_ids": []
+      },
+      {
+        "claim_id": "C09",
+        "type": "direct_answer",
+        "strength": "strong",
+        "text": "静态评测易受数据污染和环境过时影响；fresh / live slices 应作为回归补充。",
+        "scope": "live 环境会降低可复现性并增加维护成本。",
+        "supporting_evidence_ids": [
+          "E12",
+          "E14"
+        ],
+        "contradicting_evidence_ids": []
+      },
+      {
+        "claim_id": "C10",
+        "type": "direct_answer",
+        "strength": "unknown",
+        "text": "尚无跨研究、网页、API 与 OS 任务的统一证据能给出最优的单一 agent 编排或固定 token 预算。",
+        "scope": "不得把某一个 leaderboard 当作产品可靠性证明。",
+        "supporting_evidence_ids": [
+          "E05",
+          "E09",
+          "E10",
+          "E15"
+        ],
+        "contradicting_evidence_ids": []
+      },
+      {
+        "claim_id": "P01",
+        "type": "product_recommendation",
+        "strength": "recommendation",
+        "title": "发布前双 gate",
+        "text": "把每条实质结论绑定 claim → evidence excerpt/location → immutable source URL/version，并将主张蕴含检查与引文元数据检查分开。",
+        "side_effects": "编辑成本与页面数据量增加。",
+        "supporting_evidence_ids": [
+          "E17"
+        ],
+        "contradicting_evidence_ids": []
+      },
+      {
+        "claim_id": "P02",
+        "type": "product_recommendation",
+        "strength": "recommendation",
+        "title": "两级检索",
+        "text": "候选发现层可宽，core evidence 层只收一手且固定版本。",
+        "side_effects": "覆盖率与时效可能下降。",
+        "supporting_evidence_ids": [
+          "E02",
+          "E03",
+          "E04"
+        ],
+        "contradicting_evidence_ids": []
+      },
+      {
+        "claim_id": "P03",
+        "type": "product_recommendation",
+        "strength": "recommendation",
+        "title": "可审计选择",
+        "text": "保留 query、cutoff、candidate ledger、排除理由和 stop signal。",
+        "side_effects": "研究过程暴露，维护负担上升。",
+        "supporting_evidence_ids": [
+          "E13",
+          "E14"
+        ],
+        "contradicting_evidence_ids": []
+      },
+      {
+        "claim_id": "P04",
+        "type": "product_recommendation",
+        "strength": "recommendation",
+        "title": "Critic 发布门",
+        "text": "至少五个核心 claim 主动查找反例、范围外推与 source-claim 不闭合。",
+        "side_effects": "出稿变慢，可能产出更多 conditional / unknown。",
+        "supporting_evidence_ids": [
+          "E15",
+          "E16",
+          "E17"
+        ],
+        "contradicting_evidence_ids": []
+      },
+      {
+        "claim_id": "P05",
+        "type": "product_recommendation",
+        "strength": "recommendation",
+        "title": "只读 consumer",
+        "text": "用三个只读 manifest 问答验收 source provenance、反例限制与产品 gate。",
+        "side_effects": "需维护回答金标准。",
+        "supporting_evidence_ids": [
+          "E10",
+          "E17"
+        ],
+        "contradicting_evidence_ids": []
+      },
+      {
+        "claim_id": "P06",
+        "type": "product_recommendation",
+        "strength": "recommendation",
+        "title": "重复运行",
+        "text": "用小样本重复运行 / 独立 reviewer，而非只记录一次生成。",
+        "side_effects": "模型与人工成本上升。",
+        "supporting_evidence_ids": [
+          "E10"
+        ],
+        "contradicting_evidence_ids": []
+      },
+      {
+        "claim_id": "P07",
+        "type": "product_recommendation",
+        "strength": "recommendation",
+        "title": "三面网页 QA",
+        "text": "将网页 QA 分为 desktop、390px 与 console，并断言结论、限制、引用与 provenance 可见。",
+        "side_effects": "前端测试维护增加。",
+        "supporting_evidence_ids": [
+          "E05",
+          "E08"
+        ],
+        "contradicting_evidence_ids": []
+      },
+      {
+        "claim_id": "P08",
+        "type": "product_recommendation",
+        "strength": "recommendation",
+        "title": "freshness 预算",
+        "text": "标注访问日期，并在下一 episode 前复核 live / 近期 preprint；不自动重写 immutable release。",
+        "side_effects": "可能出现多个并存版本。",
+        "supporting_evidence_ids": [
+          "E12",
+          "E14"
+        ],
+        "contradicting_evidence_ids": []
+      }
+    ],
+    "candidate_ledger": [
+      {
+        "arxiv_id": "2210.03629",
+        "decision": "included",
+        "reason": "reasoning-action 闭环",
+        "query_cluster": "core set",
+        "original_url": "https://arxiv.org/abs/2210.03629v3"
+      },
+      {
+        "arxiv_id": "2302.04761",
+        "decision": "included",
+        "reason": "自监督 API 决策",
+        "query_cluster": "core set",
+        "original_url": "https://arxiv.org/abs/2302.04761v1"
+      },
+      {
+        "arxiv_id": "2307.16789",
+        "decision": "included",
+        "reason": "API retrieval + search tree",
+        "query_cluster": "core set",
+        "original_url": "https://arxiv.org/abs/2307.16789v2"
+      },
+      {
+        "arxiv_id": "2306.06070",
+        "decision": "included",
+        "reason": "DOM 候选筛选",
+        "query_cluster": "core set",
+        "original_url": "https://arxiv.org/abs/2306.06070v3"
+      },
+      {
+        "arxiv_id": "2307.13854",
+        "decision": "included",
+        "reason": "可执行网页终态验证",
+        "query_cluster": "core set",
+        "original_url": "https://arxiv.org/abs/2307.13854v4"
+      },
+      {
+        "arxiv_id": "2308.03688",
+        "decision": "included",
+        "reason": "多环境长程失败分类",
+        "query_cluster": "core set",
+        "original_url": "https://arxiv.org/abs/2308.03688v3"
+      },
+      {
+        "arxiv_id": "2311.12983",
+        "decision": "included",
+        "reason": "通用工具 / 浏览基线",
+        "query_cluster": "core set",
+        "original_url": "https://arxiv.org/abs/2311.12983v1"
+      },
+      {
+        "arxiv_id": "2401.13919",
+        "decision": "included",
+        "reason": "真实网页多模态闭环",
+        "query_cluster": "core set",
+        "original_url": "https://arxiv.org/abs/2401.13919v4"
+      },
+      {
+        "arxiv_id": "2404.07972",
+        "decision": "included",
+        "reason": "跨 app OS 执行终态",
+        "query_cluster": "core set",
+        "original_url": "https://arxiv.org/abs/2404.07972v2"
+      },
+      {
+        "arxiv_id": "2406.12045",
+        "decision": "included",
+        "reason": "多轮用户 + API 可靠性",
+        "query_cluster": "core set",
+        "original_url": "https://arxiv.org/abs/2406.12045v1"
+      },
+      {
+        "arxiv_id": "2310.06770",
+        "decision": "included",
+        "reason": "真实软件任务终态",
+        "query_cluster": "core set",
+        "original_url": "https://arxiv.org/abs/2310.06770v3"
+      },
+      {
+        "arxiv_id": "2505.23419",
+        "decision": "included",
+        "reason": "freshness / 污染反例",
+        "query_cluster": "core set",
+        "original_url": "https://arxiv.org/abs/2505.23419v2"
+      },
+      {
+        "arxiv_id": "2504.12516",
+        "decision": "included",
+        "reason": "持续 web 搜寻",
+        "query_cluster": "core set",
+        "original_url": "https://arxiv.org/abs/2504.12516v1"
+      },
+      {
+        "arxiv_id": "2602.08543",
+        "decision": "included",
+        "reason": "live 信息检索子集",
+        "query_cluster": "core set",
+        "original_url": "https://arxiv.org/abs/2602.08543v2"
+      },
+      {
+        "arxiv_id": "2511.07685",
+        "decision": "included",
+        "reason": "深研报告 rubric",
+        "query_cluster": "core set",
+        "original_url": "https://arxiv.org/abs/2511.07685v1"
+      },
+      {
+        "arxiv_id": "2512.01948",
+        "decision": "included",
+        "reason": "深研失败 taxonomy / FINDER",
+        "query_cluster": "core set",
+        "original_url": "https://arxiv.org/abs/2512.01948v2"
+      },
+      {
+        "arxiv_id": "2605.27700",
+        "decision": "included",
+        "reason": "引用元数据核验",
+        "query_cluster": "core set",
+        "original_url": "https://arxiv.org/abs/2605.27700v1"
+      },
+      {
+        "arxiv_id": "2402.05930",
+        "title": "WebLINX",
+        "decision": "excluded",
+        "reason": "网页导航而非本问题的检索 / 证据闭环",
+        "query_cluster": "web agent",
+        "original_url": "https://arxiv.org/abs/2402.05930"
+      },
+      {
+        "arxiv_id": "2405.14573",
+        "title": "AndroidWorld",
+        "decision": "excluded",
+        "reason": "移动 OS 域偏离",
+        "query_cluster": "real environment",
+        "original_url": "https://arxiv.org/abs/2405.14573"
+      },
+      {
+        "arxiv_id": "2508.13186",
+        "title": "MM-BrowseComp",
+        "decision": "background",
+        "reason": "多模态检索反例",
+        "query_cluster": "web retrieval",
+        "original_url": "https://arxiv.org/abs/2508.13186"
+      },
+      {
+        "arxiv_id": "2606.17458",
+        "title": "ICBCBench",
+        "decision": "background",
+        "reason": "行业报告双轨测量，金融域不直接泛化",
+        "query_cluster": "deep research",
+        "original_url": "https://arxiv.org/abs/2606.17458"
+      }
+    ],
+    "critic_records": [
+      {
+        "critic_id": "C01",
+        "claim_id": "C01",
+        "counter_search": "是否仅是 prompt / benchmark 特异",
+        "result": "保留 strong，但限定为受控交互任务。"
+      },
+      {
+        "critic_id": "C03",
+        "claim_id": "C03",
+        "counter_search": "终态是否遗漏过程伤害 / 成本",
+        "result": "加入终态通过不是安全 / 合规证明。"
+      },
+      {
+        "critic_id": "C04",
+        "claim_id": "C04",
+        "counter_search": "不同论文成功率能否横比",
+        "result": "不能；禁止汇总为平均成功率。"
+      },
+      {
+        "critic_id": "C07",
+        "claim_id": "C07",
+        "counter_search": "CiteCheck 能否验证文字蕴含",
+        "result": "不能；保留独立 entailment / Critic gate。"
+      },
+      {
+        "critic_id": "C09",
+        "claim_id": "C09",
+        "counter_search": "live benchmark 是否仍可复现",
+        "result": "部分不能；snapshot 加 dated result 是折中。"
+      }
+    ],
+    "consumer_contract": {
+      "questions": [
+        {
+          "question_id": "Q1",
+          "question": "为什么 citation metadata valid 仍不足以发布一条产品结论？",
+          "expected_answer": "S17 只覆盖引用存在与元数据；C07 要求另设 source-to-claim entailment gate。"
+        },
+        {
+          "question_id": "Q2",
+          "question": "哪一组证据支持不能只报一次成功率，其限制是什么？",
+          "expected_answer": "S10 / τ-bench 的 pass^k；限制是 LLM 模拟用户与有限业务域。"
+        },
+        {
+          "question_id": "Q3",
+          "question": "Paper 发布 gate 需要哪些字段，为什么不能修改 AGE-174？",
+          "expected_answer": "request/cutoff/query/ledger/source/evidence/claim/critic/provenance/snapshot/digest；AGE-174 是独立 immutable release。"
+        }
+      ]
+    },
+    "report": {
+      "claim_links": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10"
+      ],
+      "recommendation_links": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07",
+        "P08"
+      ],
+      "method": [
+        "候选层以四个检索簇发现，core 层只保留一手 arXiv 抽象页；本环境没有可运行的 oo connector，因此记录了官方页回退。",
+        "每个 source、evidence 与 claim 通过 ID 闭合；快照保存 digest-covered payload，发布后的修订应新开版本。",
+        "网页由本 manifest 渲染；consumer、Critic 与浏览器 QA 都是发布门禁，不以一次生成替代验证。"
+      ],
+      "limitations": [
+        "本研究不保留论文全文、PDF 或大段原文。",
+        "多数 venue 未逐一访问独立会议页，因此诚实标为未独立确认。",
+        "近期 preprint 的结论被降级解读，不能当作稳定共识。",
+        "跨 benchmark 数字没有被汇总为排名或平均成功率。"
+      ]
+    },
+    "validation": {
+      "metadata_audit": "research/tool-reliability-2026/metadata-audit.v1.json",
+      "browser_qa": "research/tool-reliability-2026/browser-qa.v1.md",
+      "queries": "research/tool-reliability-2026/queries.md",
+      "candidate_ledger": "research/tool-reliability-2026/candidate-ledger.md"
+    }
+  }
+}

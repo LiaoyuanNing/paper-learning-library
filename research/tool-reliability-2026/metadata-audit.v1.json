@@ -1,0 +1,234 @@
+{
+  "schema_version": "1.0.0",
+  "artifact_id": "age-396-v1",
+  "audited_on": "2026-08-03",
+  "auditor": "Dev-Paper",
+  "evidence_policy": "official versioned arXiv abstract page for title/version/date; venue is preprint / venue not independently confirmed unless an official venue pointer was independently read",
+  "tool_observations": {
+    "oo_connector": "unavailable: oo executable remained unavailable after skill-directed install attempt",
+    "fallback": "official arXiv abstract pages"
+  },
+  "records": [
+    {
+      "source_id": "S01",
+      "checked_url": "https://arxiv.org/abs/2210.03629v3",
+      "checked_on": "2026-08-03",
+      "outcome": "verified_arxiv_metadata",
+      "snapshot": {
+        "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+        "arxiv_id": "2210.03629",
+        "version": "v3",
+        "publication_status": "published",
+        "venue_status": "venue confirmed: ICLR 2023"
+      }
+    },
+    {
+      "source_id": "S02",
+      "checked_url": "https://arxiv.org/abs/2302.04761v1",
+      "checked_on": "2026-08-03",
+      "outcome": "verified_arxiv_metadata",
+      "snapshot": {
+        "title": "Toolformer: Language Models Can Teach Themselves to Use Tools",
+        "arxiv_id": "2302.04761",
+        "version": "v1",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed"
+      }
+    },
+    {
+      "source_id": "S03",
+      "checked_url": "https://arxiv.org/abs/2307.16789v2",
+      "checked_on": "2026-08-03",
+      "outcome": "verified_arxiv_metadata",
+      "snapshot": {
+        "title": "ToolLLM: Facilitating Large Language Models to Master 16000+ Real-world APIs",
+        "arxiv_id": "2307.16789",
+        "version": "v2",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed"
+      }
+    },
+    {
+      "source_id": "S04",
+      "checked_url": "https://arxiv.org/abs/2306.06070v3",
+      "checked_on": "2026-08-03",
+      "outcome": "verified_arxiv_metadata",
+      "snapshot": {
+        "title": "Mind2Web: Towards a Generalist Agent for the Web",
+        "arxiv_id": "2306.06070",
+        "version": "v3",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed"
+      }
+    },
+    {
+      "source_id": "S05",
+      "checked_url": "https://arxiv.org/abs/2307.13854v4",
+      "checked_on": "2026-08-03",
+      "outcome": "verified_arxiv_metadata",
+      "snapshot": {
+        "title": "WebArena: A Realistic Web Environment for Building Autonomous Agents",
+        "arxiv_id": "2307.13854",
+        "version": "v4",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed"
+      }
+    },
+    {
+      "source_id": "S06",
+      "checked_url": "https://arxiv.org/abs/2308.03688v3",
+      "checked_on": "2026-08-03",
+      "outcome": "verified_arxiv_metadata",
+      "snapshot": {
+        "title": "AgentBench: Evaluating LLMs as Agents",
+        "arxiv_id": "2308.03688",
+        "version": "v3",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed"
+      }
+    },
+    {
+      "source_id": "S07",
+      "checked_url": "https://arxiv.org/abs/2311.12983v1",
+      "checked_on": "2026-08-03",
+      "outcome": "verified_arxiv_metadata",
+      "snapshot": {
+        "title": "GAIA: a benchmark for General AI Assistants",
+        "arxiv_id": "2311.12983",
+        "version": "v1",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed"
+      }
+    },
+    {
+      "source_id": "S08",
+      "checked_url": "https://arxiv.org/abs/2401.13919v4",
+      "checked_on": "2026-08-03",
+      "outcome": "verified_arxiv_metadata",
+      "snapshot": {
+        "title": "WebVoyager: Building an End-to-End Web Agent with Large Multimodal Models",
+        "arxiv_id": "2401.13919",
+        "version": "v4",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed"
+      }
+    },
+    {
+      "source_id": "S09",
+      "checked_url": "https://arxiv.org/abs/2404.07972v2",
+      "checked_on": "2026-08-03",
+      "outcome": "verified_arxiv_metadata",
+      "snapshot": {
+        "title": "OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks in Real Computer Environments",
+        "arxiv_id": "2404.07972",
+        "version": "v2",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed"
+      }
+    },
+    {
+      "source_id": "S10",
+      "checked_url": "https://arxiv.org/abs/2406.12045v1",
+      "checked_on": "2026-08-03",
+      "outcome": "verified_arxiv_metadata",
+      "snapshot": {
+        "title": "τ-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains",
+        "arxiv_id": "2406.12045",
+        "version": "v1",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed"
+      }
+    },
+    {
+      "source_id": "S11",
+      "checked_url": "https://arxiv.org/abs/2310.06770v3",
+      "checked_on": "2026-08-03",
+      "outcome": "verified_arxiv_metadata",
+      "snapshot": {
+        "title": "SWE-bench: Can Language Models Resolve Real-World GitHub Issues?",
+        "arxiv_id": "2310.06770",
+        "version": "v3",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed"
+      }
+    },
+    {
+      "source_id": "S12",
+      "checked_url": "https://arxiv.org/abs/2505.23419v2",
+      "checked_on": "2026-08-03",
+      "outcome": "verified_arxiv_metadata",
+      "snapshot": {
+        "title": "SWE-bench Goes Live!",
+        "arxiv_id": "2505.23419",
+        "version": "v2",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed"
+      }
+    },
+    {
+      "source_id": "S13",
+      "checked_url": "https://arxiv.org/abs/2504.12516v1",
+      "checked_on": "2026-08-03",
+      "outcome": "verified_arxiv_metadata",
+      "snapshot": {
+        "title": "BrowseComp: A Simple Yet Challenging Benchmark for Browsing Agents",
+        "arxiv_id": "2504.12516",
+        "version": "v1",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed"
+      }
+    },
+    {
+      "source_id": "S14",
+      "checked_url": "https://arxiv.org/abs/2602.08543v2",
+      "checked_on": "2026-08-03",
+      "outcome": "verified_arxiv_metadata",
+      "snapshot": {
+        "title": "GISA: A Benchmark for General Information-Seeking Assistant",
+        "arxiv_id": "2602.08543",
+        "version": "v2",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed"
+      }
+    },
+    {
+      "source_id": "S15",
+      "checked_url": "https://arxiv.org/abs/2511.07685v1",
+      "checked_on": "2026-08-03",
+      "outcome": "verified_arxiv_metadata",
+      "snapshot": {
+        "title": "ResearchRubrics: A Benchmark of Prompts and Rubrics For Evaluating Deep Research Agents",
+        "arxiv_id": "2511.07685",
+        "version": "v1",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed"
+      }
+    },
+    {
+      "source_id": "S16",
+      "checked_url": "https://arxiv.org/abs/2512.01948v2",
+      "checked_on": "2026-08-03",
+      "outcome": "verified_arxiv_metadata",
+      "snapshot": {
+        "title": "How Far Are We from Genuinely Useful Deep Research Agents?",
+        "arxiv_id": "2512.01948",
+        "version": "v2",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed"
+      }
+    },
+    {
+      "source_id": "S17",
+      "checked_url": "https://arxiv.org/abs/2605.27700v1",
+      "checked_on": "2026-08-03",
+      "outcome": "verified_arxiv_metadata",
+      "snapshot": {
+        "title": "CiteCheck: Retrieval-Grounded Detection of LLM Citation Hallucinations in Scientific Text",
+        "arxiv_id": "2605.27700",
+        "version": "v1",
+        "publication_status": "preprint",
+        "venue_status": "venue not independently confirmed"
+      }
+    }
+  ]
+}
