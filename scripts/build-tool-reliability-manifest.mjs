@@ -29,7 +29,7 @@ const sourceRows = [
   ["S17", "2605.27700", "v1", "CiteCheck: Retrieval-Grounded Detection of LLM Citation Hallucinations in Scientific Text", "引用元数据核验，不证明 source-to-claim 蕴含", "不证明主张蕴含", "preprint", "venue not independently confirmed"],
 ];
 const venueLocators = {
-  S05: "https://openreview.net/forum?id=oKnDwg0ljZ",
+  S05: "https://openreview.net/forum?id=oKn9c6ytLx",
   S06: "https://arxiv.org/abs/2308.03688v3",
   S11: "https://arxiv.org/abs/2310.06770v3",
 };

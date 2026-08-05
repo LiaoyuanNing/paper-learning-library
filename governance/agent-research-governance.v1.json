@@ -82,7 +82,7 @@
         "manifest_path": "site/reports/tool-reliability-2026/data/evidence-manifest.v1.json",
         "snapshot_path": "site/reports/tool-reliability-2026/data/evidence-snapshot.v1.json",
         "manifest_version": "1.0.0",
-        "snapshot_digest": "sha256:5f781d2467cdfb20febf09cc6d7683e2a632bebf7151dc63dde15194eb405c86"
+        "snapshot_digest": "sha256:8147187b94cb51f2eb8b64a4375e71942537fd47ce7688ed4affba36023b2257"
       },
       "claim_contract": {
         "required_fields": ["claim_id", "supporting_evidence_ids", "contradicting_evidence_ids", "strength"],

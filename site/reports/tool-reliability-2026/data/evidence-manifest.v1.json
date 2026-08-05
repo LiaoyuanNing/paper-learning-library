@@ -115,7 +115,7 @@
       "source_checked_on": null,
       "publication_status": "published",
       "venue_status": "ICLR 2024 (Master documented independent check; direct OpenReview recheck was challenge-blocked)",
-      "venue_locator": "https://openreview.net/forum?id=oKnDwg0ljZ",
+      "venue_locator": "https://openreview.net/forum?id=oKn9c6ytLx",
       "full_text_stored": false
     },
     {
@@ -915,11 +915,11 @@
     "queries": "research/tool-reliability-2026/queries.md",
     "candidate_ledger": "research/tool-reliability-2026/candidate-ledger.md"
   },
-  "snapshot_digest": "sha256:5f781d2467cdfb20febf09cc6d7683e2a632bebf7151dc63dde15194eb405c86",
+  "snapshot_digest": "sha256:8147187b94cb51f2eb8b64a4375e71942537fd47ce7688ed4affba36023b2257",
   "evidence_snapshot": {
     "artifact_id": "age-396-v1",
     "manifest_version": "1.0.0",
-    "snapshot_digest": "sha256:5f781d2467cdfb20febf09cc6d7683e2a632bebf7151dc63dde15194eb405c86",
+    "snapshot_digest": "sha256:8147187b94cb51f2eb8b64a4375e71942537fd47ce7688ed4affba36023b2257",
     "release_status": "mutable_candidate",
     "candidate_note": "No merge, tag, stable URL, or blind-consumer result exists for this candidate."
   }
