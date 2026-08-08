@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="工具、检索与证据闭环可靠性：Episode 002 的可审计中文研究报告。" />
+    <title>工具与检索可靠性 · Paper Learning Library</title>
+    <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./report.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <header class="report-header"><div class="shell header-inner">
+      <a class="brand" href="../../" aria-label="返回论文学习库"><span class="brand-mark" aria-hidden="true">P</span><span><strong>Paper Learning Library</strong><small>Research brief · AGE-396</small></span></a>
+      <nav aria-label="报告导航"><a href="#findings">结论</a><a href="#recommendations">产品 gate</a><a href="#papers">证据</a><a href="#method">方法</a></nav>
+    </div></header>
+    <main id="main-content" tabindex="-1">
+      <section class="hero shell" aria-labelledby="page-title">
+        <div><p class="eyebrow">AGENT-FIRST RESEARCH EPISODE · 002</p><h1 id="page-title">可靠性不是<br />“会调用工具”。</h1><p class="dek">面向产品与技术负责人的可审计综述：把行动闭环、终态验证、重复稳定性、引用核验与 freshness 放进同一份发布门禁。</p><p class="hero-actions"><a class="primary-action" href="#findings">先看 10 条结论</a><a class="secondary-action" href="./data/evidence-manifest.v1.json">打开证据包 JSON</a></p></div>
+        <aside class="hero-meta" aria-label="报告元数据"><dl><div><dt>数据截止</dt><dd id="knowledge-cutoff"></dd></div><div><dt>核心来源</dt><dd id="source-count"></dd></div><div><dt>快照</dt><dd id="snapshot-digest"></dd></div><div><dt>全文策略</dt><dd>不存储论文全文</dd></div></dl><p id="model-disclosure" class="disclosure"></p></aside>
+      </section>
+      <section class="signal-strip"><div class="shell"><strong>发布判断</strong><p>产品不能把一次看似成功、一个自动 judge 分数，或一条“存在的”引用当作可靠性证明。</p></div></section>
+      <section id="findings" class="section shell"><div class="section-heading"><p class="eyebrow">01 · DIRECT ANSWERS</p><h2>10 条结论，连同边界一起发布</h2><p>强度描述的是此轮证据覆盖，不是跨环境的普适定律。每条均可回到 evidence、source 与 Critic 记录。</p></div><ol id="findings-list" class="findings"></ol></section>
+      <section id="recommendations" class="section section-tint"><div class="shell"><div class="section-heading"><p class="eyebrow">02 · PRODUCT GATES</p><h2>8 条产品建议，含代价</h2><p>这是对 Paper Learning Library 的产品推断，不是论文作者的结论。</p></div><ol id="recommendations-list" class="recommendations"></ol></div></section>
+      <section id="papers" class="section section-dark"><div class="shell"><div class="section-heading inverse"><p class="eyebrow">03 · EVIDENCE MAP</p><h2>17 个一手来源，版本透明</h2><p>没有在本次核验中取得独立会议页证据的 venue，统一显示为未独立确认。</p></div><div id="source-grid" class="source-grid"></div></div></section>
+      <section id="method" class="section shell"><div class="method-grid"><div><p class="eyebrow">04 · AUDIT TRAIL</p><h2>研究过程也可复核</h2><div id="method-copy"></div></div><aside class="audit-card"><h3>Blind consumer protocol</h3><ol id="consumer-questions"></ol><p class="scope">仅在 post-tag 固定快照后，交给未参与者（记录 <code>prior_involvement: none</code>）独立回答；每条 citation 均须复核。本候选没有 PASS 结果。</p><a href="./data/evidence-manifest.v1.json">下载 machine-readable manifest →</a></aside></div></section>
+      <section class="limitations shell"><h2>限制与反向核验</h2><ul id="limitations"></ul></section>
+    </main>
+    <footer class="report-footer"><div class="shell footer-inner"><p><strong>AGE-396 · Episode 002</strong><br /><span id="footer-version"></span></p><p>仅保存元数据、短证据定位与综合判断；原文请前往一手链接。AI 内容的模型、时间、工作流、输入证据与 PM 审核均见 manifest。</p></div></footer>
+    <noscript><p class="noscript">此报告需要启用 JavaScript 才能加载版本化证据包。</p></noscript>
+    <script type="module" src="./report.js"></script>
+  </body>
+</html>

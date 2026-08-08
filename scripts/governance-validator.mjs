@@ -214,11 +214,96 @@ function evidencePayload(manifest) {
   const payload = structuredClone(manifest);
   delete payload.snapshot_digest;
   delete payload.stable_url;
+  delete payload.immutable_url;
   delete payload.evidence_snapshot_url;
   delete payload.evidence_snapshot;
   delete payload.validation?.manifest_consumer_trial;
   delete payload.validation?.consumer_attestation;
   return payload;
+}
+
+export function validateToolReliabilityConsumerContract(manifest, audit) {
+  const contract = requireObject(manifest.consumer_contract, "age-396 consumer contract");
+  if (!Array.isArray(contract.questions) || contract.questions.length !== 3) fail("age-396 needs exactly three consumer questions");
+  const sources = new Map(manifest.sources.map((item) => [item.source_id, item]));
+  const evidence = new Map(manifest.evidence.map((item) => [item.evidence_id, item]));
+  const claims = new Map(manifest.claims.map((item) => [item.claim_id, item]));
+  const predecessors = new Map(manifest.predecessor_releases?.map((item) => [item.artifact_id, item]));
+  const rejectAnswerKeys = (value, label = "consumer contract") => {
+    if (Array.isArray(value)) return value.forEach((item, index) => rejectAnswerKeys(item, `${label}[${index}]`));
+    if (!value || typeof value !== "object") return;
+    for (const [key, child] of Object.entries(value)) {
+      if (/^(?:expected|gold)_?answer$|^answer$/i.test(key)) fail(`${label} publishes an answer key: ${key}`);
+      rejectAnswerKeys(child, `${label}.${key}`);
+    }
+  };
+  rejectAnswerKeys(contract);
+  for (const question of contract.questions) {
+    requireString(question.question_id, "age-396 consumer question id");
+    requireString(question.question, `age-396 ${question.question_id} question`);
+    if (!Array.isArray(question.evidence_refs) || question.evidence_refs.length === 0) fail(`age-396 ${question.question_id} lacks evidence references`);
+    for (const ref of question.evidence_refs) {
+      const item = evidence.get(ref.evidence_id);
+      if (!item) fail(`age-396 ${question.question_id} points to missing evidence ${ref.evidence_id}`);
+      if (!sources.has(ref.source_id) || item.source_id !== ref.source_id) fail(`age-396 ${question.question_id} has mismatched evidence/source reference`);
+    }
+    if (!Array.isArray(question.claim_refs) || question.claim_refs.length === 0) fail(`age-396 ${question.question_id} lacks claim references`);
+    for (const claimId of question.claim_refs) {
+      const claim = claims.get(claimId);
+      if (!claim) fail(`age-396 ${question.question_id} points to missing claim ${claimId}`);
+      if (!question.evidence_refs.some((ref) => claim.supporting_evidence_ids.includes(ref.evidence_id))) fail(`age-396 ${question.question_id} claim is not supported by its cited evidence`);
+    }
+    for (const predecessorId of question.predecessor_release_ids ?? []) {
+      const predecessor = predecessors.get(predecessorId);
+      if (!predecessor?.snapshot_digest || !predecessor?.pinned_commit || !predecessor?.immutable_snapshot_url) fail(`age-396 ${question.question_id} points to an incomplete predecessor release`);
+    }
+  }
+  if (!Array.isArray(audit.records) || audit.records.length !== manifest.sources.length) fail("age-396 metadata audit does not cover every source");
+  const auditIds = new Set();
+  for (const record of audit.records) {
+    if (!sources.has(record.source_id) || auditIds.has(record.source_id)) fail("age-396 metadata audit source coverage is invalid");
+    auditIds.add(record.source_id);
+    if (record.verification_status === "unverified") { requireString(record.reason, `age-396 audit ${record.source_id} unverified reason`); continue; }
+    if (record.verification_status !== "verified" || !Array.isArray(record.observations) || record.observations.length === 0) fail(`age-396 audit ${record.source_id} makes an unsupported verification claim`);
+    const source = sources.get(record.source_id);
+    for (const observation of record.observations) {
+      for (const field of ["checked_url", "observed_title", "observed_arxiv_id", "observed_version", "checked_at", "verifier", "method", "match"]) requireString(observation[field], `age-396 audit ${record.source_id}.${field}`);
+      if (observation.match !== "match" || observation.checked_url !== source.official_url || observation.observed_title !== source.title || observation.observed_arxiv_id !== source.arxiv_id || observation.observed_version !== source.version) fail(`age-396 audit ${record.source_id} observation does not match its source`);
+    }
+  }
+}
+
+async function validateToolReliabilityArtifact(registry, root) {
+  const artifact = registry.governed_artifacts?.find((item) => item.artifact_id === "age-396-v1");
+  if (!artifact || artifact.immutable !== true || artifact.release_status !== "immutable_release") fail("age-396-v1 must be recorded as an immutable release");
+  validateProvenance(artifact.provenance, "age-396-v1.provenance", { requireApproved: true });
+  if (artifact.provenance.source_model === LEGACY_UNKNOWN_MODEL) fail("age-396-v1 cannot use the legacy unknown-model exemption");
+  const release = artifact.immutable_snapshot;
+  const manifest = JSON.parse(await readFile(join(root, release.manifest_path), "utf8"));
+  const snapshot = JSON.parse(await readFile(join(root, release.snapshot_path), "utf8"));
+  const rawPrefix = "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/";
+  const snapshotPath = "site/reports/tool-reliability-2026/data/evidence-snapshot.v1.json";
+  if (manifest.artifact_id !== "age-396-v1" || manifest.immutable !== true || manifest.release_status !== "immutable_release") fail("age-396-v1 manifest release status is invalid");
+  if (manifest.stable_url !== `${rawPrefix}main/${snapshotPath}` || manifest.immutable_url !== `${rawPrefix}age-396-v1/${snapshotPath}`) fail("age-396-v1 release URLs are invalid");
+  if (manifest.snapshot_digest !== release.snapshot_digest || snapshot.snapshot_digest !== manifest.snapshot_digest || snapshot.release_status !== "immutable_release" || snapshot.immutable !== true) fail("age-396-v1 digest differs from governed immutable record");
+  if (snapshot.stable_url !== manifest.stable_url || snapshot.immutable_url !== manifest.immutable_url) fail("age-396-v1 snapshot release URLs differ from manifest");
+  if (sha256(evidencePayload(manifest)) !== manifest.snapshot_digest) fail("age-396-v1 manifest digest no longer verifies");
+  assert.deepEqual(snapshot.evidence_payload, evidencePayload(manifest), "AGE-396 snapshot payload must equal the digest-covered manifest payload");
+  const sourceIds = new Set(manifest.sources.map((item) => item.source_id));
+  const evidenceIds = new Set(manifest.evidence.map((item) => item.evidence_id));
+  if (manifest.claims.filter((item) => item.type === "direct_answer").length !== 10) fail("age-396 needs exactly 10 direct answers");
+  if (manifest.claims.filter((item) => item.type === "product_recommendation").length !== 8) fail("age-396 needs exactly 8 product recommendations");
+  if (manifest.critic_records?.length !== 5) fail("age-396 needs five critic records");
+  for (const evidence of manifest.evidence) {
+    if (!sourceIds.has(evidence.source_id) || !evidence.locator || !evidence.faithful_summary) fail(`age-396 evidence is not closed: ${evidence.evidence_id}`);
+  }
+  for (const claim of manifest.claims) for (const id of [...claim.supporting_evidence_ids, ...claim.contradicting_evidence_ids]) if (!evidenceIds.has(id)) fail(`age-396 claim points to missing evidence: ${claim.claim_id}`);
+  for (const source of manifest.sources) {
+    if (!/^https:\/\/arxiv\.org\/abs\/\d{4}\.\d{4,5}v\d+$/.test(source.official_url)) fail(`age-396 source URL is not a versioned arXiv record: ${source.source_id}`);
+    if (!source.publication_status || !source.venue_status) fail(`age-396 source lacks publication status: ${source.source_id}`);
+  }
+  const audit = JSON.parse(await readFile(join(root, manifest.validation.metadata_audit), "utf8"));
+  validateToolReliabilityConsumerContract(manifest, audit);
 }
 
 export async function validateAgentResearchGovernance(root) {
@@ -261,6 +346,7 @@ export async function validateAgentResearchGovernance(root) {
     if (!sourceIds.has(item.source_id)) fail(`AGE-174 evidence ${item.evidence_id} points to missing source ${item.source_id}`);
   }
   validateNoTestOnlyContent(manifest, "AGE-174 manifest");
+  await validateToolReliabilityArtifact(registry, root);
   return registry;
 }
 

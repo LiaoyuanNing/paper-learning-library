@@ -54,6 +54,40 @@
         "requires_librarian_review": true,
         "rule": "Long-term knowledge promotion must be deduplicated and reviewed by Librarian; report approval never bypasses this rule."
       }
+    },
+    {
+      "artifact_id": "age-396-v1",
+      "content_type": "tool_reliability_research_synthesis",
+      "immutable": true,
+      "release_status": "immutable_release",
+      "provenance": {
+        "generated_at": "2026-08-03T12:00:00+08:00",
+        "source_model": "gpt-5.6",
+        "provider": "OpenAI",
+        "workflow_version": "age-396-episode002-evidence-synthesis-v1",
+        "input_evidence": [
+          { "kind": "research_handoff", "reference": "AGE-400 attachment episode002-research-handoff.md" },
+          { "kind": "metadata_audit", "reference": "research/tool-reliability-2026/metadata-audit.v1.json" }
+        ],
+        "review": {
+          "status": "approved",
+          "reviewer": "PM-Paper (scope and content contract handoff)",
+          "reviewed_at": "2026-08-03T12:00:00+08:00",
+          "reason": "AGE-396 locked the research contract; this mutable candidate preserves its claims and boundaries for independent release review.",
+          "replaces": null,
+          "withdrawn_by": null
+        }
+      },
+      "immutable_snapshot": {
+        "manifest_path": "site/reports/tool-reliability-2026/data/evidence-manifest.v1.json",
+        "snapshot_path": "site/reports/tool-reliability-2026/data/evidence-snapshot.v1.json",
+        "manifest_version": "1.0.0",
+        "snapshot_digest": "sha256:ee58186a6a8cfa09f57875eda194c1e3bfd390cc829294fdf05f20abf4bed2f6"
+      },
+      "claim_contract": {
+        "required_fields": ["claim_id", "supporting_evidence_ids", "contradicting_evidence_ids", "strength"],
+        "source_closure": "claim -> evidence -> source"
+      }
     }
   ]
 }

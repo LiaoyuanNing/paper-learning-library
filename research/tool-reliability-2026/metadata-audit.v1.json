@@ -1,0 +1,193 @@
+{
+  "schema_version": "1.1.0",
+  "artifact_id": "age-396-v1",
+  "audited_on": "2026-08-04T10:30:00+08:00",
+  "auditor": "Dev-Paper",
+  "evidence_policy": "A verified status requires an independent observation with URL, observed title/ID/version, time, verifier/method and match outcome. Unverified records are intentionally not copies of source input.",
+  "records": [
+    {
+      "source_id": "S01",
+      "verification_status": "unverified",
+      "reason": "No independently recorded observation is available in this candidate."
+    },
+    {
+      "source_id": "S02",
+      "verification_status": "unverified",
+      "reason": "No independently recorded observation is available in this candidate."
+    },
+    {
+      "source_id": "S03",
+      "verification_status": "unverified",
+      "reason": "No independently recorded observation is available in this candidate."
+    },
+    {
+      "source_id": "S04",
+      "verification_status": "unverified",
+      "reason": "No independently recorded observation is available in this candidate."
+    },
+    {
+      "source_id": "S05",
+      "verification_status": "verified",
+      "observations": [
+        {
+          "checked_url": "https://arxiv.org/abs/2307.13854v4",
+          "observed_title": "WebArena: A Realistic Web Environment for Building Autonomous Agents",
+          "observed_arxiv_id": "2307.13854",
+          "observed_version": "v4",
+          "checked_at": "2026-08-04T10:30:00+08:00",
+          "verifier": "Dev-Paper",
+          "method": "official arXiv API versioned entry",
+          "match": "match"
+        }
+      ]
+    },
+    {
+      "source_id": "S06",
+      "verification_status": "verified",
+      "observations": [
+        {
+          "checked_url": "https://arxiv.org/abs/2308.03688v3",
+          "observed_title": "AgentBench: Evaluating LLMs as Agents",
+          "observed_arxiv_id": "2308.03688",
+          "observed_version": "v3",
+          "checked_at": "2026-08-04T10:30:00+08:00",
+          "verifier": "Dev-Paper",
+          "method": "official arXiv API versioned entry",
+          "match": "match"
+        }
+      ]
+    },
+    {
+      "source_id": "S07",
+      "verification_status": "unverified",
+      "reason": "No independently recorded observation is available in this candidate."
+    },
+    {
+      "source_id": "S08",
+      "verification_status": "unverified",
+      "reason": "No independently recorded observation is available in this candidate."
+    },
+    {
+      "source_id": "S09",
+      "verification_status": "unverified",
+      "reason": "No independently recorded observation is available in this candidate."
+    },
+    {
+      "source_id": "S10",
+      "verification_status": "unverified",
+      "reason": "No independently recorded observation is available in this candidate."
+    },
+    {
+      "source_id": "S11",
+      "verification_status": "verified",
+      "observations": [
+        {
+          "checked_url": "https://arxiv.org/abs/2310.06770v3",
+          "observed_title": "SWE-bench: Can Language Models Resolve Real-World GitHub Issues?",
+          "observed_arxiv_id": "2310.06770",
+          "observed_version": "v3",
+          "checked_at": "2026-08-04T10:30:00+08:00",
+          "verifier": "Dev-Paper",
+          "method": "official arXiv API versioned entry",
+          "match": "match"
+        }
+      ]
+    },
+    {
+      "source_id": "S12",
+      "verification_status": "verified",
+      "observations": [
+        {
+          "checked_url": "https://arxiv.org/abs/2505.23419v2",
+          "observed_title": "SWE-bench Goes Live!",
+          "observed_arxiv_id": "2505.23419",
+          "observed_version": "v2",
+          "checked_at": "2026-08-03T18:25:49Z",
+          "verifier": "Master (documented independent acceptance check)",
+          "method": "Master record: direct official arXiv abstract-page check",
+          "match": "match"
+        }
+      ]
+    },
+    {
+      "source_id": "S13",
+      "verification_status": "verified",
+      "observations": [
+        {
+          "checked_url": "https://arxiv.org/abs/2504.12516v1",
+          "observed_title": "BrowseComp: A Simple Yet Challenging Benchmark for Browsing Agents",
+          "observed_arxiv_id": "2504.12516",
+          "observed_version": "v1",
+          "checked_at": "2026-08-03T18:25:49Z",
+          "verifier": "Master (documented independent acceptance check)",
+          "method": "Master record: direct official arXiv abstract-page check",
+          "match": "match"
+        }
+      ]
+    },
+    {
+      "source_id": "S14",
+      "verification_status": "verified",
+      "observations": [
+        {
+          "checked_url": "https://arxiv.org/abs/2602.08543v2",
+          "observed_title": "GISA: A Benchmark for General Information-Seeking Assistant",
+          "observed_arxiv_id": "2602.08543",
+          "observed_version": "v2",
+          "checked_at": "2026-08-03T18:25:49Z",
+          "verifier": "Master (documented independent acceptance check)",
+          "method": "Master record: direct official arXiv abstract-page check",
+          "match": "match"
+        }
+      ]
+    },
+    {
+      "source_id": "S15",
+      "verification_status": "verified",
+      "observations": [
+        {
+          "checked_url": "https://arxiv.org/abs/2511.07685v1",
+          "observed_title": "ResearchRubrics: A Benchmark of Prompts and Rubrics For Evaluating Deep Research Agents",
+          "observed_arxiv_id": "2511.07685",
+          "observed_version": "v1",
+          "checked_at": "2026-08-03T18:25:49Z",
+          "verifier": "Master (documented independent acceptance check)",
+          "method": "Master record: direct official arXiv abstract-page check",
+          "match": "match"
+        }
+      ]
+    },
+    {
+      "source_id": "S16",
+      "verification_status": "verified",
+      "observations": [
+        {
+          "checked_url": "https://arxiv.org/abs/2512.01948v2",
+          "observed_title": "How Far Are We from Genuinely Useful Deep Research Agents?",
+          "observed_arxiv_id": "2512.01948",
+          "observed_version": "v2",
+          "checked_at": "2026-08-03T18:25:49Z",
+          "verifier": "Master (documented independent acceptance check)",
+          "method": "Master record: direct official arXiv abstract-page check",
+          "match": "match"
+        }
+      ]
+    },
+    {
+      "source_id": "S17",
+      "verification_status": "verified",
+      "observations": [
+        {
+          "checked_url": "https://arxiv.org/abs/2605.27700v1",
+          "observed_title": "CiteCheck: Retrieval-Grounded Detection of LLM Citation Hallucinations in Scientific Text",
+          "observed_arxiv_id": "2605.27700",
+          "observed_version": "v1",
+          "checked_at": "2026-08-03T18:25:49Z",
+          "verifier": "Master (documented independent acceptance check)",
+          "method": "Master record: direct official arXiv abstract-page check",
+          "match": "match"
+        }
+      ]
+    }
+  ]
+}
