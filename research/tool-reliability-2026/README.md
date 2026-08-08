@@ -2,7 +2,7 @@
 
 AGE-396 的可复用研究资产。页面由唯一 `evidence-manifest.v1.json` 渲染；快照、逐篇 metadata audit、curated set 记录、查询、Critic、blind-consumer 协议与 browser QA 均在本目录。只保存元数据、短定位与综合判断，不保存论文正文或 PDF。
 
-`age-396-v1` 目前是 PR #6 上的 mutable candidate，不是 immutable release；不得以 stable URL、tag 或已完成 consumer 测试宣称发布。它包含指向 `age-174-v2` 的 pinned predecessor（artifact identity、commit 和 digest），但不修改其 payload、tag 或 digest。
+`age-396-v1` 是一次 immutable release：stable snapshot 使用 `main` URL，immutable snapshot 固定到同名 tag。该发布不包含 blind-consumer 运行结果或 PASS 宣称。它包含指向 `age-174-v2` 的 pinned predecessor（artifact identity、commit 和 digest），但不修改其 payload、tag 或 digest。
 
 ## Blind-consumer protocol（仅 post-tag 后执行）
 

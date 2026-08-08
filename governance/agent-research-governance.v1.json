@@ -58,8 +58,8 @@
     {
       "artifact_id": "age-396-v1",
       "content_type": "tool_reliability_research_synthesis",
-      "immutable": false,
-      "release_status": "mutable_candidate",
+      "immutable": true,
+      "release_status": "immutable_release",
       "provenance": {
         "generated_at": "2026-08-03T12:00:00+08:00",
         "source_model": "gpt-5.6",
@@ -78,11 +78,11 @@
           "withdrawn_by": null
         }
       },
-      "candidate_snapshot": {
+      "immutable_snapshot": {
         "manifest_path": "site/reports/tool-reliability-2026/data/evidence-manifest.v1.json",
         "snapshot_path": "site/reports/tool-reliability-2026/data/evidence-snapshot.v1.json",
         "manifest_version": "1.0.0",
-        "snapshot_digest": "sha256:8147187b94cb51f2eb8b64a4375e71942537fd47ce7688ed4affba36023b2257"
+        "snapshot_digest": "sha256:ee58186a6a8cfa09f57875eda194c1e3bfd390cc829294fdf05f20abf4bed2f6"
       },
       "claim_contract": {
         "required_fields": ["claim_id", "supporting_evidence_ids", "contradicting_evidence_ids", "strength"],

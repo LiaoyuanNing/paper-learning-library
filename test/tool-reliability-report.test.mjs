@@ -15,14 +15,17 @@ const [manifest, snapshot, audit, html, script, researchReadme] = await Promise.
 ]);
 const canonicalize = (value) => Array.isArray(value) ? value.map(canonicalize) : value && typeof value === "object" ? Object.fromEntries(Object.keys(value).sort().map((key) => [key, canonicalize(value[key])])) : value;
 const digest = (value) => `sha256:${createHash("sha256").update(JSON.stringify(canonicalize(value))).digest("hex")}`;
-function payload(value) { const result = structuredClone(value); delete result.snapshot_digest; delete result.evidence_snapshot; return result; }
+function payload(value) { const result = structuredClone(value); delete result.snapshot_digest; delete result.stable_url; delete result.immutable_url; delete result.evidence_snapshot; return result; }
 
-test("AGE-396 candidate is a closed, mutable evidence graph without an answer key", () => {
+test("AGE-396 immutable release is a closed evidence graph without an answer key", () => {
   assert.equal(manifest.artifact_id, "age-396-v1");
-  assert.equal(manifest.immutable, false); assert.equal(manifest.release_status, "mutable_candidate");
+  assert.equal(manifest.immutable, true); assert.equal(manifest.release_status, "immutable_release");
   assert.equal(manifest.snapshot_digest, digest(payload(manifest)));
   assert.deepEqual(snapshot.evidence_payload, payload(manifest)); assert.equal(snapshot.snapshot_digest, manifest.snapshot_digest);
-  assert.equal(snapshot.release_status, "mutable_candidate");
+  assert.equal(snapshot.release_status, "immutable_release"); assert.equal(snapshot.immutable, true);
+  assert.equal(manifest.stable_url, "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/main/site/reports/tool-reliability-2026/data/evidence-snapshot.v1.json");
+  assert.equal(manifest.immutable_url, "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/age-396-v1/site/reports/tool-reliability-2026/data/evidence-snapshot.v1.json");
+  assert.equal(snapshot.stable_url, manifest.stable_url); assert.equal(snapshot.immutable_url, manifest.immutable_url);
   assert.equal(manifest.ai_provenance.provider, "OpenAI"); assert.equal(manifest.ai_provenance.source_model, "gpt-5.6");
   assert.equal(manifest.claims.filter((item) => item.type === "direct_answer").length, 10);
   assert.equal(manifest.claims.filter((item) => item.type === "product_recommendation").length, 8);

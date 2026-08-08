@@ -214,6 +214,7 @@ function evidencePayload(manifest) {
   const payload = structuredClone(manifest);
   delete payload.snapshot_digest;
   delete payload.stable_url;
+  delete payload.immutable_url;
   delete payload.evidence_snapshot_url;
   delete payload.evidence_snapshot;
   delete payload.validation?.manifest_consumer_trial;
@@ -274,13 +275,18 @@ export function validateToolReliabilityConsumerContract(manifest, audit) {
 
 async function validateToolReliabilityArtifact(registry, root) {
   const artifact = registry.governed_artifacts?.find((item) => item.artifact_id === "age-396-v1");
-  if (!artifact || artifact.immutable !== false || artifact.release_status !== "mutable_candidate") fail("age-396-v1 must be recorded as a mutable candidate");
+  if (!artifact || artifact.immutable !== true || artifact.release_status !== "immutable_release") fail("age-396-v1 must be recorded as an immutable release");
   validateProvenance(artifact.provenance, "age-396-v1.provenance", { requireApproved: true });
   if (artifact.provenance.source_model === LEGACY_UNKNOWN_MODEL) fail("age-396-v1 cannot use the legacy unknown-model exemption");
-  const manifest = JSON.parse(await readFile(join(root, artifact.candidate_snapshot.manifest_path), "utf8"));
-  const snapshot = JSON.parse(await readFile(join(root, artifact.candidate_snapshot.snapshot_path), "utf8"));
-  if (manifest.artifact_id !== "age-396-v1" || manifest.immutable !== false || manifest.release_status !== "mutable_candidate") fail("age-396-v1 manifest release status is invalid");
-  if (manifest.snapshot_digest !== artifact.candidate_snapshot.snapshot_digest || snapshot.snapshot_digest !== manifest.snapshot_digest || snapshot.release_status !== "mutable_candidate") fail("age-396-v1 digest differs from governed candidate record");
+  const release = artifact.immutable_snapshot;
+  const manifest = JSON.parse(await readFile(join(root, release.manifest_path), "utf8"));
+  const snapshot = JSON.parse(await readFile(join(root, release.snapshot_path), "utf8"));
+  const rawPrefix = "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/";
+  const snapshotPath = "site/reports/tool-reliability-2026/data/evidence-snapshot.v1.json";
+  if (manifest.artifact_id !== "age-396-v1" || manifest.immutable !== true || manifest.release_status !== "immutable_release") fail("age-396-v1 manifest release status is invalid");
+  if (manifest.stable_url !== `${rawPrefix}main/${snapshotPath}` || manifest.immutable_url !== `${rawPrefix}age-396-v1/${snapshotPath}`) fail("age-396-v1 release URLs are invalid");
+  if (manifest.snapshot_digest !== release.snapshot_digest || snapshot.snapshot_digest !== manifest.snapshot_digest || snapshot.release_status !== "immutable_release" || snapshot.immutable !== true) fail("age-396-v1 digest differs from governed immutable record");
+  if (snapshot.stable_url !== manifest.stable_url || snapshot.immutable_url !== manifest.immutable_url) fail("age-396-v1 snapshot release URLs differ from manifest");
   if (sha256(evidencePayload(manifest)) !== manifest.snapshot_digest) fail("age-396-v1 manifest digest no longer verifies");
   assert.deepEqual(snapshot.evidence_payload, evidencePayload(manifest), "AGE-396 snapshot payload must equal the digest-covered manifest payload");
   const sourceIds = new Set(manifest.sources.map((item) => item.source_id));

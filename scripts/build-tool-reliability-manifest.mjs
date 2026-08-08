@@ -5,6 +5,9 @@ import { dirname, resolve } from "node:path";
 const root = resolve(new URL("..", import.meta.url).pathname);
 const stamp = "2026-08-04T10:30:00+08:00";
 const version = "1.0.0";
+const releaseTag = "age-396-v1";
+const snapshotPath = "site/reports/tool-reliability-2026/data/evidence-snapshot.v1.json";
+const rawSnapshotUrl = (ref) => `https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/${ref}/${snapshotPath}`;
 const canonicalize = (value) => Array.isArray(value) ? value.map(canonicalize) : value && typeof value === "object" ? Object.fromEntries(Object.keys(value).sort().map((key) => [key, canonicalize(value[key])])) : value;
 const digest = (value) => `sha256:${createHash("sha256").update(JSON.stringify(canonicalize(value))).digest("hex")}`;
 const writeJson = async (path, value) => { await mkdir(dirname(path), { recursive: true }); await writeFile(path, `${JSON.stringify(value, null, 2)}\n`); };
@@ -80,10 +83,10 @@ const predecessor_releases = [{
   immutable_snapshot_url: "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/2aeb71cf4388a238e76a95ac6d6c715ab1c9dd3c/site/reports/agent-teams-2026/data/evidence-snapshot.v2.json",
   relationship: "independent immutable predecessor; this mutable AGE-396 candidate must not alter its payload, tag, or digest",
 }];
-const provenance = { generated_at: stamp, source_model: "gpt-5.6", provider: "OpenAI", workflow_version: "age-396-episode002-evidence-synthesis-v1", input_evidence: [{ kind: "research_handoff", reference: "AGE-400 attachment episode002-research-handoff.md" }, { kind: "metadata_audit", reference: "research/tool-reliability-2026/metadata-audit.v1.json" }], review: { status: "approved", reviewer: "PM-Paper (scope and content contract handoff)", reviewed_at: stamp, reason: "AGE-396 locked the research contract; this mutable candidate preserves its claims and boundaries for independent release review.", replaces: null, withdrawn_by: null } };
+const provenance = { generated_at: stamp, source_model: "gpt-5.6", provider: "OpenAI", workflow_version: "age-396-episode002-evidence-synthesis-v1", input_evidence: [{ kind: "research_handoff", reference: "AGE-400 attachment episode002-research-handoff.md" }, { kind: "metadata_audit", reference: "research/tool-reliability-2026/metadata-audit.v1.json" }], review: { status: "approved", reviewer: "PM-Paper (scope and content contract handoff)", reviewed_at: stamp, reason: "AGE-396 locked the research contract; this immutable release preserves its approved claims and boundaries for independent post-tag consumer review.", replaces: null, withdrawn_by: null } };
 const consumerContract = {
   protocol_version: "1.0.0",
-  run_status: "not_run_pending_post_tag_blind_consumer",
+  run_status: "not_run_post_tag_blind_consumer_required",
   input_boundary: "post-tag fixed evidence snapshot only; no report, research notes, Git history, issue, conversation history, originals, or internet",
   questions: [
     { question_id: "Q1", question: "为什么 citation metadata valid 仍不足以发布一条产品结论？", evidence_refs: [{ evidence_id: "E17", source_id: "S17" }], claim_refs: ["C07"], citation_review: "cite E17/S17 and C07; explain the separate source-to-claim entailment gate" },
@@ -93,20 +96,22 @@ const consumerContract = {
 };
 const manifest = {
   schema_version: "1.1.0", artifact_id: "age-396-v1", manifest_version: version,
-  release_status: "mutable_candidate", immutable: false,
-  digest_method: "SHA-256 of recursively key-sorted JSON after omitting snapshot_digest and evidence_snapshot",
+  release_status: "immutable_release", immutable: true,
+  stable_url: rawSnapshotUrl("main"),
+  immutable_url: rawSnapshotUrl(releaseTag),
+  digest_method: "SHA-256 of recursively key-sorted JSON after omitting snapshot_digest, stable_url, immutable_url, and evidence_snapshot",
   request: { knowledge_cutoff: "2026-08-03T23:59:59+08:00", subject_window_start: "2023-01-01", query_clusters: ["tool-use API retrieval evaluation", "web agent real environment execution evaluation", "long-horizon reliability pass@k", "deep research factual grounding citation verification"], selection_record: "core_set_plus_adjudicated_exclusions", core_target: "12–18", exclusions: ["无 agent/tool loop 的一般 RAG", "纯 prompt 技巧", "无实验的产品宣称"] },
   ai_provenance: provenance, sources, evidence, claims: [...direct, ...recText], predecessor_releases,
   candidate_ledger: [...sources.map((source) => ({ arxiv_id: source.arxiv_id, decision: "core_set", reason: source.role, provenance: "episode core set; not a candidate-scan retention result", original_url: source.official_url })), { arxiv_id: "2402.05930", title: "WebLINX", decision: "adjudicated_exclusion", reason: "网页导航而非本问题的检索 / 证据闭环", provenance: "curated exclusion", original_url: "https://arxiv.org/abs/2402.05930" }, { arxiv_id: "2405.14573", title: "AndroidWorld", decision: "adjudicated_exclusion", reason: "移动 OS 域偏离", provenance: "curated exclusion", original_url: "https://arxiv.org/abs/2405.14573" }, { arxiv_id: "2508.13186", title: "MM-BrowseComp", decision: "background", reason: "多模态检索反例", provenance: "curated background", original_url: "https://arxiv.org/abs/2508.13186" }, { arxiv_id: "2606.17458", title: "ICBCBench", decision: "background", reason: "行业报告双轨测量，金融域不直接泛化", provenance: "curated background", original_url: "https://arxiv.org/abs/2606.17458" }],
   critic_records: [{ critic_id: "C01", claim_id: "C01", counter_search: "是否仅是 prompt / benchmark 特异", result: "保留 strong，但限定为受控交互任务。" }, { critic_id: "C03", claim_id: "C03", counter_search: "终态是否遗漏过程伤害 / 成本", result: "加入终态通过不是安全 / 合规证明。" }, { critic_id: "C04", claim_id: "C04", counter_search: "不同论文成功率能否横比", result: "不能；禁止汇总为平均成功率。" }, { critic_id: "C07", claim_id: "C07", counter_search: "CiteCheck 能否验证文字蕴含", result: "不能；保留独立 entailment / Critic gate。" }, { critic_id: "C09", claim_id: "C09", counter_search: "live benchmark 是否仍可复现", result: "部分不能；snapshot 加 dated result 是折中。" }],
   consumer_contract: consumerContract,
-  report: { claim_links: direct.map((item) => item.claim_id), recommendation_links: recText.map((item) => item.claim_id), method: ["本工件是 mutable candidate：core set 加已裁定排除项，不是完整候选扫描，不能导出 retention ratio 或停止信号。", "每个 source、evidence 与 claim 通过 ID 闭合；candidate snapshot 仅作 digest-covered review input，tag 后才可声明 immutable release。", "consumer 题目只发布引用契约；独立 blind run 必须在 post-tag snapshot 后执行，不能以本候选生成 PASS。"], limitations: ["本研究不保留论文全文、PDF 或大段原文。", "未留下观察记录的元数据明确为 unverified，不可从 audit 推出已核验。", "WebArena 的 ICLR locator 在本 runner 被 OpenReview challenge 拦截；状态来自 Master 已记录的独立核验，待后续可访问时复查。", "跨 benchmark 数字没有被汇总为排名或平均成功率。"] },
+  report: { claim_links: direct.map((item) => item.claim_id), recommendation_links: recText.map((item) => item.claim_id), method: ["本工件是固定发布版本：core set 加已裁定排除项，不是完整候选扫描，不能导出 retention ratio 或停止信号。", "每个 source、evidence 与 claim 通过 ID 闭合；digest-covered snapshot 固定在 age-396-v1 tag。", "consumer 题目只发布引用契约；独立 blind run 必须在 post-tag snapshot 后执行，不能预设或记录 PASS。"], limitations: ["本研究不保留论文全文、PDF 或大段原文。", "未留下观察记录的元数据明确为 unverified，不可从 audit 推出已核验。", "WebArena 的 ICLR locator 在本 runner 被 OpenReview challenge 拦截；状态来自 Master 已记录的独立核验，待后续可访问时复查。", "跨 benchmark 数字没有被汇总为排名或平均成功率。"] },
   validation: { metadata_audit: "research/tool-reliability-2026/metadata-audit.v1.json", browser_qa: "research/tool-reliability-2026/browser-qa.v1.md", queries: "research/tool-reliability-2026/queries.md", candidate_ledger: "research/tool-reliability-2026/candidate-ledger.md" },
 };
-const payload = structuredClone(manifest); delete payload.snapshot_digest; delete payload.evidence_snapshot;
+const payload = structuredClone(manifest); delete payload.snapshot_digest; delete payload.stable_url; delete payload.immutable_url; delete payload.evidence_snapshot;
 manifest.snapshot_digest = digest(payload);
-manifest.evidence_snapshot = { artifact_id: manifest.artifact_id, manifest_version: version, snapshot_digest: manifest.snapshot_digest, release_status: "mutable_candidate", candidate_note: "No merge, tag, stable URL, or blind-consumer result exists for this candidate." };
-const snapshot = { artifact_id: manifest.artifact_id, manifest_version: version, snapshot_digest: manifest.snapshot_digest, release_status: "mutable_candidate", digest_method: manifest.digest_method, evidence_payload: payload };
+manifest.evidence_snapshot = { artifact_id: manifest.artifact_id, manifest_version: version, snapshot_digest: manifest.snapshot_digest, release_status: manifest.release_status, stable_url: manifest.stable_url, immutable_url: manifest.immutable_url, tag: releaseTag };
+const snapshot = { artifact_id: manifest.artifact_id, manifest_version: version, snapshot_digest: manifest.snapshot_digest, release_status: manifest.release_status, immutable: true, stable_url: manifest.stable_url, immutable_url: manifest.immutable_url, digest_method: manifest.digest_method, evidence_payload: payload };
 
 const masterChecks = new Map([
   ["S12", ["SWE-bench Goes Live!", "2505.23419", "v2"]], ["S13", ["BrowseComp: A Simple Yet Challenging Benchmark for Browsing Agents", "2504.12516", "v1"]], ["S14", ["GISA: A Benchmark for General Information-Seeking Assistant", "2602.08543", "v2"]], ["S15", ["ResearchRubrics: A Benchmark of Prompts and Rubrics For Evaluating Deep Research Agents", "2511.07685", "v1"]], ["S16", ["How Far Are We from Genuinely Useful Deep Research Agents?", "2512.01948", "v2"]], ["S17", ["CiteCheck: Retrieval-Grounded Detection of LLM Citation Hallucinations in Scientific Text", "2605.27700", "v1"]],

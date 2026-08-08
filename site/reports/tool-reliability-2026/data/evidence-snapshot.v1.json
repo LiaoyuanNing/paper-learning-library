@@ -1,16 +1,19 @@
 {
   "artifact_id": "age-396-v1",
   "manifest_version": "1.0.0",
-  "snapshot_digest": "sha256:8147187b94cb51f2eb8b64a4375e71942537fd47ce7688ed4affba36023b2257",
-  "release_status": "mutable_candidate",
-  "digest_method": "SHA-256 of recursively key-sorted JSON after omitting snapshot_digest and evidence_snapshot",
+  "snapshot_digest": "sha256:ee58186a6a8cfa09f57875eda194c1e3bfd390cc829294fdf05f20abf4bed2f6",
+  "release_status": "immutable_release",
+  "immutable": true,
+  "stable_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/main/site/reports/tool-reliability-2026/data/evidence-snapshot.v1.json",
+  "immutable_url": "https://raw.githubusercontent.com/LiaoyuanNing/paper-learning-library/age-396-v1/site/reports/tool-reliability-2026/data/evidence-snapshot.v1.json",
+  "digest_method": "SHA-256 of recursively key-sorted JSON after omitting snapshot_digest, stable_url, immutable_url, and evidence_snapshot",
   "evidence_payload": {
     "schema_version": "1.1.0",
     "artifact_id": "age-396-v1",
     "manifest_version": "1.0.0",
-    "release_status": "mutable_candidate",
-    "immutable": false,
-    "digest_method": "SHA-256 of recursively key-sorted JSON after omitting snapshot_digest and evidence_snapshot",
+    "release_status": "immutable_release",
+    "immutable": true,
+    "digest_method": "SHA-256 of recursively key-sorted JSON after omitting snapshot_digest, stable_url, immutable_url, and evidence_snapshot",
     "request": {
       "knowledge_cutoff": "2026-08-03T23:59:59+08:00",
       "subject_window_start": "2023-01-01",
@@ -47,7 +50,7 @@
         "status": "approved",
         "reviewer": "PM-Paper (scope and content contract handoff)",
         "reviewed_at": "2026-08-04T10:30:00+08:00",
-        "reason": "AGE-396 locked the research contract; this mutable candidate preserves its claims and boundaries for independent release review.",
+        "reason": "AGE-396 locked the research contract; this immutable release preserves its approved claims and boundaries for independent post-tag consumer review.",
         "replaces": null,
         "withdrawn_by": null
       }
@@ -830,7 +833,7 @@
     ],
     "consumer_contract": {
       "protocol_version": "1.0.0",
-      "run_status": "not_run_pending_post_tag_blind_consumer",
+      "run_status": "not_run_post_tag_blind_consumer_required",
       "input_boundary": "post-tag fixed evidence snapshot only; no report, research notes, Git history, issue, conversation history, originals, or internet",
       "questions": [
         {
@@ -904,9 +907,9 @@
         "P08"
       ],
       "method": [
-        "本工件是 mutable candidate：core set 加已裁定排除项，不是完整候选扫描，不能导出 retention ratio 或停止信号。",
-        "每个 source、evidence 与 claim 通过 ID 闭合；candidate snapshot 仅作 digest-covered review input，tag 后才可声明 immutable release。",
-        "consumer 题目只发布引用契约；独立 blind run 必须在 post-tag snapshot 后执行，不能以本候选生成 PASS。"
+        "本工件是固定发布版本：core set 加已裁定排除项，不是完整候选扫描，不能导出 retention ratio 或停止信号。",
+        "每个 source、evidence 与 claim 通过 ID 闭合；digest-covered snapshot 固定在 age-396-v1 tag。",
+        "consumer 题目只发布引用契约；独立 blind run 必须在 post-tag snapshot 后执行，不能预设或记录 PASS。"
       ],
       "limitations": [
         "本研究不保留论文全文、PDF 或大段原文。",
