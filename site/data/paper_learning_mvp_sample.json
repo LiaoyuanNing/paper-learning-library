@@ -1,6 +1,6 @@
 {
   "dataset_id": "paper_learning_mvp_seed_v1",
-  "schema_version": "0.2.0",
+  "schema_version": "0.3.0",
   "project": "论文学习库 Paper Learning Library",
   "generated_at": "2026-07-13T04:08:14Z",
   "source_model_for_ai_fields": "unknown (runtime default)",
@@ -9,8 +9,8 @@
     "LLM tooling",
     "vision-language-action"
   ],
-  "record_count": 8,
-  "copyright_policy": "Store metadata, arXiv abstract, AI-generated Chinese abstract/highlights, tags, and source links only. Do not store paper full text unless license is explicitly checked.",
+  "record_count": 9,
+  "copyright_policy": "Store metadata, public first-party abstracts, AI-generated Chinese abstract/highlights, tags, and source links only. Do not store paper full text unless license is explicitly checked.",
   "source_query": {
     "primary_tools_attempted": [
       "oo-arxiv connector",
@@ -741,6 +741,83 @@
           "approved": true,
           "reason": "The historical static sample cannot recover an exact model slug. Policy v1 permits only the literal unknown (runtime default) value for this pre-policy artifact.",
           "recorded_at": "2026-07-15T09:14:41.802Z"
+        }
+      }
+    },
+    {
+      "id": "repository:cordiverse-paper-2026-08-13",
+      "title": "A Programming Paradigm for Spatiotemporal Composability",
+      "authors": [
+        "Yifan Shi (Peking University; DeepSeek-AI)",
+        "Wei Zhang (Peking University)",
+        "Tianyi Cui (DeepSeek-AI)"
+      ],
+      "categories": [
+        "programming-languages",
+        "software-composition"
+      ],
+      "primary_category": "programming-languages",
+      "published_at": "2026-08-13",
+      "updated_at": "2026-08-13",
+      "abstract": "Modern software—from plugin systems to self-evolving agent harnesses—increasingly requires dynamic composition, yet its formal foundations remain underdeveloped. This preprint introduces temporal effects for captured, abortable control and reactive coeffects for context changes that notify components against their specifications, then combines them in a single context type and a calculus for dynamic composition.",
+      "links": {
+        "abstract": "https://github.com/cordiverse/paper#readme",
+        "pdf": "https://github.com/cordiverse/paper/blob/main/paper.pdf",
+        "doi": ""
+      },
+      "source": {
+        "kind": "repository_preprint",
+        "name": "cordiverse/paper (作者公开仓库)",
+        "url": "https://github.com/cordiverse/paper",
+        "retrieved_at": "2026-08-15T06:03:39Z",
+        "retrieval_note": "First-party public repository. README supplies the official abstract and identifies this as an active-revision preprint; no full text was copied into this dataset."
+      },
+      "copyright": {
+        "full_text_stored": false,
+        "stored_content": [
+          "metadata",
+          "public_abstract",
+          "ai_generated_chinese_abstract",
+          "ai_generated_highlights",
+          "source_links"
+        ],
+        "license_checked_for_full_text": false
+      },
+      "tags": [
+        "programming-languages",
+        "dynamic-composition",
+        "effects",
+        "coeffects",
+        "plugin-systems"
+      ],
+      "ai_generated": {
+        "generated_at": "2026-08-15",
+        "generated_at_precision": "day",
+        "source_model": "claude-opus-5",
+        "provider": "Anthropic",
+        "workflow_version": "master-paper-analysis-v1",
+        "abstract_zh": "论文为插件系统与自演化 agent harness 中的动态组合提出形式化基础：时间维度用可捕获、可中止的 effect 表达控制过程，空间维度用 reactive coeffect 表达组件如何响应上下文变化。作者再把两类上下文统一为一个类型，并在其上建立动态组合的演算；Cordis 与 Koishi 的长期演进案例说明该模型试图连接形式语义和真实插件生态。",
+        "learning_highlights_zh": [
+          "将 temporal effect 与 spatial reactive coeffect 并列处理，明确了动态组合不只是函数拼接，还包含控制撤回和环境变化两个维度。",
+          "reactive coeffect 的关键是“上下文变化会通知组件”，适合用来思考插件、订阅和 agent 运行时中的依赖更新边界。",
+          "统一 effect / coeffect context type 后再给出组合演算，使读者可以把组件级机制和交错系统级性质放在同一语义框架中审视。",
+          "Cordis 与 Koishi 案例提高了工程相关性，但学习时应区分论文给出的形式性质与案例经验，不能把案例直接外推为通用性能结论。"
+        ],
+        "input_evidence": [
+          {
+            "kind": "official_repository_readme",
+            "url": "https://github.com/cordiverse/paper#readme",
+            "source_field": "abstract",
+            "retrieved_at": "2026-08-15"
+          }
+        ],
+        "review": {
+          "status": "approved",
+          "reviewer": "PM-Paper (AGE-538)",
+          "reviewed_at": "2026-08-15T06:10:00Z",
+          "reason": "Checked title, authors, date and source identity against the verified first-party repository; AI summary and four highlights are separated from the public abstract, avoid performance claims, and cite the public README. No PDF or full-text content is stored.",
+          "replaces": null,
+          "withdrawn_by": null
         }
       }
     }

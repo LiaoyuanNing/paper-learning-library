@@ -1,9 +1,13 @@
 export const EMPTY_FILTERS = Object.freeze({ query: "", category: "", topic: "", customTag: "", readingState: "" });
 
+export function recordKey(record) {
+  return record.source?.kind === "repository_preprint" ? record.id : record.arxiv_id;
+}
+
 export function recordMatchesFilters(record, filters, studyStore) {
   const searchSpace = `${record.title} ${record.authors.join(" ")}`.toLocaleLowerCase();
   const query = filters.query.trim().toLocaleLowerCase();
-  const paper = studyStore.getPaper(record.arxiv_id);
+  const paper = studyStore.getPaper(recordKey(record));
   return (!query || searchSpace.includes(query))
     && (!filters.category || record.categories.includes(filters.category))
     && (!filters.topic || record.tags.includes(filters.topic))

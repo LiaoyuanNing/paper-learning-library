@@ -33,6 +33,8 @@ test("detail view separates arXiv and AI-generated content with honest provenanc
   assert.match(app, /AGE-23/);
   assert.match(app, /full_text_stored/);
   assert.match(app, /learning_highlights_zh/);
+  assert.match(app, /repository_preprint/);
+  assert.match(app, /一手仓库预印本/);
 });
 
 test("styles define mobile layout and safe long-text wrapping", () => {

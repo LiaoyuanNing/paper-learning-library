@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { safeMultilineHtml } from "../site/js/safe-html.js";
-import { listCustomTags, recordMatchesFilters } from "../site/js/study-filters.js";
+import { listCustomTags, recordKey, recordMatchesFilters } from "../site/js/study-filters.js";
 import { STUDY_STORAGE_KEY, StudyStore } from "../site/js/study-store.js";
 
 class MemoryStorage {
@@ -28,6 +28,15 @@ const sampleRecord = {
   authors: ["Shunyu Yao"],
   categories: ["cs.AI", "cs.CL"],
   tags: ["ai-agent", "tool-use"],
+};
+
+const repositoryPreprintRecord = {
+  id: "repository:cordiverse-paper-2026-08-13",
+  title: "A Programming Paradigm for Spatiotemporal Composability",
+  authors: ["Yifan Shi"],
+  categories: ["programming-languages"],
+  tags: ["dynamic-composition"],
+  source: { kind: "repository_preprint" },
 };
 
 test("reading state, custom tags, notes, and reviews support CRUD", () => {
@@ -76,6 +85,20 @@ test("compound filters and saved views persist across a fresh store", () => {
   assert.equal(replay.data.saved_views.length, 0);
 });
 
+test("repository preprints use their stable record ID for search and local study state", () => {
+  const store = createStore();
+  const paperId = recordKey(repositoryPreprintRecord);
+  assert.equal(paperId, "repository:cordiverse-paper-2026-08-13");
+  assert.equal(store.setReadingState(paperId, "queued"), true);
+  assert.equal(recordMatchesFilters(repositoryPreprintRecord, {
+    query: "spatiotemporal",
+    category: "programming-languages",
+    topic: "dynamic-composition",
+    customTag: "",
+    readingState: "queued",
+  }, store), true);
+});
+
 test("damaged or old storage falls back without blocking baseline records", async () => {
   const broken = createStore(new MemoryStorage({ [STUDY_STORAGE_KEY]: "{not-json" }));
   assert.equal(broken.recovered, true);
@@ -86,7 +109,7 @@ test("damaged or old storage falls back without blocking baseline records", asyn
   assert.deepEqual(old.data.saved_views, []);
 
   const data = JSON.parse(await readFile(new URL("../site/data/paper_learning_mvp_sample.json", import.meta.url), "utf8"));
-  assert.equal(data.records.length, 8);
+  assert.equal(data.records.length, 9);
   assert.equal(data.records.every((record) => !record.copyright.full_text_stored && record.ai_generated.generated_at && record.source.url), true);
 });
 
