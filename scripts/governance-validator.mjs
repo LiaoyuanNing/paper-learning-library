@@ -68,10 +68,7 @@ function validateInputEvidence(value, label) {
 
 export function validateProvenance(provenance, label, options = {}) {
   const value = requireObject(provenance, label);
-  const allowDayPrecision = options.allowDayPrecision === true || value.generated_at_precision === "day";
-  if (value.generated_at_precision !== undefined && value.generated_at_precision !== "day") {
-    fail(`${label}.generated_at_precision must be day when supplied`);
-  }
+  const allowDayPrecision = options.allowDayPrecision === true;
   requireDate(value.generated_at, `${label}.generated_at`, { allowDayPrecision });
   requireString(value.source_model, `${label}.source_model`);
   requireString(value.provider, `${label}.provider`);
