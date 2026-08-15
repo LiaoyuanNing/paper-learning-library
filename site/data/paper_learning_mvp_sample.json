@@ -1,6 +1,6 @@
 {
   "dataset_id": "paper_learning_mvp_seed_v1",
-  "schema_version": "0.2.0",
+  "schema_version": "0.3.0",
   "project": "论文学习库 Paper Learning Library",
   "generated_at": "2026-07-13T04:08:14Z",
   "source_model_for_ai_fields": "unknown (runtime default)",
@@ -9,8 +9,8 @@
     "LLM tooling",
     "vision-language-action"
   ],
-  "record_count": 8,
-  "copyright_policy": "Store metadata, arXiv abstract, AI-generated Chinese abstract/highlights, tags, and source links only. Do not store paper full text unless license is explicitly checked.",
+  "record_count": 9,
+  "copyright_policy": "Store metadata, public first-party abstracts, AI-generated Chinese abstract/highlights, tags, and source links only. Do not store paper full text unless license is explicitly checked.",
   "source_query": {
     "primary_tools_attempted": [
       "oo-arxiv connector",
@@ -741,6 +741,87 @@
           "approved": true,
           "reason": "The historical static sample cannot recover an exact model slug. Policy v1 permits only the literal unknown (runtime default) value for this pre-policy artifact.",
           "recorded_at": "2026-07-15T09:14:41.802Z"
+        }
+      }
+    },
+    {
+      "id": "repository:cordiverse-paper-2026-08-13",
+      "title": "A Programming Paradigm for Spatiotemporal Composability",
+      "authors": [
+        "Yifan Shi (Peking University; DeepSeek-AI)",
+        "Wei Zhang (Peking University)",
+        "Tianyi Cui (DeepSeek-AI)"
+      ],
+      "categories": [
+        "programming-languages",
+        "software-composition"
+      ],
+      "primary_category": "programming-languages",
+      "published_at": "2026-08-13",
+      "updated_at": "2026-08-13",
+      "abstract": "Modern software—from plugin systems to self-evolving agent harnesses—increasingly requires dynamic composition, yet its formal foundations remain underdeveloped. We identify two orthogonal dimensions of the problem: temporal composability, the ability to completely revert a component’s side effects upon removal, and spatial composability, the ability to declare and reactively manage inter-component dependencies. We address the two dimensions by lifting classical effect and coeffect concepts to runtime mechanisms. In particular, we formalize revertible effects, in which every context transformation carries an inverse that the runtime tracks. We formalize reactive coeffects, in which each change of the context notifies a component against its coeffect specification. We unify the effect context and the coeffect context into a single context type, which constitutes a programming paradigm. After that, we combine these mechanisms into the notion of a component and give a calculus of dynamic composition, whose metatheory carries spatiotemporal composability from a single component to a whole system of interleaved components. We implement these ideas in Cordis, a meta-framework of spatiotemporal composability that provides a core library with effect tracking and coeffect resolution, as well as a declarative component loader with configuration reconciliation and hot module replacement.",
+      "links": {
+        "abstract": "https://github.com/cordiverse/paper#readme",
+        "pdf": "https://github.com/cordiverse/paper/blob/main/paper.pdf",
+        "doi": ""
+      },
+      "source": {
+        "kind": "repository_preprint",
+        "name": "cordiverse/paper (作者公开仓库)",
+        "url": "https://github.com/cordiverse/paper",
+        "retrieved_at": "2026-08-15T06:03:39Z",
+        "retrieval_note": "First-party public repository. README supplies the official abstract and identifies this as an active-revision preprint; no full text was copied into this dataset."
+      },
+      "copyright": {
+        "full_text_stored": false,
+        "stored_content": [
+          "metadata",
+          "public_abstract",
+          "ai_generated_chinese_abstract",
+          "ai_generated_highlights",
+          "source_links"
+        ],
+        "license_checked_for_full_text": false
+      },
+      "tags": [
+        "programming-languages",
+        "dynamic-composition",
+        "effects",
+        "coeffects",
+        "plugin-systems"
+      ],
+      "ai_generated": {
+        "generated_at": "2026-08-15T05:53:48Z",
+        "source_model": "claude-opus-5",
+        "provider": "Anthropic",
+        "workflow_version": "master-paper-analysis-v1",
+        "abstract_zh": "论文为插件系统与自演化 agent harness 的动态组合提出形式化基础：时间可组合性要求组件移除时能完整撤回其副作用，作者以可撤回 effect 实现——每次上下文变换都带有由运行时追踪的逆；空间可组合性要求声明并反应式管理组件依赖，作者以 reactive coeffect 实现。两类上下文被统一为一个类型，并进一步形成动态组合演算；Cordis 实现承载 effect tracking、coeffect resolution 与组件加载机制，Koishi 案例用于说明其长期插件生态中的适用性。",
+        "learning_highlights_zh": [
+          "时间可组合性的核心不是中止控制，而是组件移除后完整撤回副作用；可撤回 effect 为每次上下文变换保留运行时追踪的逆。",
+          "reactive coeffect 将依赖声明与上下文变更后的组件通知联系起来，给插件与 agent runtime 的依赖更新提供了明确语义边界。",
+          "统一 effect / coeffect context type 后再给出动态组合演算，使组件级机制能推演到交错组件系统，而不是只停留在 API 约定。",
+          "Cordis 与 Koishi 是工程案例而非性能基准；它们支持可用性讨论，但不能单独推出对其他框架的通用性能结论。"
+        ],
+        "input_evidence": [
+          {
+            "kind": "official_repository_readme",
+            "url": "https://github.com/cordiverse/paper#readme",
+            "source_field": "abstract",
+            "retrieved_at": "2026-08-15"
+          },
+          {
+            "kind": "verified_source_pdf",
+            "reference": "AGE-538 attachment paper.pdf; sha256:4d48478dc0b6222d9f74d7db10ee776449b1209eb112632336544d32a49db97f; PDF §1 and Cordis/Koishi discussion",
+            "locator": "PDF abstract; §§1, 5–6"
+          }
+        ],
+        "review": {
+          "status": "approved",
+          "reviewer": "PM-Paper (AGE-538)",
+          "reviewed_at": "2026-08-15T06:10:00Z",
+          "reason": "Checked the stored abstract verbatim against the public README/PDF abstract; checked the Chinese summary and four highlights against the README plus the identified PDF attachment for Cordis/Koishi context; preserved the distinction between source fields and AI fields. No PDF or full-text content is stored.",
+          "replaces": null,
+          "withdrawn_by": null
         }
       }
     }

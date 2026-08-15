@@ -152,15 +152,31 @@ export function validatePublicRecord(record, label) {
     if (AI_ONLY_RECORD_FIELDS.has(key)) fail(`${label}.${key} is an AI field and must be nested under ai_generated`);
     if (!PUBLIC_RECORD_FIELDS.has(key)) fail(`${label}.${key} is not an allowed raw/source/AI record field`);
   }
-  for (const field of ["arxiv_id", "arxiv_version", "title", "abstract", "published_at", "updated_at", "primary_category"]) {
+  requireObject(value.source, `${label}.source`);
+  const sourceKind = value.source.kind ?? "arxiv";
+  if (!["arxiv", "repository_preprint"].includes(sourceKind)) {
+    fail(`${label}.source.kind must be arxiv or repository_preprint`);
+  }
+  for (const field of ["title", "abstract", "published_at", "updated_at", "primary_category"]) {
     requireString(value[field], `${label}.${field}`);
+  }
+  if (sourceKind === "arxiv") {
+    for (const field of ["arxiv_id", "arxiv_version"]) requireString(value[field], `${label}.${field}`);
+  } else {
+    requireString(value.id, `${label}.id`);
   }
   for (const field of ["authors", "categories", "tags"]) {
     if (!Array.isArray(value[field]) || value[field].length === 0) fail(`${label}.${field} must be a non-empty array`);
   }
   requireObject(value.links, `${label}.links`);
-  for (const field of ["abstract", "pdf", "doi"]) requireString(value.links[field], `${label}.links.${field}`);
-  requireObject(value.source, `${label}.source`);
+  requireString(value.links.abstract, `${label}.links.abstract`);
+  if (sourceKind === "arxiv") {
+    for (const field of ["pdf", "doi"]) requireString(value.links[field], `${label}.links.${field}`);
+  } else {
+    for (const field of ["pdf", "doi"]) {
+      if (value.links[field] !== undefined && typeof value.links[field] !== "string") fail(`${label}.links.${field} must be a string when supplied`);
+    }
+  }
   requireString(value.source.url, `${label}.source.url`);
   validateCopyright(value, label);
   validateProvenance(value.ai_generated, `${label}.ai_generated`, { requireApproved: true });
@@ -180,8 +196,9 @@ export function validatePublicDataset(data, label = "public dataset") {
   const ids = new Set();
   for (const [index, record] of value.records.entries()) {
     validatePublicRecord(record, `${label}.records[${index}]`);
-    if (ids.has(record.arxiv_id)) fail(`${label}: duplicate arXiv ID ${record.arxiv_id}`);
-    ids.add(record.arxiv_id);
+    const identifier = record.source?.kind === "repository_preprint" ? record.id : record.arxiv_id;
+    if (ids.has(identifier)) fail(`${label}: duplicate public record identifier ${identifier}`);
+    ids.add(identifier);
   }
   return value;
 }

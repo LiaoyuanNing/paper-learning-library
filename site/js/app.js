@@ -1,5 +1,5 @@
 import { REVIEW_STATUSES, READING_STATES, StudyStore } from "./study-store.js";
-import { EMPTY_FILTERS, listCustomTags, recordMatchesFilters } from "./study-filters.js";
+import { EMPTY_FILTERS, listCustomTags, recordKey, recordMatchesFilters } from "./study-filters.js";
 import { escapeHtml, safeMultilineHtml } from "./safe-html.js";
 
 const DATASET_SOURCE = "AGE-23 · paper_learning_mvp_seed_v1";
@@ -40,8 +40,9 @@ function formatDate(value) {
     : new Intl.DateTimeFormat("zh-CN", { dateStyle: "medium" }).format(date);
 }
 
-function formatDateTime(value) {
+function formatDateTime(value, precision = "timestamp") {
   if (!value) return "未审核";
+  if (precision === "day") return formatDate(value);
   const date = new Date(value);
   return Number.isNaN(date.getTime())
     ? escapeHtml(value)
@@ -60,6 +61,16 @@ function inputEvidenceLinks(inputEvidence = []) {
     if (item.url) return externalLink(label, item.url);
     return `<li>${escapeHtml(label)}：${escapeHtml(item.reference || "未提供")}</li>`;
   }).join("")}</ul>`;
+}
+
+function sourceLabel(record) {
+  return record.source?.kind === "repository_preprint"
+    ? "一手仓库预印本"
+    : `arXiv:${record.arxiv_id}${record.arxiv_version || ""}`;
+}
+
+function sourceName(record) {
+  return record.source?.name || (record.source?.kind === "repository_preprint" ? "作者公开仓库" : "arXiv");
 }
 
 function selectOptions(placeholder, values, selected, labels = {}) {
@@ -109,8 +120,9 @@ function syncFilterControls() {
 }
 
 function readingStateControl(record) {
-  const state = studyStore.getPaper(record.arxiv_id).reading_state ?? "";
-  return `<label class="compact-control"><span>阅读状态</span><select data-reading-state data-paper-id="${escapeHtml(record.arxiv_id)}">${selectOptions("未设置", READING_STATES, state, READING_STATE_LABELS)}</select></label>`;
+  const paperId = recordKey(record);
+  const state = studyStore.getPaper(paperId).reading_state ?? "";
+  return `<label class="compact-control"><span>阅读状态</span><select data-reading-state data-paper-id="${escapeHtml(paperId)}">${selectOptions("未设置", READING_STATES, state, READING_STATE_LABELS)}</select></label>`;
 }
 
 function renderList() {
@@ -127,13 +139,14 @@ function renderList() {
   }
 
   reader.innerHTML = `<div class="paper-grid">${filtered.map((record) => {
-    const customTags = studyStore.getPaper(record.arxiv_id).tags ?? [];
+    const paperId = recordKey(record);
+    const customTags = studyStore.getPaper(paperId).tags ?? [];
     return `<article class="paper-card">
-      <div class="card-topline"><span class="arxiv-id">arXiv:${escapeHtml(record.arxiv_id)}</span><span>${escapeHtml(record.primary_category)}</span></div>
-      <h2 class="card-title"><a href="?paper=${encodeURIComponent(record.arxiv_id)}" data-paper-id="${escapeHtml(record.arxiv_id)}">${escapeHtml(record.title)}</a></h2>
+      <div class="card-topline"><span class="arxiv-id">${escapeHtml(sourceLabel(record))}</span><span>${escapeHtml(record.primary_category)}</span></div>
+      <h2 class="card-title"><a href="?paper=${encodeURIComponent(paperId)}" data-paper-id="${escapeHtml(paperId)}">${escapeHtml(record.title)}</a></h2>
       <p class="authors">${escapeHtml(record.authors.join(" · "))}</p>
       <ul class="tag-list">${record.tags.slice(0, 3).map((tag) => `<li class="tag">#${escapeHtml(tag)}</li>`).join("")}${customTags.map((tag) => `<li class="tag tag-personal">${escapeHtml(tag)}</li>`).join("")}</ul>
-      <div class="card-footer">${readingStateControl(record)}<a class="card-link" href="?paper=${encodeURIComponent(record.arxiv_id)}" data-paper-id="${escapeHtml(record.arxiv_id)}">阅读学习卡片 <span aria-hidden="true">→</span></a></div>
+      <div class="card-footer">${readingStateControl(record)}<a class="card-link" href="?paper=${encodeURIComponent(paperId)}" data-paper-id="${escapeHtml(paperId)}">阅读学习卡片 <span aria-hidden="true">→</span></a></div>
     </article>`;
   }).join("")}</div>`;
 }
@@ -170,25 +183,28 @@ function renderDetail(record) {
   resultSummary.textContent = "";
   const ai = record.ai_generated;
   const fullTextStored = record.copyright?.full_text_stored === true;
+  const paperId = recordKey(record);
+  const isRepositoryPreprint = record.source?.kind === "repository_preprint";
   document.title = `${record.title} · 论文学习库`;
 
   reader.innerHTML = `<article class="detail">
     <button class="back-button" type="button" id="back-to-list">← 返回全部论文</button>
     <header class="detail-header">
-      <div class="detail-kicker"><span class="arxiv-id">arXiv:${escapeHtml(record.arxiv_id)}${escapeHtml(record.arxiv_version || "")}</span><span>${escapeHtml(record.categories.join(" · "))}</span></div>
+      <div class="detail-kicker"><span class="arxiv-id">${escapeHtml(sourceLabel(record))}</span><span>${escapeHtml(record.categories.join(" · "))}</span></div>
       <h2>${escapeHtml(record.title)}</h2>
       <p class="detail-authors">${escapeHtml(record.authors.join(" · "))}</p>
       <div class="detail-study-controls">${readingStateControl(record)}<p class="local-note">学习进度、标签、笔记和审核结论仅保存在当前浏览器。</p></div>
     </header>
     <section class="study-panel tag-panel" aria-labelledby="tags-heading">
-      <div><p class="section-label">本地学习组织</p><h3 id="tags-heading">自定义标签</h3><p class="local-note">与 arXiv 分类和来源主题分开保存，不会改写源数据。</p></div>
-      <div>${customTagList(record.arxiv_id)}<form data-form="custom-tag" data-paper-id="${escapeHtml(record.arxiv_id)}" class="inline-form"><label class="sr-only" for="custom-tag-input">新自定义标签</label><input id="custom-tag-input" name="custom-tag" maxlength="48" required placeholder="例如：组会分享"><button type="submit">添加标签</button></form></div>
+      <div><p class="section-label">本地学习组织</p><h3 id="tags-heading">自定义标签</h3><p class="local-note">与来源分类和主题分开保存，不会改写源数据。</p></div>
+      <div>${customTagList(paperId)}<form data-form="custom-tag" data-paper-id="${escapeHtml(paperId)}" class="inline-form"><label class="sr-only" for="custom-tag-input">新自定义标签</label><input id="custom-tag-input" name="custom-tag" maxlength="48" required placeholder="例如：组会分享"><button type="submit">添加标签</button></form></div>
     </section>
     <div class="detail-columns">
       <section class="content-section" aria-labelledby="original-heading">
-        <p class="section-label">arXiv 原始信息</p>
+        <p class="section-label">${isRepositoryPreprint ? "一手来源信息" : "arXiv 原始信息"}</p>
         <h3 id="original-heading">原始摘要与来源</h3>
         <dl>
+          <dt>来源类型</dt><dd>${escapeHtml(sourceName(record))}</dd>
           <dt>主分类</dt><dd>${escapeHtml(record.primary_category)}</dd>
           <dt>全部分类</dt><dd>${escapeHtml(record.categories.join(" · "))}</dd>
           <dt>首次发布</dt><dd>${formatDate(record.published_at)}</dd>
@@ -197,25 +213,25 @@ function renderDetail(record) {
         <h4>Abstract</h4>
         <p>${escapeHtml(record.abstract)}</p>
         <ul class="external-links" aria-label="原文链接">
-          ${externalLink("arXiv 原始页", record.links?.abstract)}
-          ${externalLink("PDF", record.links?.pdf)}
+          ${externalLink(isRepositoryPreprint ? "一手 README" : "arXiv 原始页", record.links?.abstract)}
+          ${externalLink("PDF（原站外链）", record.links?.pdf)}
           ${externalLink("DOI", record.links?.doi)}
         </ul>
         <div class="disclosure">
           <p><strong>版权姿态：</strong>full_text_stored=${fullTextStored}; 本页不存储或渲染论文全文。</p>
-          <p>原始来源：<a href="${escapeHtml(record.source?.url)}" target="_blank" rel="noreferrer">arXiv</a>；检索于 ${formatDate(record.source?.retrieved_at)}。</p>
+          <p>原始来源：<a href="${escapeHtml(record.source?.url)}" target="_blank" rel="noreferrer">${escapeHtml(sourceName(record))}</a>；检索于 ${formatDate(record.source?.retrieved_at)}。</p>
         </div>
       </section>
       <section class="content-section ai-section" aria-labelledby="ai-heading">
         <p class="section-label">AI 生成内容</p>
         <h3 id="ai-heading">中文学习摘要</h3>
         <p>${escapeHtml(ai.abstract_zh)}</p>
-        ${reviewControl(record.arxiv_id, "translation", "中文摘要")}
+        ${reviewControl(paperId, "translation", "中文摘要")}
         <h4>学习亮点</h4>
         <ol class="highlights">${ai.learning_highlights_zh.map((highlight) => `<li>${escapeHtml(highlight)}</li>`).join("")}</ol>
-        ${reviewControl(record.arxiv_id, "highlights", "学习亮点")}
+        ${reviewControl(paperId, "highlights", "学习亮点")}
         <div class="disclosure">
-          <p><strong>生成时间：</strong>${formatDateTime(ai.generated_at)}</p>
+          <p><strong>生成时间：</strong>${formatDateTime(ai.generated_at, ai.generated_at_precision)}</p>
           <p><strong>模型 / Provider：</strong>${escapeHtml(ai.source_model)} · ${escapeHtml(ai.provider)}</p>
           <p><strong>工作流版本：</strong>${escapeHtml(ai.workflow_version)}</p>
           <p><strong>发布审核：</strong>${escapeHtml(PUBLISHED_AI_REVIEW_LABELS[ai.review?.status] || ai.review?.status || "未提供")}；${escapeHtml(ai.review?.reviewer || "未提供")}，${formatDateTime(ai.review?.reviewed_at)}</p>
@@ -227,7 +243,7 @@ function renderDetail(record) {
         </div>
       </section>
     </div>
-    ${notesPanel(record.arxiv_id)}
+    ${notesPanel(paperId)}
   </article>`;
 
   document.querySelector("#back-to-list").addEventListener("click", () => {
@@ -240,7 +256,7 @@ function renderDetail(record) {
 
 function renderRoute() {
   const paperId = currentPaperId();
-  const record = records.find((item) => item.arxiv_id === paperId);
+  const record = records.find((item) => recordKey(item) === paperId);
   if (paperId && record) {
     renderDetail(record);
     return;
